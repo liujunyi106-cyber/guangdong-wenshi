@@ -21,9 +21,9 @@
     <view class="content-card">
       <!-- 标题区 + 装饰星标 -->
       <view class="card-header">
-        <image class="header-star-l" src="/images/deco-star-1.png" mode="aspectFit"></image>
+        <image class="header-star" src="/images/deco-star-title.png" mode="aspectFit"></image>
         <text class="card-title">{{newsData.title}}</text>
-        <image class="header-star-r" src="/images/deco-star-3.png" mode="aspectFit"></image>
+        <image class="header-star header-star-flip" src="/images/deco-star-title.png" mode="aspectFit"></image>
       </view>
 
       <!-- 正文区 — 标签+内容 -->
