@@ -41,7 +41,7 @@
       <view class="color-actions">
         <view class="action-btn" bindtap="onUndo">↩ 撤销</view>
         <view class="action-btn {{eraserMode ? 'eraser-active' : ''}}" bindtap="onToggleEraser">
-          <image class="action-icon" src="/images/icon-eraser.png" mode="aspectFit"></image>
+          <image class="action-icon" src="/images/icon-eraser.svg" mode="aspectFit"></image>
         </view>
         <view class="action-btn action-save" bindtap="onSaveColor">💾 保存</view>
       </view>

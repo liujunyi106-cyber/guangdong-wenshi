@@ -8,7 +8,7 @@
 
     <!-- 用户卡片（对齐商店 Hero 卡片 335×142） -->
     <view class="hero-card">
-      <image class="hero-dots" src="/images/mine-hero-dots.png" mode="aspectFit"></image>
+      <image class="hero-dots" src="/images/mine-hero-dots.svg" mode="aspectFit"></image>
       <view class="hero-avatar-wrap">
         <image class="hero-avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
         <image wx:else class="hero-avatar-default" src="/images/icon-mine-avatar.png" mode="aspectFit"></image>
