@@ -113,7 +113,7 @@ Page({
       if (count > 0) {
         this.setData({ cdText: String(count), cdPulse: !this.data.cdPulse })
       } else if (count === 0) {
-        this.setData({ cdText: '开始！', cdPulse: true, cdTextStyle: 'font-size:96rpx;' })
+        this.setData({ cdText: '开始！', cdPulse: true, cdTextStyle: 'font-size:120rpx;' })
       } else {
         clearInterval(this.countdownTimer)
         this.beginPlaying()

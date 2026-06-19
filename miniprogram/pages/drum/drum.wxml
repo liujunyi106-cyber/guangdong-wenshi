@@ -43,7 +43,11 @@
 
   <!-- ===== 倒计时页 ===== -->
   <view class="cd-page" wx:if="{{state === 'countdown'}}">
-    <view class="cd-title-abs" style="top:{{statusBarHeight * 2 + 28}}px;">准备</view>
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="sub-spacer"></view>
+      <text class="sub-title">准备</text>
+      <view class="sub-spacer"></view>
+    </view>
     <view class="cd-number-box">
       <text class="cd-number {{cdPulse ? 'cd-pulse' : ''}}" style="{{cdTextStyle}}">{{cdText}}</text>
     </view>
@@ -51,8 +55,11 @@
 
   <!-- ===== 游戏进行页 ===== -->
   <view class="page-state game-page" wx:if="{{state === 'playing'}}">
-    <view class="game-header" style="padding-top:{{statusBarHeight}}px;">
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
       <view class="back-btn" bindtap="pauseGame">←</view>
+      <view class="sub-spacer"></view>
+    </view>
+    <view class="game-progress-row">
       <view class="game-progress-wrap">
         <view class="game-progress-fill" style="width:{{progress}}%;"></view>
       </view>

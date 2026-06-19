@@ -135,18 +135,6 @@
   z-index: 10;
 }
 
-/* 标题 —— 与数字同一套绝对居中方案 */
-.cd-title-abs {
-  position: absolute;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-family: "MiSans Latin", "PingFang SC", sans-serif;
-  font-size: 40rpx;
-  font-weight: 600;
-  color: #000000;
-}
-
 /* 数字 */
 .cd-number-box {
   position: absolute;
@@ -175,14 +163,14 @@
 }
 
 /* 游戏头部 */
-.game-header {
+/* 进度条行（位于 sub-header 下方） */
+.game-progress-row {
   display: flex;
   align-items: center;
   padding: 0 40rpx;
-  height: 112rpx;
+  height: 56rpx;
   gap: 24rpx;
   flex-shrink: 0;
-  margin-top: 20px;
 }
 .game-progress-wrap {
   flex: 1;
@@ -190,7 +178,6 @@
   background: #EEEEEE;
   border-radius: 8rpx;
   overflow: hidden;
-  margin: 0 24rpx;
 }
 .game-progress-fill {
   height: 100%;
