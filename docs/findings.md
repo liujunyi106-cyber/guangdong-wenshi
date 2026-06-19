@@ -36,6 +36,8 @@
 | 4 | AR 拍照原型需 4 页闭环 | 相机→贴纸选择→编辑→保存，全部打通 |
 | 5 | 贴纸选择页 3×2 网格比横向滚动好 | 每格 ≥80pt，触控面积大，适合 4 岁儿童 |
 | 6 | MCP `import_image` 无法导入 PNG | base64 >2000 字符截断，真机开发直接读文件无此限制 |
+| 7 | 鼓棒出现时机太早 | `scheduleNextBeat` 在 `startRing()` 前调了 `updateSticksForBeat(false)`，删除该行即可 |
+| 8 | 鼓棒颜色需反映判定结果 | 新增 `drumstickJudge` 字段 + CSS 4色类控制 `::before` 边框色 |
 
 ## 之前会话新增
 | 问题 | 解决方案 |

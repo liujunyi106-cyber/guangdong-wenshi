@@ -395,4 +395,13 @@
   - 贴纸拖拽：bindtouchstart/move 实时跟随
   - "完成"红底白字移至右下，与"删除"同行
   - 保存完成页新增返回栏
-  - 4 份 MD 文档同步至 V2.4
+   - 4 份 MD 文档同步至 V2.4
+
+### 会话：2026-06-19
+
+- **状态：** in_progress 🔄
+- 执行的操作：
+  - "开始！" 右移 10px（margin-left: 40rpx→20rpx）
+  - 鼓棒早现修复：删除 `scheduleNextBeat` 中提前调用的 `updateSticksForBeat(false)`，鼓棒仅在外圈缩至 scale≤1.0 时出现
+  - 鼓棒颜色按判定实时着色：perfect红(#E31E15) / good绿(#65B96A) / early金(#FFB020) / miss灰(#C9CDD4)
+  - 新增 `drumstickJudge` 数据字段，CSS 类 `drumstick-perfect/good/early/miss` 控制边框色
