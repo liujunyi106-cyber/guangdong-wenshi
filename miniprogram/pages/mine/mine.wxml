@@ -1,6 +1,11 @@
 <!-- 个人中心 -->
 <scroll-view scroll-y class="page" style="padding-top:{{statusBarHeight}}px;">
 
+  <!-- 状态栏 -->
+  <view class="status-bar">
+    <text class="status-bar-time">9:41</text>
+  </view>
+
   <!-- 用户头像区 -->
   <view class="profile-section">
     <view class="avatar-wrap">

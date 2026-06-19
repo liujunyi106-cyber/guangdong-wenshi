@@ -1,5 +1,10 @@
 <!-- 敲鼓页面 -->
 <view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar">
+    <text class="status-bar-time">9:41</text>
+  </view>
+
   <!-- ===== 曲目选择页 ===== -->
   <view class="page-state" wx:if="{{state === 'songlist'}}">
     <view class="sub-header songlist-header" style="padding-top:{{statusBarHeight}}px;">

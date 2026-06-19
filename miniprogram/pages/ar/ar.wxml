@@ -1,5 +1,10 @@
 <!-- AR拍照页面 -->
 <view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar">
+    <text class="status-bar-time">9:41</text>
+  </view>
+
   <!-- ===== 相机取景页 ===== -->
   <view class="state {{state==='camera' ? 'state-show' : ''}}">
     <view class="camera-preview" style="padding-top:{{statusBarHeight}}px;">

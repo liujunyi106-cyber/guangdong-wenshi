@@ -77,13 +77,13 @@ page {
   top: 0;
   left: 0;
   z-index: 30;
-  background: #FFFFFF;
+  background: #1E1E1E;
 }
 .status-bar-time {
   font-family: Inter, sans-serif;
   font-size: 28rpx;
   font-weight: 500;
-  color: #333333;
+  color: #FFFFFF;
 }
 
 /* ========== 返回按钮（全局统一） ========== */

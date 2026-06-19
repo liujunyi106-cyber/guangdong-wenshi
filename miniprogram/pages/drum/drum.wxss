@@ -617,13 +617,3 @@
   justify-content: center;
   margin: 0 auto;
 }
-  top: 120rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333333;
-  color: #FFFFFF;
-  font-size: 26rpx;
-  padding: 20rpx 40rpx;
-  border-radius: 16rpx;
-  z-index: 200;
-}
