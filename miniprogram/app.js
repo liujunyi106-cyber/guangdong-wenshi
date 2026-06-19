@@ -17,6 +17,12 @@ App({
     statusBarHeight: 44,
     screenHeight: 812,
     screenWidth: 375,
-    isOnline: true
+    isOnline: true,
+    utils: null
+  },
+  onReady() {
+    // 延迟加载 utils/error.js，确保 wx 全局可用
+    const error = require('./utils/error.js')
+    this.globalData.utils = error
   }
 })

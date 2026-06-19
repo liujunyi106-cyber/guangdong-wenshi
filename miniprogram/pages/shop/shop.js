@@ -1,5 +1,8 @@
 const app = getApp()
 
+const app = getApp()
+const errorUtils = app.globalData.utils
+
 Page({
   data: {
     statusBarHeight: 44,
@@ -21,6 +24,13 @@ Page({
   onLoad() {
     const wi = wx.getWindowInfo()
     this.setData({ statusBarHeight: wi.statusBarHeight || 44 })
+
+    // 网络检查
+    if (!errorUtils || !errorUtils.isOnline()) {
+      wx.showToast({ title: '网络已断开', icon: 'none', duration: 2000 })
+      return
+    }
+
     this.filterProducts()
   },
 
