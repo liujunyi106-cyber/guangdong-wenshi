@@ -70,7 +70,7 @@
       <image class="game-ip-img" src="{{currentIpImg}}" mode="aspectFit"></image>
 
       <!-- 鼓面 + 命中区 共用容器 -->
-      <view class="drum-stage">
+      <view class="drum-stage {{tutorialStep > 0 ? 'drum-stage-top' : ''}}">
         <view class="drum-container">
           <!-- 鼓棒 -->
           <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}} drumstick-{{drumstickJudge}}"></view>
@@ -130,7 +130,7 @@
       <text class="tutorial-feedback" wx:if="{{tutorialFeedback}}">{{tutorialFeedback}}</text>
     </view>
     <view class="tutorial-card tutorial-ready" wx:if="{{tutorialStep === 4}}">
-      <text class="tutorial-ready-icon">🥁</text>
+      <image class="tutorial-ready-icon" src="/images/icon-drum-hero.png" mode="aspectFit"></image>
       <text class="tutorial-text">{{tutorialText}}</text>
       <view class="tutorial-confirm-btn" bindtap="onConfirmTutorial">开始挑战！</view>
     </view>

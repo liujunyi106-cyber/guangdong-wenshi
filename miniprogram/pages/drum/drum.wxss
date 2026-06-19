@@ -219,6 +219,11 @@
   overflow: visible;
   min-height: 400rpx;
 }
+/* 教程模式：将鼓面+命中区提升到蒙版之上 */
+.drum-stage-top {
+  z-index: 360;
+  pointer-events: auto;
+}
 /* 鼓面 + 命中区共用容器 —— 对齐鼓面位置 */
 .drum-container {
   position: absolute;
@@ -624,9 +629,10 @@
   padding: 48rpx;
 }
 .tutorial-ready-icon {
-  font-size: 80rpx;
+  width: 120rpx;
+  height: 120rpx;
   display: block;
-  margin-bottom: 16rpx;
+  margin: 0 auto 20rpx;
 }
 .tutorial-confirm-btn {
   width: 400rpx;
