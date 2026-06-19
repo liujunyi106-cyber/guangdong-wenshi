@@ -553,7 +553,7 @@
 | 选中态 | 品牌红边框 `4rpx solid #E31E15`，`box-sizing: border-box` + 默认 `4rpx solid transparent` 占位防止布局跳动 |
 | 未解锁蒙版 | `rgba(0,0,0,0.45)` 全遮 + 🔒 锁图标 |
 | 底部按钮 | "下一步：编辑位置"，品牌红 #E31E15 全宽，未选中时 #C9CDD4 禁用态 |
-| 卡片比例 | `aspect-ratio: 1` |
+| 卡片比例 | 固定尺寸 320×242rpx |
 | 已解锁 | 彩色 + 小狮名称 |
 | 未解锁 | 灰色 + 🔒 锁图标 |
 
@@ -704,9 +704,9 @@
 
 | Tab | 文件 | 尺寸 | 格式 |
 |-----|------|------|------|
-| 首页 | `图标png/01_首页.png` | 128×128 → 37×38 显示 | PNG |
-| 商店 | `图标png/05_商店.png` | 128×128 → 45×38 显示 | PNG |
-| 我的 | `图标png/06_我的.png` | 128×128 → 43×44 显示 | PNG |
+| 首页 | `tab-home.png` | 128×128 → 37×38 显示 | PNG |
+| 商店 | `tab-shop.png` | 128×128 → 45×38 显示 | PNG |
+| 我的 | `tab-mine.png` | 128×128 → 43×44 显示 | PNG |
 
 - 选中态：彩色 PNG
 - 未选中态：黑白 PNG（`图标png-黑白/` 目录）或 CSS `filter: grayscale(1)` 实时切换
@@ -858,9 +858,8 @@ body {
   color: #AAAAAA;
   background: transparent;
 }
-}
-.back-btn-dark { border-color: #FFFFFF; }
-.back-btn-light { border-color: #AAAAAA; }
+.back-btn-dark { color: #FFFFFF; }
+.back-btn-light { color: #AAAAAA; }
 ```
 
 ### 11.2 主页卡片样式
