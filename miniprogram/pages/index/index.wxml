@@ -1,13 +1,19 @@
 <!-- 首页 · 小狮子 -->
 <view class="page">
   <!-- 状态栏 -->
-  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;">
+    <text class="status-bar-time">9:41</text>
+  </view>
 
   <!-- 可滚动内容区 -->
   <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
 
-    <!-- 页面标题 -->
-    <view class="page-title">小狮子</view>
+    <!-- 页面标题区（与曲目选择页 sub-header 同高对齐） -->
+    <view class="sub-header">
+      <view class="sub-spacer"></view>
+      <text class="sub-title">小狮子</text>
+      <view class="sub-spacer"></view>
+    </view>
 
     <!-- Hero 卡片 -->
     <view class="hero-card" bindtap="onHeroTap">

@@ -1,7 +1,9 @@
 <!-- 涂色装饰页面 -->
 <view class="page">
   <!-- 状态栏 -->
-  <view class="status-bar"></view>
+  <view class="status-bar">
+    <text class="status-bar-time">9:41</text>
+  </view>
 
   <!-- ===== 线稿选择页 ===== -->
   <view wx:if="{{state === 'outline'}}" class="state-show">
