@@ -219,9 +219,9 @@
   overflow: visible;
   min-height: 400rpx;
 }
-/* 教程模式：将鼓面+命中区提升到蒙版之上 */
+/* 教程模式：命中区+外圈提升到蒙版之上，鼓面隐藏 */
 .drum-stage-top {
-  z-index: 360;
+  z-index: 355;
   pointer-events: auto;
 }
 /* 鼓面 + 命中区共用容器 —— 对齐鼓面位置 */
@@ -241,6 +241,10 @@
   top: 0;
   left: 0;
   z-index: 1;
+}
+/* 教程模式：隐藏鼓面，仅显示命中圈 */
+.drum-area-hidden {
+  opacity: 0;
 }
 
 /* 虚幻鼓棒（CSS 绘制，参照 HTML 原型） */
@@ -572,8 +576,8 @@
   background: rgba(0,0,0,0.25);
 }
 .tutorial-card {
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  z-index: 370;
   width: 560rpx;
   background: #FFFFFF;
   border-radius: 32rpx;
@@ -582,6 +586,9 @@
   box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
   animation: tutorialSlideUp 0.35s ease-out;
   pointer-events: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 @keyframes tutorialSlideUp {
   from { opacity: 0; transform: translateY(40rpx); }

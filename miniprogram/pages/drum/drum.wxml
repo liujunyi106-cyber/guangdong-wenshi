@@ -96,7 +96,7 @@
           <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
 
           <!-- 鼓面 -->
-          <image class="drum-area" src="/images/drum-face.png" mode="aspectFit"></image>
+          <image class="drum-area {{tutorialStep > 0 ? 'drum-area-hidden' : ''}}" src="/images/drum-face.png" mode="aspectFit"></image>
         </view>
 
         <!-- 判定文字 -->
