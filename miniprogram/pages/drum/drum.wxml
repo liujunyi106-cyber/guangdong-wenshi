@@ -73,8 +73,8 @@
       <view class="drum-stage">
         <view class="drum-container">
           <!-- 鼓棒 -->
-          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
-          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
+          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}} drumstick-{{drumstickJudge}}"></view>
+          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}} drumstick-{{drumstickJudge}}"></view>
 
           <!-- 缩圈 × 5 击打区域 -->
           <view class="ring-zone ring-left {{ringShow && ringZone === 'center-left' ? 'ring-visible' : ''}}"

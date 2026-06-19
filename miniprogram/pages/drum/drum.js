@@ -51,6 +51,7 @@ Page({
     drumstickRight: false,
     drumstickType: 'center',
     drumstickHit: false,
+    drumstickJudge: '',
     // ring
     ringShow: false,
     ringScale: RING_MAX,
@@ -113,7 +114,7 @@ Page({
       if (count > 0) {
         this.setData({ cdText: String(count), cdPulse: !this.data.cdPulse })
       } else if (count === 0) {
-        this.setData({ cdText: '开始！', cdPulse: true, cdTextStyle: 'font-size:120rpx;' })
+        this.setData({ cdText: '开始！', cdPulse: true, cdTextStyle: 'font-size:140rpx;margin-left:20rpx;' })
       } else {
         clearInterval(this.countdownTimer)
         this.beginPlaying()
@@ -161,9 +162,6 @@ Page({
     this.clearHitZones()
     this.showHitZone(this.currentBeatType)
 
-    // 鼓棒出场（先不敲击）
-    this.updateSticksForBeat(false)
-
     // 启动缩圈
     this.startRing(this.currentBeatType)
 
@@ -208,8 +206,8 @@ Page({
 
       this.setData({ ringScale: Math.round(scale * 100) / 100 })
 
-      // 鼓棒出现：外圈快接近内圈时（~1.15 开始）
-      if (scale <= 1.15 && !this.data.drumstickLeft && !this.data.drumstickRight) {
+      // 鼓棒出现：外圈与内圈重合时出现
+      if (scale <= 1.0 && !this.data.drumstickLeft && !this.data.drumstickRight) {
         this.updateSticksForBeat(false)
       }
     }, 20) // 50fps
@@ -220,7 +218,7 @@ Page({
   },
 
   /* 鼓棒显隐 */
-  updateSticksForBeat(hit) {
+  updateSticksForBeat(hit, judge) {
     const type = this.currentBeatType
     const isRim = type.includes('rim')
     const stickType = isRim ? 'rim' : 'center'
@@ -228,7 +226,7 @@ Page({
     if (type === 'center-left' || type === 'rim-left') left = true
     else if (type === 'center-right' || type === 'rim-right') right = true
     else if (type === 'center-both' || type === 'rim-both') { left = true; right = true }
-    this.setData({ drumstickLeft: left, drumstickRight: right, drumstickType: stickType, drumstickHit: hit })
+    this.setData({ drumstickLeft: left, drumstickRight: right, drumstickType: stickType, drumstickHit: hit, drumstickJudge: judge || '' })
   },
 
   hideSticks() {
@@ -280,7 +278,7 @@ Page({
     if (this.comboCount > this.maxCombo) this.maxCombo = this.comboCount
 
     // 鼓棒敲击
-    this.updateSticksForBeat(true)
+    this.updateSticksForBeat(true, judgeType)
     clearTimeout(this.drumstickTimer)
     this.drumstickTimer = setTimeout(() => this.hideSticks(), 400)
 

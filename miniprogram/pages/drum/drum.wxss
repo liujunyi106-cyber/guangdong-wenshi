@@ -450,14 +450,18 @@
   box-shadow: 0 0 40rpx rgba(90,184,232,0.4), inset 0 0 40rpx rgba(90,184,232,0.1);
 }
 
-/* 鼓棒敲击动画 */
+/* 鼓棒判定着色 */
+.drumstick-perfect::before { border-color: #E31E15 !important; }
+.drumstick-good::before    { border-color: #65B96A !important; }
+.drumstick-early::before   { border-color: #FFB020 !important; }
+.drumstick-miss::before    { border-color: #C9CDD4 !important; }
+
 .drumstick.drumstick-hit::before {
-  border-color: #E31E15 !important;
   animation: stickFlash 0.3s ease-out;
 }
 @keyframes stickFlash {
-  0% { border-color: #FFB020; border-width: 10rpx; }
-  100% { border-color: #E31E15; border-width: 6rpx; }
+  0% { border-width: 10rpx; }
+  100% { border-width: 6rpx; }
 }
 
 /* 拍点提示 */
