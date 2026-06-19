@@ -328,41 +328,50 @@
 }
 
 .record-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24rpx 0;
+  padding: 28rpx 0;
   border-bottom: 1rpx solid #F5F5F5;
 }
 .record-item:last-child {
   border-bottom: none;
 }
-.record-left {
+.record-main {
   display: flex;
-  align-items: center;
-  gap: 16rpx;
+  flex-direction: column;
+  gap: 14rpx;
 }
-.record-stars {
-  font-size: 36rpx;
-}
-.record-title {
+.record-rating {
   font-size: 28rpx;
   font-weight: 600;
   color: #1A1A1A;
 }
-.record-right {
-  text-align: right;
+.record-score-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+.record-stars {
+  font-size: 36rpx;
 }
 .record-score {
   font-size: 36rpx;
   font-weight: 700;
   color: #E31E15;
-  display: block;
 }
-.record-meta {
-  font-size: 22rpx;
-  color: #AAAAAA;
-  margin-top: 4rpx;
+.record-stats {
+  display: flex;
+  gap: 32rpx;
+  padding-top: 4rpx;
+}
+.stat {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #949494;
+}
+.stat-num {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #333333;
+  margin-left: 4rpx;
 }
 
 .photo-grid {

@@ -88,13 +88,18 @@
             <text class="empty-text">还没有敲鼓记录，去首页挑战吧~</text>
           </view>
           <view class="record-item" wx:for="{{drumRecords}}" wx:key="time">
-            <view class="record-left">
-              <text class="record-stars">{{item.stars}}</text>
-              <text class="record-title">{{item.rating}}</text>
-            </view>
-            <view class="record-right">
-              <text class="record-score">{{item.score}} 分</text>
-              <text class="record-meta">P{{item.perfect}} G{{item.good}} E{{item.early}} M{{item.miss}}</text>
+            <view class="record-main">
+              <text class="record-rating">{{item.rating}}</text>
+              <view class="record-score-row">
+                <text class="record-stars">{{item.stars}}</text>
+                <text class="record-score">{{item.score}} 分</text>
+              </view>
+              <view class="record-stats">
+                <text class="stat">P<text class="stat-num">{{item.perfect}}</text></text>
+                <text class="stat">G<text class="stat-num">{{item.good}}</text></text>
+                <text class="stat">E<text class="stat-num">{{item.early}}</text></text>
+                <text class="stat">M<text class="stat-num">{{item.miss}}</text></text>
+              </view>
             </view>
           </view>
         </view>
