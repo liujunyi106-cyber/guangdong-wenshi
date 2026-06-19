@@ -5,11 +5,11 @@ Page({
     statusBarHeight: 44,
     state: 'camera',
     stickers: [
-      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/fire-lion.png', unlockHint: '敲鼓通关即可解锁' },
-      { id: 2, name: '水水狮', emoji: '💧', unlocked: true, image: '/images/water-lion.png', unlockHint: 'AR拍照使用即可解锁' },
-      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/gold-lion.png', unlockHint: '涂色完成1幅作品即可解锁' },
-      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/wood-lion.png', unlockHint: '敲鼓获得S/A评级即可解锁' },
-      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/earth-lion.png', unlockHint: '集齐4只小狮即可解锁' }
+      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/ip-3d-fire.png', unlockHint: '敲鼓通关即可解锁' },
+      { id: 2, name: '水水狮', emoji: '💧', unlocked: true, image: '/images/ip-3d-water.png', unlockHint: 'AR拍照使用即可解锁' },
+      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/ip-3d-gold.png', unlockHint: '涂色完成1幅作品即可解锁' },
+      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/ip-3d-wood.png', unlockHint: '敲鼓获得S/A评级即可解锁' },
+      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/ip-3d-earth.png', unlockHint: '集齐4只小狮即可解锁' }
     ],
     selectedSticker: null,
     editStickerImage: '',

@@ -37,6 +37,7 @@ Page({
     // countdown
     cdText: '3',
     cdPulse: false,
+    cdTextStyle: '',
     // game
     progress: 0,
     currentIpImg: '/images/ip-actions/活力满满.png',
@@ -106,13 +107,13 @@ Page({
   startCountdown() {
     this.gameState = 'countdown'
     let count = 3
-    this.setData({ state: 'countdown', cdText: String(count), cdPulse: true })
+    this.setData({ state: 'countdown', cdText: String(count), cdPulse: true, cdTextStyle: '' })
     this.countdownTimer = setInterval(() => {
       count--
       if (count > 0) {
         this.setData({ cdText: String(count), cdPulse: !this.data.cdPulse })
       } else if (count === 0) {
-        this.setData({ cdText: '开始！', cdPulse: true })
+        this.setData({ cdText: '开始！', cdPulse: true, cdTextStyle: 'font-size:96rpx;' })
       } else {
         clearInterval(this.countdownTimer)
         this.beginPlaying()
