@@ -1,6 +1,6 @@
 # 广东舞狮文创小程序 · 落地版 PRD
 
-> 版本：V1.11 | 状态：定稿 | 最后更新：2026-06-20 | 变更：舞狮故事→舞狮故事(3卡片落地+故事详情页+蒙版)+背景渐变+商店字段调整+敲鼓成绩精简+鼓面IP修复
+> 版本：V1.12 | 状态：定稿 | 最后更新：2026-06-20 | 变更：成就系统10项+规则引擎+左右滑动+状态栏统一+商店标题对齐+V1未完成8项盘点
 >
 > 本文档整合概念版 PRD 及 4 份功能详细说明，为开发唯一参考。设计规范参考 `docs/design-spec.md`，涂色装饰交互详见 `docs/交互设计文档.md`。
 
@@ -712,15 +712,31 @@ result_fail → (重试) → playing / (放弃) → idle
 | 用户卡片 | Hero 卡片（头像 + 昵称 + ID） | 微信头像昵称组件 / Mock | — | ✅ |
 | 小狮收集 | 5 只小狮 3D IP 形象横排 + 进度条 | 前端 Mock（imageMap 保护） | `icon-collect.png` | ✅ |
 | 等级称号 | 收集 ≥ 3 只显示"🏅 舞狮小传人" | 前端计算 | — | ✅ |
-| 我的成就 | 3 张成就卡片（连击/拍照/绘画） | 前端 Mock | `icon-combo/camera/paint.png` | ✅ |
+| 我的成就 | 10 张成就卡片（8鼓点+1AR+1涂色），左右滑动 | 前端计算（checkAchievement规则引擎） | `achi-*.png` 5图标 | ✅ |
 | 我的作品 | 涂色作品缩略网格（最近 3 张） | 前端 Mock（空数组占位） | `icon-color.png` | ✅ |
-| 快捷菜单 | 敲鼓成绩 / AR 照片 / 我的订单 | Toast "开发中" | `icon-drum-record/ar-record/order.png` | ✅ |
+| 快捷菜单 | 敲鼓成绩 / AR 照片 / 我的订单 | 展开式菜单(accordion) | `icon-drum-record/ar-record/order.png` | ✅ |
+
+**成就系统（10 项）：**
+| # | 名称 | 图标 | 解锁规则 |
+|---|------|------|---------|
+| 1 | 初次敲鼓 | achi-star1 | plays≥1 |
+| 2 | 鼓手常客 | achi-plays | plays≥10 |
+| 3 | 百鼓争鸣 | achi-star2 | plays≥100 |
+| 4 | 高分达人 | achi-highscore | score≥500 |
+| 5 | 连击能手 | achi-combo | combo≥20 |
+| 6 | 完美节拍 | achi-star1 | perfect≥30 |
+| 7 | 零失误 | achi-star2 | miss=0 |
+| 8 | 鼓王降临 | achi-highscore | rating=S |
+| 9 | 首张照片 | icon-camera | photoRecords>0 |
+| 10 | 小画家 | icon-paint | artworkRecords>0 |
+
+未解锁成就 opacity:0.40，无锁图标。
 
 **未解锁小狮展示：** opacity 0.55（保留原色，无灰度滤镜），叠加 `lock-3d.png` 3D 锁图标居中。
 
 **小狮 IP 3D 形象来源：** `全部内容/IP形象/3D形象/` → `miniprogram/images/mine-fire.png` 等。
 
-**锁图标 + 成就图标来源：** `全部内容/3Dicon/` → `miniprogram/images/lock-3d.png` / `icon-combo/camera/paint.png`。
+**锁图标 + 成就图标来源：** `全部内容/3Dicon/锁定.png` → `miniprogram/images/lock-3d.png`；鼓点成就图标 `全部内容/鼓点成就/` → `miniprogram/images/achi-*.png`。
 
 ---
 

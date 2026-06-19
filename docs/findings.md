@@ -71,6 +71,17 @@
 | 8 | 鼓面/IP模糊 | drum-face 340→680px128色, ip-actions 200→400px |
 | 9 | 敲鼓成绩信息过载 | 精简：评价+分数同行，删星级，P/G/E/M缩小减间距 |
 
+## 本次会话新增（2026-06-20 b）
+| # | 问题/决策 | 方案 |
+|---|----------|------|
+| 10 | 成就太少，无鼓点专项 | 从3项→10项：8鼓点(规则引擎)+1AR+1涂色 |
+| 11 | 成就图标白色背景 | RGBA保留透明度替代RGB转白底，P-mode 128色消除模糊 |
+| 12 | 成就无法左右滑动查看 | scroll-view scroll-x + inline-flex + 固定200rpx宽 |
+| 13 | 未解锁覆盖锁图标不美观 | 删除锁图标，仅保留 opacity:0.40 |
+| 14 | 各页状态栏高度不一致 | 6页统一动态 statusBarHeight+padding inline style |
+| 15 | 商店标题与首页不对齐 | shop-title→sub-header(spacer+title+spacer) |
+| 16 | 编辑贴纸按钮/预览间距 | 完成按钮 margin-top:-10rpx, 预览 padding-top 16→36rpx |
+
 ## 本次会话新增（2026-06-18 d）
 | 决策 | 理由 |
 |------|------|

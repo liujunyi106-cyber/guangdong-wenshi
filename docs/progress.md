@@ -461,8 +461,55 @@
 ### 五问重启检查
 | 问题 | 答案 |
 |------|------|
-| 我在哪里？ | 阶段 5：打磨上线 |
+| 我在哪里？ | 阶段 6：打磨上线 |
 | 我要去哪里？ | 真机相机接入 / 音效 / 分享 / 商品详情页 |
 | 目标是什么？ | V1 核心闭环打通 → 可上线 |
 | 我学到了什么？ | 见 findings.md |
-| 我做了什么？ | 首页卡片+详情页+视觉打磨+Bug修复，包体积 2034KB |
+| 我做了什么？ | 成就系统+状态栏统一+视觉打磨+Bug修复，包体积 2047KB |
+
+## 会话：2026-06-20 (b)
+
+### 任务：成就系统升级 + 视觉统一 + V1 未完成盘点
+- **状态：** completed ✅
+- 执行的操作：
+  - **成就系统升级**：3项→10项（8鼓点+1AR+1涂色），规则引擎 checkAchievement()
+    - 图标：全部内容/鼓点成就/ (连击/高分/多次游玩/星1/星2)，RGBA 80px 128色
+    - 解锁规则：plays/score/combo/perfect/miss/ratingS + photoRecords + artworkRecords
+    - 组件改为 scroll-view 左右滑动，200rpx 固定宽，未解锁 opacity:0.40
+  - **状态栏统一**：drum/color/ar/shop/mine 全部添加动态 statusBarHeight+padding
+  - **商店标题对齐**：shop-title→sub-header (spacer+title+spacer)，与首页一致
+  - **我的页对齐**：menu-label 28rpx/500→30rpx/700 + icon 44→40rpx + accordion padding
+  - **敲鼓成绩重排**：分数右置(space-between) + P/G/E/M gap 24→12rpx
+  - **编辑贴纸微调**：完成按钮上移10px + 照片预览缩减10px
+  - **成就图标修复**：RGBA 保留透明度消除白色背景，32→128色消除模糊
+  - **未解锁锁图标删除**：仅保留 opacity:0.40
+- **V1 未完成清单**（8项）：
+  | # | 项目 | 状态 |
+  |---|------|------|
+  | 1 | 真机相机接入 wx.createCameraContext | 存根 |
+  | 2 | audio/ 音效系统 | 空目录 |
+  | 3 | 分享功能 ×3 | Toast 存根 |
+  | 4 | 商品详情页 | 缺失 |
+  | 5 | 小程序联盟跳转 | 缺失 |
+  | 6 | 首页狮子进度 | 未加载 |
+  | 7 | 周边商品 3D 图 | 3/8款空 |
+  | 8 | 商品详情页（mine订单） | 占位文本 |
+- **文档同步**：progress.md / task_plan.md / findings.md / 落地版PRD.md / 交互设计文档.md / design-spec.md 全部更新
+
+### 创建/修改的文件
+- `miniprogram/pages/mine/mine.{js,wxml,wxss}` — 成就系统 10项 + 左右滑动 + 对齐
+- `miniprogram/pages/{drum,color,ar,shop,mine}/*.wxml` — 状态栏 inline style
+- `miniprogram/pages/{shop,mine}/*.js` — 动态 statusBarPadding
+- `miniprogram/pages/shop/shop.{wxml,wxss}` — sub-header 标题
+- `miniprogram/pages/ar/ar.wxss` — 编辑贴纸微调
+- `miniprogram/images/achi-*.png` — 成就图标 RGBA 80px
+- `docs/*.md` — 6份文档同步
+
+### 五问重启检查
+| 问题 | 答案 |
+|------|------|
+| 我在哪里？ | 阶段 6：打磨上线 |
+| 我要去哪里？ | 真机相机接入 / 音效 / 分享 / 商品详情页 |
+| 目标是什么？ | V1 核心闭环打通 → 可上线 |
+| 我学到了什么？ | 见 findings.md |
+| 我做了什么？ | 成就系统+状态栏统一+视觉打磨+Bug修复+V1盘点，包体积 2047KB |
