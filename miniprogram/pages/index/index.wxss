@@ -216,6 +216,17 @@
   line-height: 1.4;
   margin-top: 4rpx;
 }
+.news-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300rpx;
+  border: 2rpx dashed #D9D9D9;
+  background: transparent;
+}
+.news-card-placeholder .news-title {
+  color: #AAAAAA;
+}
 
 /* 底部占位 */
 .bottom-nav-placeholder {

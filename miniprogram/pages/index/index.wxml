@@ -55,6 +55,13 @@
             <text class="news-desc">为什么狮头会有各种不同的颜色？</text>
           </view>
         </view>
+        <view class="news-card" bindtap="onNewsTap" data-id="liubei">
+          <image class="news-img" src="/images/card-news-liubei.jpg" mode="aspectFill"></image>
+          <view class="news-info">
+            <text class="news-title">刘备狮是谁</text>
+            <text class="news-desc">温和又稳重的小狮</text>
+          </view>
+        </view>
       </view>
       <!-- 右列 -->
       <view class="news-col">
@@ -65,11 +72,9 @@
             <text class="news-desc">跳一跳摘好运</text>
           </view>
         </view>
-        <view class="news-card" bindtap="onNewsTap" data-id="liubei">
-          <image class="news-img" src="/images/card-news-liubei.jpg" mode="aspectFill"></image>
+        <view class="news-card news-card-placeholder">
           <view class="news-info">
-            <text class="news-title">刘备狮是谁</text>
-            <text class="news-desc">温和又稳重的小狮</text>
+            <text class="news-title">待开发中</text>
           </view>
         </view>
       </view>
