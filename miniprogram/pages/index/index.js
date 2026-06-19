@@ -29,7 +29,7 @@ Page({
     wx.navigateTo({ url: '/pages/color/color' })
   },
 
-  /* 舞狮趣闻卡片点击 */
+  /* 舞狮故事卡片点击 */
   onNewsTap(e) {
     const { id } = e.currentTarget.dataset
     if (id) {
