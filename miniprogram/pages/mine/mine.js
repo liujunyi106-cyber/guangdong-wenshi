@@ -8,11 +8,11 @@ Page({
     userId: '',
     unlockedCount: 0,
     lions: [
-      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/fire-lion.png' },
-      { id: 2, name: '水水狮', emoji: '💧', unlocked: false, image: '/images/water-lion.png' },
-      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/gold-lion.png' },
-      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/wood-lion.png' },
-      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/earth-lion.png' }
+      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/mine-fire.png' },
+      { id: 2, name: '水水狮', emoji: '💧', unlocked: false, image: '/images/mine-water.png' },
+      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/mine-gold.png' },
+      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/mine-wood.png' },
+      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/mine-earth.png' }
     ],
     achievements: [
       { id: 1, icon: '🥇', name: '鼓点入门', desc: '首次通关' },

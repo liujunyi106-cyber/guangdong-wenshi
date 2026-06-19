@@ -5,26 +5,27 @@
   background: #F7F7F8;
 }
 
-/* ===== 用户卡片（335×142，完全对齐商店 Hero 卡片） ===== */
+/* ===== 用户卡片（335×142，与商店 Hero 完全一致） ===== */
 .hero-card {
   width: 670rpx;
   height: 284rpx;
   border-radius: 32rpx;
   margin: 52rpx 40rpx 24rpx;
   background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%);
-  display: flex;
-  align-items: center;
-  padding: 0 48rpx;
-  gap: 36rpx;
+  position: relative;
+  overflow: visible;
 }
 .hero-avatar-wrap {
+  position: absolute;
+  left: 34rpx;
+  top: 50%;
+  transform: translateY(-50%);
   width: 144rpx;
   height: 144rpx;
   border-radius: 50%;
   overflow: hidden;
   border: 6rpx solid rgba(255,255,255,0.4);
   background: rgba(255,255,255,0.2);
-  flex-shrink: 0;
 }
 .hero-avatar {
   width: 100%;
@@ -38,10 +39,15 @@
   justify-content: center;
   font-size: 72rpx;
 }
-.hero-info {
+.hero-name-wrap {
+  position: absolute;
+  left: 204rpx;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 12rpx;
+  z-index: 1;
 }
 .hero-name {
   font-size: 40rpx;
@@ -52,6 +58,7 @@
 .hero-id {
   font-size: 24rpx;
   color: rgba(255,255,255,0.65);
+  line-height: 1;
 }
 
 /* ===== 通用卡片 ===== */
