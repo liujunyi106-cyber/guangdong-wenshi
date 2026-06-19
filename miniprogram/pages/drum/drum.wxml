@@ -120,25 +120,19 @@
     </view>
   </view>
 
-  <!-- 首次游玩引导遮罩 -->
-  <view class="guide-overlay" wx:if="{{guideShow}}">
-    <view class="guide-content">
-      <text class="guide-title">怎么玩？</text>
-      <view class="guide-steps">
-        <view class="guide-step">
-          <view class="guide-step-num">1</view>
-          <text class="guide-step-text">看鼓面光点提示</text>
-        </view>
-        <view class="guide-step">
-          <view class="guide-step-num">2</view>
-          <text class="guide-step-text">在光点闪烁时点击鼓面</text>
-        </view>
-        <view class="guide-step">
-          <view class="guide-step-num">3</view>
-          <text class="guide-step-text">左右鼓面、鼓边都要敲哦！</text>
-        </view>
-      </view>
-      <view class="guide-btn" bindtap="dismissGuide">知道了</view>
+  <!-- 交互式预玩教程 -->
+  <view class="tutorial-overlay" wx:if="{{tutorialStep > 0}}">
+    <view class="tutorial-mask"></view>
+    <view class="tutorial-card" wx:if="{{tutorialStep < 4}}">
+      <text class="tutorial-step-badge">第 {{tutorialStep}} 步</text>
+      <text class="tutorial-text">{{tutorialText}}</text>
+      <text class="tutorial-hint" wx:if="{{tutorialHint}}">{{tutorialHint}}</text>
+      <text class="tutorial-feedback" wx:if="{{tutorialFeedback}}">{{tutorialFeedback}}</text>
+    </view>
+    <view class="tutorial-card tutorial-ready" wx:if="{{tutorialStep === 4}}">
+      <text class="tutorial-ready-icon">🥁</text>
+      <text class="tutorial-text">{{tutorialText}}</text>
+      <view class="tutorial-confirm-btn" bindtap="onConfirmTutorial">开始挑战！</view>
     </view>
   </view>
 

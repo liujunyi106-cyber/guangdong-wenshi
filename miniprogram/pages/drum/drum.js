@@ -75,8 +75,11 @@ Page({
     unlockIcon: '🎉',
     unlockTitle: '',
     unlockSub: '',
-    // guide overlay
-    guideShow: false,
+    // guide overlay → 交互式预玩教程
+    tutorialStep: 0,
+    tutorialText: '',
+    tutorialHint: '',
+    tutorialFeedback: '',
     // 狮子解锁状态（曲目列表页）
     lionFire: { unlocked: false },
     lionWood: { unlocked: false },
@@ -159,21 +162,58 @@ Page({
       drumstickLeft: false, drumstickRight: false, drumstickHit: false
     })
 
+    // 首次游玩 → 进入交互式预玩教程
     if (!unlock.isGuideDone()) {
-      this.setData({ guideShow: true })
-      this._guidePendingStart = true
+      this.startTutorial()
       return
     }
     this.scheduleNextBeat()
   },
 
-  dismissGuide() {
-    this.setData({ guideShow: false })
-    unlock.saveGuideDone()
-    if (this._guidePendingStart) {
-      this._guidePendingStart = false
-      this.scheduleNextBeat()
+  /* ========== 交互式预玩教程 ========== */
+
+  startTutorial() {
+    this._tutorialStep = 1
+    this._beginTutorialStep()
+  },
+
+  _beginTutorialStep() {
+    const step = this._tutorialStep
+    const steps = [
+      { type: 'center-left', text: '看光点，敲鼓面！', hint: '瞄准闪烁的区域，用手指点下去' },
+      { type: 'rim-right', text: '鼓边也要敲哦~', hint: '试试敲鼓的边缘' },
+      { type: 'center-both', text: '两只手一起敲！', hint: '左右同时敲下去' },
+    ]
+    const s = steps[step - 1]
+    this.setData({
+      tutorialStep: step, tutorialText: s.text, tutorialHint: s.hint, tutorialFeedback: ''
+    })
+    this.currentBeatType = s.type
+    this.beatPlaying = true
+    this.showHitZone(s.type)
+    this.startRing(s.type)
+  },
+
+  advanceTutorial() {
+    const feedbacks = ['干得漂亮！', '就是这样！', '太厉害了！']
+    this.setData({ tutorialFeedback: feedbacks[this._tutorialStep - 1] || '太棒了！' })
+    this._tutorialStep++
+    if (this._tutorialStep > 3) {
+      // 教程完成 → 显示确认按钮
+      setTimeout(() => {
+        this.setData({
+          tutorialStep: 4, tutorialText: '准备好了吗？', tutorialHint: '', tutorialFeedback: ''
+        })
+      }, 1200)
+      return
     }
+    setTimeout(() => this._beginTutorialStep(), 1500)
+  },
+
+  onConfirmTutorial() {
+    this.setData({ tutorialStep: 0, tutorialText: '', tutorialHint: '', tutorialFeedback: '' })
+    unlock.saveGuideDone()
+    this.scheduleNextBeat()
   },
 
   /* ========== 缩圈系统 ========== */
@@ -232,7 +272,15 @@ Page({
             beatHintShow: false, drumstickLeft: false, drumstickRight: false
           })
           this.showJudge('miss', '😅 漏掉了')
-          setTimeout(() => { if (this.gameState === 'playing') this.scheduleNextBeat() }, 800)
+          // 教程模式：自动重试本步骤
+          if (this._tutorialStep >= 1 && this._tutorialStep <= 3) {
+            setTimeout(() => {
+              this.setData({ tutorialFeedback: '' })
+              this._beginTutorialStep()
+            }, 1200)
+          } else {
+            setTimeout(() => { if (this.gameState === 'playing') this.scheduleNextBeat() }, 800)
+          }
         }
         return
       }
@@ -270,6 +318,16 @@ Page({
 
   hitDrum(e) {
     if (this.gameState !== 'playing' || !this.beatPlaying) return
+
+    // 教程模式 → 不判定，直接通过
+    if (this._tutorialStep >= 1 && this._tutorialStep <= 3) {
+      this.beatPlaying = false
+      this.clearRingTimer()
+      this.updateSticksForBeat(true, 'perfect')
+      this.setData({ ringShow: false, hzState: { left: false, right: false, center: false, rimLeft: false, rimRight: false } })
+      this.advanceTutorial()
+      return
+    }
 
     this.beatPlaying = false
     this.clearRingTimer()
@@ -462,8 +520,9 @@ Page({
   },
 
   retryGame() {
+    this._tutorialStep = 0
     this.loadLionStatus()
-    this.setData({ state: 'songlist', unlockShow: false })
+    this.setData({ state: 'songlist', unlockShow: false, tutorialStep: 0 })
     this.clearUnlockTimers()
     this.gameState = 'idle'
   },

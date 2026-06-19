@@ -551,63 +551,84 @@
 }
 
 /* 解锁居中弹窗 */
-/* 首次游玩引导遮罩 */
-.guide-overlay {
+/* 交互式预玩教程 */
+.tutorial-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.75);
   z-index: 350;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  animation: fadeIn 0.3s ease-out;
+  padding-bottom: 460rpx;
 }
-.guide-content {
-  width: 600rpx;
+.tutorial-mask {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+}
+.tutorial-card {
+  position: relative;
+  z-index: 1;
+  width: 560rpx;
   background: #FFFFFF;
   border-radius: 32rpx;
-  padding: 56rpx 48rpx 48rpx;
+  padding: 40rpx 48rpx;
   text-align: center;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+  animation: tutorialSlideUp 0.35s ease-out;
 }
-.guide-title {
-  font-size: 44rpx;
-  font-weight: 700;
+@keyframes tutorialSlideUp {
+  from { opacity: 0; transform: translateY(40rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tutorial-step-badge {
+  display: inline-block;
+  padding: 6rpx 24rpx;
+  border-radius: 20rpx;
+  background: #FFF0EF;
   color: #E31E15;
+  font-size: 24rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+.tutorial-text {
   display: block;
-  margin-bottom: 40rpx;
-}
-.guide-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 28rpx;
-  margin-bottom: 48rpx;
-}
-.guide-step {
-  display: flex;
-  align-items: center;
-  gap: 20rpx;
-  text-align: left;
-}
-.guide-step-num {
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 50%;
-  background: #E31E15;
-  color: #FFFFFF;
-  font-size: 28rpx;
+  font-size: 36rpx;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  color: #1A1A1A;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
 }
-.guide-step-text {
-  font-size: 28rpx;
-  color: #333333;
+.tutorial-hint {
+  display: block;
+  font-size: 26rpx;
+  color: #94A3B8;
   line-height: 1.5;
 }
-.guide-btn {
-  width: 320rpx;
+.tutorial-feedback {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #E31E15;
+  margin-top: 24rpx;
+  animation: tutorialBounce 0.4s ease;
+}
+@keyframes tutorialBounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tutorial-ready {
+  padding: 48rpx;
+}
+.tutorial-ready-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.tutorial-confirm-btn {
+  width: 400rpx;
   height: 88rpx;
   border-radius: 16rpx;
   background: #E31E15;
@@ -617,9 +638,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 32rpx auto 0;
+}
+.tutorial-confirm-btn:active {
+  opacity: 0.85;
 }
 
+/* ===== 旧样式 (清理) ===== */
 .unlock-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
