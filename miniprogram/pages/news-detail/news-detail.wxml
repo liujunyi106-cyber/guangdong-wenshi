@@ -1,0 +1,30 @@
+<!-- 故事详情页 -->
+<view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
+
+    <!-- 导航栏 -->
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="onBack">
+        <text class="nav-back-arrow">←</text>
+      </view>
+      <text class="nav-title">故事详情</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- Hero 图片 -->
+    <image class="hero-img" src="{{newsData.image}}" mode="aspectFill"></image>
+
+    <!-- 内容卡片 -->
+    <view class="content-card">
+      <view class="card-title">{{newsData.title}}</view>
+      <view class="card-body">{{newsData.content}}</view>
+    </view>
+
+    <!-- 底部占位 -->
+    <view class="bottom-placeholder"></view>
+
+  </scroll-view>
+</view>

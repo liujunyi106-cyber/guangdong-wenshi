@@ -32,6 +32,8 @@ Page({
   /* 舞狮趣闻卡片点击 */
   onNewsTap(e) {
     const { id } = e.currentTarget.dataset
-    wx.showToast({ title: '开发中', icon: 'none', duration: 1500 })
+    if (id) {
+      wx.navigateTo({ url: '/pages/news-detail/news-detail?id=' + id })
+    }
   }
 })
