@@ -266,17 +266,17 @@ Page({
     const scale = this.data.ringScale
     let judgeType, symbol, score, keepCombo
 
-    if (scale < 0.8) {
-      // 外圈 < 内圈 → 漏掉了
+    if (scale < 0.9) {
+      // 外圈已缩过内圈 → 漏掉了
       judgeType = 'miss'; symbol = '😅 漏掉了'
       score = 0; keepCombo = false
       this.missCount++
-    } else if (scale >= 0.9 && scale <= 1.1) {
+    } else if (scale <= 1.1) {
       // 外圈 ≈ 内圈 (±10%) → 太棒啦
       judgeType = 'perfect'; symbol = '✨ 太棒啦!'
       score = 200; keepCombo = true
       this.perfectCount++
-    } else if (scale > 1.1 && scale <= 1.4) {
+    } else if (scale <= 1.4) {
       // 外圈接近内圈 → 不错哦
       judgeType = 'good'; symbol = '👍 不错哦!'
       score = 100; keepCombo = true

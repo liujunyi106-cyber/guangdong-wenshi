@@ -74,6 +74,40 @@
   line-height: 1;
 }
 
+/* ===== 下拉展开菜单 ===== */
+.menu-accordion-card {
+  padding: 0;
+  overflow: hidden;
+}
+.accordion-item {
+  padding: 0 32rpx;
+}
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+}
+.accordion-header:active {
+  opacity: 0.6;
+}
+.accordion-arrow {
+  font-size: 36rpx;
+  color: #CCCCCC;
+  transition: transform 0.25s ease;
+}
+.accordion-arrow.open {
+  transform: rotate(90deg);
+}
+.accordion-body {
+  padding: 0 0 28rpx;
+  animation: accordionSlideIn 0.25s ease-out;
+}
+@keyframes accordionSlideIn {
+  from { opacity: 0; transform: translateY(-8rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== 通用卡片 ===== */
 .card {
   margin: 0 40rpx 24rpx;

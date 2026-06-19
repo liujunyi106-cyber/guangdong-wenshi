@@ -71,67 +71,73 @@
       </view>
     </view>
 
-    <!-- ===== 快捷入口 ===== -->
-    <view class="card" wx:if="{{menuState === 'main'}}">
-      <view class="menu-item" bindtap="onTapDrum">
-        <view class="menu-left">
-          <image class="menu-icon-img" src="/images/icon-drum-record.png" mode="aspectFit"></image>
-          <text class="menu-label">敲鼓成绩</text>
+    <!-- ===== 下拉展开式菜单 ===== -->
+    <view class="card menu-accordion-card">
+      <!-- 敲鼓成绩 -->
+      <view class="accordion-item">
+        <view class="accordion-header" bindtap="onToggleAccordion" data-key="drum">
+          <view class="menu-left">
+            <image class="menu-icon-img" src="/images/icon-drum-record.png" mode="aspectFit"></image>
+            <text class="menu-label">敲鼓成绩</text>
+          </view>
+          <text class="accordion-arrow {{expanded.drum ? 'open' : ''}}">›</text>
         </view>
-        <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-divider"></view>
-      <view class="menu-item" bindtap="onTapPhotos">
-        <view class="menu-left">
-          <image class="menu-icon-img" src="/images/icon-ar-record.png" mode="aspectFit"></image>
-          <text class="menu-label">AR 照片</text>
+        <view class="accordion-body" wx:if="{{expanded.drum}}">
+          <view wx:if="{{drumRecords.length === 0}}" class="empty-hint">
+            <text class="empty-text">还没有敲鼓记录，去首页挑战吧~</text>
+          </view>
+          <view class="record-item" wx:for="{{drumRecords}}" wx:key="time">
+            <view class="record-left">
+              <text class="record-stars">{{item.stars}}</text>
+              <text class="record-title">{{item.rating}}</text>
+            </view>
+            <view class="record-right">
+              <text class="record-score">{{item.score}} 分</text>
+              <text class="record-meta">P{{item.perfect}} G{{item.good}} E{{item.early}} M{{item.miss}}</text>
+            </view>
+          </view>
         </view>
-        <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-divider"></view>
-      <view class="menu-item" bindtap="onTapOrders">
-        <view class="menu-left">
-          <image class="menu-icon-img" src="/images/icon-order.png" mode="aspectFit"></image>
-          <text class="menu-label">我的订单</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-    </view>
 
-    <!-- 敲鼓成绩详情 -->
-    <view class="card" wx:if="{{menuState === 'drum'}}">
-      <view class="detail-header">
-        <view class="back-text-btn" bindtap="onBackToMain">‹ 返回</view>
-        <text class="card-title">敲鼓成绩</text>
-      </view>
-      <view wx:if="{{drumRecords.length === 0}}" class="empty-hint">
-        <text class="empty-text">还没有敲鼓记录，去首页挑战吧~</text>
-      </view>
-      <view class="record-item" wx:for="{{drumRecords}}" wx:key="time">
-        <view class="record-left">
-          <text class="record-stars">{{item.stars}}</text>
-          <text class="record-title">{{item.rating}}</text>
-        </view>
-        <view class="record-right">
-          <text class="record-score">{{item.score}} 分</text>
-          <text class="record-meta">P{{item.perfect}} G{{item.good}} E{{item.early}} M{{item.miss}}</text>
-        </view>
-      </view>
-    </view>
+      <view class="menu-divider"></view>
 
-    <!-- AR 照片详情 -->
-    <view class="card" wx:if="{{menuState === 'photo'}}">
-      <view class="detail-header">
-        <view class="back-text-btn" bindtap="onBackToMain">‹ 返回</view>
-        <text class="card-title">AR 照片</text>
+      <!-- AR 照片 -->
+      <view class="accordion-item">
+        <view class="accordion-header" bindtap="onToggleAccordion" data-key="photo">
+          <view class="menu-left">
+            <image class="menu-icon-img" src="/images/icon-ar-record.png" mode="aspectFit"></image>
+            <text class="menu-label">AR 照片</text>
+          </view>
+          <text class="accordion-arrow {{expanded.photo ? 'open' : ''}}">›</text>
+        </view>
+        <view class="accordion-body" wx:if="{{expanded.photo}}">
+          <view wx:if="{{photoRecords.length === 0}}" class="empty-hint">
+            <text class="empty-text">还没有 AR 照片，去拍照吧~</text>
+          </view>
+          <view class="photo-grid">
+            <view class="photo-thumb" wx:for="{{photoRecords}}" wx:key="time">
+              <text class="photo-thumb-emoji">🦁</text>
+              <text class="photo-thumb-name">{{item.stickerName}}</text>
+            </view>
+          </view>
+        </view>
       </view>
-      <view wx:if="{{photoRecords.length === 0}}" class="empty-hint">
-        <text class="empty-text">还没有 AR 照片，去拍照吧~</text>
-      </view>
-      <view class="photo-grid">
-        <view class="photo-thumb" wx:for="{{photoRecords}}" wx:key="time">
-          <text class="photo-thumb-emoji">🦁</text>
-          <text class="photo-thumb-name">{{item.stickerName}}</text>
+
+      <view class="menu-divider"></view>
+
+      <!-- 我的订单 -->
+      <view class="accordion-item">
+        <view class="accordion-header" bindtap="onToggleAccordion" data-key="orders">
+          <view class="menu-left">
+            <image class="menu-icon-img" src="/images/icon-order.png" mode="aspectFit"></image>
+            <text class="menu-label">我的订单</text>
+          </view>
+          <text class="accordion-arrow {{expanded.orders ? 'open' : ''}}">›</text>
+        </view>
+        <view class="accordion-body" wx:if="{{expanded.orders}}">
+          <view class="empty-hint">
+            <text class="empty-text">暂无订单（商品详情页开发中）</text>
+          </view>
         </view>
       </view>
     </view>

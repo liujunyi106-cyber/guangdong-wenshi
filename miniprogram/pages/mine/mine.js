@@ -17,12 +17,14 @@ Page({
     ],
     works: [],
     title: '',
-    menuState: 'main',
     drumRecords: [],
     photoRecords: [],
     artworkRecords: [],
-    showDrumDetail: false,
-    showPhotoDetail: false
+    expanded: {
+      drum: false,
+      photo: false,
+      orders: false
+    }
   },
 
   onLoad() {
@@ -64,20 +66,14 @@ Page({
     })
   },
 
-  onTapDrum() {
-    this.setData({ showDrumDetail: true, menuState: 'drum' })
-  },
-
-  onTapPhotos() {
-    this.setData({ showPhotoDetail: true, menuState: 'photo' })
-  },
-
-  onTapOrders() {
-    wx.showToast({ title: '订单功能开发中', icon: 'none' })
-  },
-
-  onBackToMain() {
-    this.setData({ menuState: 'main', showDrumDetail: false, showPhotoDetail: false })
+  onToggleAccordion(e) {
+    const key = e.currentTarget.dataset.key
+    const current = this.data.expanded[key]
+    const next = {}
+    for (const k in this.data.expanded) {
+      next[k] = (k === key) ? !current : false
+    }
+    this.setData({ expanded: next })
   },
 
   formatTime(ts) {
