@@ -45,8 +45,34 @@
 
     <!-- 舞狮趣闻 -->
     <view class="section-title">舞狮趣闻</view>
-    <view class="news-placeholder">
-      <text class="news-empty">更多趣闻即将上线</text>
+    <view class="news-grid">
+      <!-- 左列 -->
+      <view class="news-col">
+        <view class="news-card" bindtap="onNewsTap" data-id="secret">
+          <image class="news-img" src="/images/card-news-secret.png" mode="aspectFill"></image>
+          <view class="news-info">
+            <text class="news-title">狮头颜色小秘密</text>
+            <text class="news-desc">为什么狮头会有各种不同的颜色？</text>
+          </view>
+        </view>
+      </view>
+      <!-- 右列 -->
+      <view class="news-col">
+        <view class="news-card" bindtap="onNewsTap" data-id="caiqing">
+          <image class="news-img" src="/images/card-news-caiqing.jpg" mode="aspectFill"></image>
+          <view class="news-info">
+            <text class="news-title">小狮怎么采青</text>
+            <text class="news-desc">跳一跳摘好运</text>
+          </view>
+        </view>
+        <view class="news-card" bindtap="onNewsTap" data-id="liubei">
+          <image class="news-img" src="/images/card-news-liubei.jpg" mode="aspectFill"></image>
+          <view class="news-info">
+            <text class="news-title">刘备狮是谁</text>
+            <text class="news-desc">温和又稳重的小狮</text>
+          </view>
+        </view>
+      </view>
     </view>
 
     <!-- 底部导航占位 -->
