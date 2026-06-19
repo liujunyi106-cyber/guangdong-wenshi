@@ -24,7 +24,7 @@ App({
 
   /* 开发模式：编译清空全部本地数据（模拟全新安装），不编译则数据保留 */
   _devResetTutorial() {
-    const COMPILE_ID = 1 // ← 每次编译前手动 +1
+    const COMPILE_ID = 2 // ← 每次编译前手动 +1
     try {
       const lastId = wx.getStorageSync('__last_compile_id__') || 0
       if (COMPILE_ID !== lastId) {
