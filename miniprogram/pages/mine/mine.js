@@ -35,10 +35,14 @@ Page({
   loadUserData() {
     const nickname = wx.getStorageSync('nickname') || ''
     const avatarUrl = wx.getStorageSync('avatarUrl') || ''
-    const lions = wx.getStorageSync('lions') || this.data.lions
-    const unlockedCount = lions.filter(l => l.unlocked).length
+    const storedLions = wx.getStorageSync('lions')
+    const lions = storedLions && storedLions.length ? storedLions : this.data.lions
+    // 确保所有小狮使用3D IP形象图
+    const imageMap = ['/images/mine-fire.png', '/images/mine-water.png', '/images/mine-gold.png', '/images/mine-wood.png', '/images/mine-earth.png']
+    const mergedLions = lions.map((l, i) => ({ ...l, image: l.image || imageMap[i] }))
+    const unlockedCount = mergedLions.filter(l => l.unlocked).length
     const userId = wx.getStorageSync('userId') || 'LION000' + Math.floor(Math.random() * 1000)
-    this.setData({ nickname, avatarUrl, lions, unlockedCount, userId })
+    this.setData({ nickname, avatarUrl, lions: mergedLions, unlockedCount, userId })
   },
 
   onTapDrum() {
