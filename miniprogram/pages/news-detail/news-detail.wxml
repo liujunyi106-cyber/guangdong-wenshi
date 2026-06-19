@@ -55,12 +55,6 @@
       </view>
     </view>
 
-    <!-- 底部装饰 -->
-    <view class="bottom-deco">
-      <image class="bd-star-1" src="/images/deco-star-2.png" mode="aspectFit"></image>
-      <image class="bd-star-2" src="/images/deco-star-5.png" mode="aspectFit"></image>
-    </view>
-
     <!-- 底部占位 -->
     <view class="bottom-placeholder"></view>
 

@@ -164,20 +164,6 @@
   flex: 1;
 }
 
-/* 底部装饰星标 */
-.bottom-deco {
-  display: flex;
-  justify-content: center;
-  gap: 40rpx;
-  padding: 40rpx 0 20rpx;
-}
-.bd-star-1,
-.bd-star-2 {
-  width: 64rpx;
-  height: 64rpx;
-  opacity: 0.3;
-}
-
 /* 底部占位 */
 .bottom-placeholder {
   height: 80rpx;
