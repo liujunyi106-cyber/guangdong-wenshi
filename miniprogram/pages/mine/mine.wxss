@@ -224,9 +224,18 @@
   border-radius: 20rpx;
   background: #FAFAFA;
   text-align: center;
+  position: relative;
 }
 .achi-card.achi-locked {
-  opacity: 0.45;
+  opacity: 0.55;
+}
+.achi-lock-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48rpx;
+  height: 48rpx;
 }
 .achi-icon-img {
   width: 64rpx;

@@ -52,6 +52,7 @@
             <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
             <text class="achi-name">{{item.name}}</text>
             <text class="achi-desc">{{item.locked ? '未解锁' : item.desc}}</text>
+            <image wx:if="{{item.locked}}" class="achi-lock-img" src="/images/achi-lock.png" mode="aspectFit"></image>
           </view>
         </view>
       </scroll-view>
