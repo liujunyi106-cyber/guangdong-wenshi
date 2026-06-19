@@ -68,9 +68,9 @@
 
           <!-- 缩圈 × 5 击打区域 -->
           <view class="ring-zone ring-left {{ringShow && ringZone === 'center-left' ? 'ring-visible' : ''}}"
-            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
           <view class="ring-zone ring-right {{ringShow && ringZone === 'center-right' ? 'ring-visible' : ''}}"
-            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
           <view class="ring-zone ring-center {{ringShow && ringZone === 'center-both' ? 'ring-visible' : ''}}"
             style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
           <view class="ring-zone ring-rim-left {{ringShow && (ringZone === 'rim-left' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"

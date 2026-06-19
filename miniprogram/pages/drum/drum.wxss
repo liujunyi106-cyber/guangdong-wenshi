@@ -332,9 +332,9 @@
   pointer-events: auto;
 }
 .hz-left {
-  left: 16rpx;
+  left: 30%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   width: 160rpx;
   height: 160rpx;
   border: 6rpx solid rgba(227,30,21,0.6);
@@ -342,9 +342,9 @@
   background: rgba(227,30,21,0.08);
 }
 .hz-right {
-  right: 16rpx;
+  left: 70%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   width: 160rpx;
   height: 160rpx;
   border: 6rpx solid rgba(227,30,21,0.6);
@@ -423,14 +423,14 @@
 }
 /* 中心左击打 */
 .ring-left {
-  left: 16rpx;
+  left: 30%;
   top: 50%;
   width: 160rpx;
   height: 160rpx;
 }
 /* 中心右击打 */
 .ring-right {
-  right: 16rpx;
+  left: 70%;
   top: 50%;
   width: 160rpx;
   height: 160rpx;
