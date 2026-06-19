@@ -128,8 +128,7 @@
   position: relative;
 }
 .lion-card.lion-locked {
-  opacity: 0.45;
-  filter: grayscale(1);
+  opacity: 0.55;
 }
 .lion-img {
   width: 72rpx;
