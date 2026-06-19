@@ -6,7 +6,7 @@ Page({
     avatarUrl: '',
     nickname: '',
     lions: [
-      { id: 1, name: '火火狮', emoji: '🔥', unlocked: false, image: '/images/fire-lion.png' },
+      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/fire-lion.png' },
       { id: 2, name: '水水狮', emoji: '💧', unlocked: false, image: '/images/water-lion.png' },
       { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/gold-lion.png' },
       { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/wood-lion.png' },

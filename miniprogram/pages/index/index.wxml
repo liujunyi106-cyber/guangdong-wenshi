@@ -19,7 +19,7 @@
       <view class="hero-hello">Hello</view>
       <view class="hero-exclaim">!</view>
       <view class="hero-title">一起来敲鼓</view>
-      <view class="hero-mode">单人游戏/亲子游戏</view>
+      <view class="hero-mode">做游戏吧</view>
       <image class="hero-lion" src="/images/hero-lion.png" mode="aspectFit"></image>
       <view class="hero-cta">
         <text class="hero-cta-text">快来一起来敲鼓吧</text>
