@@ -13,23 +13,24 @@ App({
       }
     })
 
-    // ========== 开发模式：每次编译重置教程，但保留战绩/解锁/作品数据 ==========
-    // 原理：用一个编译标记 __COMPILE_ID__ 与本地存储的 __last_compile_id__ 比对。
-    // 每次编译前手动修改 __COMPILE_ID__（如 +1），启动时检测到不一致
-    // 则仅清除教程标记（drumTutorialDone），其余数据原封不动。
-    // 不编译时（普通启动）标记一致，跳过重置，保留"已学过教程"状态。
+    // ========== 开发模式：每次编译清空全部数据，编译后正常游玩可保存，再次编译才丢失 ==========
+    // 用途：在不同手机上做测试时，每次部署新版本都从零开始。
+    // 原理：用 COMPILE_ID 与本地存储的 __last_compile_id__ 比对。
+    // 编译前手动 +1 → 启动检测不一致 → 清空所有本地数据 → 写入新 ID。
+    // 编译后正常游玩 → 保存的数据与 __last_compile_id__ 一致 → 不再清空，数据持久保留。
+    // 再次编译 +1 → 检测不一致 → 再次清空，模拟首次体验。
     this._devResetTutorial()
   },
 
-  /* 开发模式：编译重置教程（仅删教程标记，不删战绩/解锁/作品） */
+  /* 开发模式：编译清空全部本地数据（模拟全新安装），不编译则数据保留 */
   _devResetTutorial() {
     const COMPILE_ID = 1 // ← 每次编译前手动 +1
     try {
       const lastId = wx.getStorageSync('__last_compile_id__') || 0
       if (COMPILE_ID !== lastId) {
-        wx.removeStorageSync('drumTutorialDone')
-        wx.setStorageSync('__last_compile_id__', COMPILE_ID)
-        console.log('[dev] 检测到新编译，已重置教程标记（战绩/解锁/作品数据保留）')
+        wx.clearStorageSync()                          // 清空全部本地数据
+        wx.setStorageSync('__last_compile_id__', COMPILE_ID) // 写入本次编译标记
+        console.log('[dev] 检测到新编译，已清空全部数据（模拟首次安装）')
       }
     } catch (e) {
       // 静默失败：存储异常不影响正常启动
