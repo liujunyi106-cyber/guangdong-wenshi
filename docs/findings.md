@@ -38,6 +38,7 @@
 | 6 | MCP `import_image` 无法导入 PNG | base64 >2000 字符截断，真机开发直接读文件无此限制 |
 | 7 | 鼓棒出现时机太早 | `scheduleNextBeat` 在 `startRing()` 前调了 `updateSticksForBeat(false)`，删除该行即可 |
 | 8 | 鼓棒颜色需反映判定结果 | 新增 `drumstickJudge` 字段 + CSS 4色类控制 `::before` 边框色 |
+| 9 | 文档多处与代码不一致 | 判定规则（时间窗口→缩圈scale）、判定语（超棒→太棒啦等）、价格（99-129→19-45）、返回按钮（有边框→无边框）、状态栏（9:41→黑底无文字）、Hero IP（fixed→absolute）、已知Bug#1（已修复→删除）|
 
 ## 之前会话新增
 | 问题 | 解决方案 |
