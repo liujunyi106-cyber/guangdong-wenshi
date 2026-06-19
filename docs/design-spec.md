@@ -29,7 +29,7 @@
 | 手机容器尺寸 | 固定 `375×812` px |
 | 容器居中 | `margin: 0 auto` |
 | 滚动 | `html, body { overflow: hidden }` 已移除，页面滚动由子容器管理 |
-| 状态栏 z-index | `30`，全局组件，所有页面共享 "9:41" |
+| 状态栏 z-index | `30`，全局组件，所有页面共享，黑底 #1E1E1E 无时间文字 |
 
 ---
 
@@ -298,7 +298,9 @@
 | 颜色 | `#252525` |
 | 位置 | x=20, y=438 |
 
-### 5.7 模式选择弹窗 (39:2 "🎮 模式选择弹窗")
+### 5.7 模式选择弹窗 (V2.5 已移除)
+
+> **已移除。** 首页 Hero 卡片点击直接进入曲目列表页，不再弹出模式选择弹窗。下方为历史参考规格，仅保留供后续迭代参考。
 
 ```
 ┌──────────────────────────────────┐
@@ -432,7 +434,7 @@
 
 | 属性 | 值 |
 |------|-----|
-| 尺寸 | 240×240rpx |
+| 尺寸 | 360×360rpx |
 | 居中 | 水平居中，位于进度条下方 |
 | 切换方式 | 根据连击数实时切换（无过渡动画，直接替换） |
 
@@ -841,17 +843,21 @@ body {
   top: 0; left: 50%;
   transform: translateX(-50%);
   width: 375px;
-  height: 44px;
+  height: 48rpx;
   z-index: 30;
+  background: #1E1E1E;
 }
 .back-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 2px solid;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 36rpx;
+  color: #AAAAAA;
+  background: transparent;
+}
 }
 .back-btn-dark { border-color: #FFFFFF; }
 .back-btn-light { border-color: #AAAAAA; }
