@@ -89,9 +89,8 @@
           </view>
           <view class="record-item" wx:for="{{drumRecords}}" wx:key="time">
             <view class="record-main">
-              <text class="record-rating">{{item.rating}}</text>
-              <view class="record-score-row">
-                <text class="record-stars">{{item.stars}}</text>
+              <view class="record-head">
+                <text class="record-rating">{{item.rating}}</text>
                 <text class="record-score">{{item.score}} 分</text>
               </view>
               <view class="record-stats">
