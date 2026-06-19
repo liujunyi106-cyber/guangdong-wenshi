@@ -12,14 +12,16 @@ Page({
     unlockedCount: 0,
     lions: [],
     achievements: [
-      { id: 1, icon: '/images/achi-star1.png', name: '初次敲鼓', desc: '完成1次敲鼓', rule: 'plays>=1' },
-      { id: 2, icon: '/images/achi-plays.png', name: '鼓手常客', desc: '累计敲鼓10次', rule: 'plays>=10' },
-      { id: 3, icon: '/images/achi-star2.png', name: '百鼓争鸣', desc: '累计敲鼓100次', rule: 'plays>=100' },
-      { id: 4, icon: '/images/achi-highscore.png', name: '高分达人', desc: '单局得分≥500分', rule: 'score>=500' },
-      { id: 5, icon: '/images/achi-combo.png', name: '连击能手', desc: '单局Combo≥20', rule: 'combo>=20' },
-      { id: 6, icon: '/images/achi-star1.png', name: '完美节拍', desc: '单局Perfect≥30', rule: 'perfect>=30' },
-      { id: 7, icon: '/images/achi-star2.png', name: '零失误', desc: '单局Miss=0', rule: 'miss===0' },
-      { id: 8, icon: '/images/achi-highscore.png', name: '鼓王降临', desc: '获得S级评价', rule: 'ratingS' }
+      { id: 1, icon: '/images/achi-star1.png', name: '初次敲鼓', desc: '完成1次敲鼓', rule: 'plays>=1', cat: 'drum' },
+      { id: 2, icon: '/images/achi-plays.png', name: '鼓手常客', desc: '累计敲鼓10次', rule: 'plays>=10', cat: 'drum' },
+      { id: 3, icon: '/images/achi-star2.png', name: '百鼓争鸣', desc: '累计敲鼓100次', rule: 'plays>=100', cat: 'drum' },
+      { id: 4, icon: '/images/achi-highscore.png', name: '高分达人', desc: '单局得分≥500分', rule: 'score>=500', cat: 'drum' },
+      { id: 5, icon: '/images/achi-combo.png', name: '连击能手', desc: '单局Combo≥20', rule: 'combo>=20', cat: 'drum' },
+      { id: 6, icon: '/images/achi-star1.png', name: '完美节拍', desc: '单局Perfect≥30', rule: 'perfect>=30', cat: 'drum' },
+      { id: 7, icon: '/images/achi-star2.png', name: '零失误', desc: '单局Miss=0', rule: 'miss===0', cat: 'drum' },
+      { id: 8, icon: '/images/achi-highscore.png', name: '鼓王降临', desc: '获得S级评价', rule: 'ratingS', cat: 'drum' },
+      { id: 9, icon: '/images/icon-camera.png', name: '首张照片', desc: '第一次AR拍照', rule: 'photo', cat: 'ar' },
+      { id: 10, icon: '/images/icon-paint.png', name: '小画家', desc: '完成首次涂色', rule: 'color', cat: 'color' }
     ],
     works: [],
     title: '',
@@ -69,7 +71,7 @@ Page({
 
     // 计算成就解锁状态
     const achievements = this.data.achievements.map(a => {
-      const locked = !this.checkAchievement(a, drumRecords)
+      const locked = !this.checkAchievement(a, drumRecords, photoRecords, artworkRecords)
       return { ...a, locked }
     })
 
@@ -83,10 +85,10 @@ Page({
   },
 
   /* 成就解锁检查 */
-  checkAchievement(ach, records) {
-    const totalPlays = records.length
+  checkAchievement(ach, drumRecords, photoRecords, artworkRecords) {
+    const totalPlays = drumRecords.length
     let bestScore = 0, bestCombo = 0, bestPerfect = 0, bestMiss = Infinity, hasS = false
-    records.forEach(r => {
+    drumRecords.forEach(r => {
       if (r.score > bestScore) bestScore = r.score
       if (r.combo > bestCombo) bestCombo = r.combo
       if (r.perfect > bestPerfect) bestPerfect = r.perfect
@@ -103,6 +105,8 @@ Page({
       case 6: return bestPerfect >= 30
       case 7: return bestMiss === 0 && totalPlays > 0
       case 8: return hasS
+      case 9: return photoRecords.length > 0
+      case 10: return artworkRecords.length > 0
       default: return false
     }
   },
