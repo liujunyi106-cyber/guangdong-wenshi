@@ -1,0 +1,50 @@
+<!-- 商店列表页 -->
+<view class="page">
+  <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
+
+    <!-- 页面标题 -->
+    <view class="shop-title">商店</view>
+
+    <!-- Hero 卡片（商店版 335×142，对齐 Figma 68:2） -->
+    <view class="hero-card">
+      <view class="hero-hello">Hello</view>
+      <view class="hero-exclaim">!</view>
+      <view class="hero-title">小狮子</view>
+      <image class="shop-hero-dots" src="/images/shop-hero-dots.svg" mode="aspectFit"></image>
+      <view class="hero-cta">
+        <text class="hero-cta-text">快来挑选你喜欢的狮子吧</text>
+      </view>
+      <!-- IP 图片放在 Hero 卡片内，absolute 溢出卡片上方 -->
+      <image class="shop-hero-lion" src="/images/shop-hero-lion.png" mode="aspectFit"></image>
+    </view>
+
+    <!-- 分类标签 -->
+    <scroll-view scroll-x class="category-tabs">
+      <text class="cat-tab {{catIdx === index ? 'cat-active' : ''}}"
+        wx:for="{{categories}}" wx:key="*this"
+        bindtap="onSwitchCat" data-index="{{index}}">{{item}}</text>
+    </scroll-view>
+
+    <!-- 商品网格 -->
+    <view class="product-grid" wx:if="{{filteredProducts.length > 0}}">
+      <view class="product-card" wx:for="{{filteredProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
+        <view class="product-img">
+          <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFit" class="product-img-inner"></image>
+          <text wx:else class="product-img-placeholder">🦁</text>
+        </view>
+        <text class="product-name">{{item.name}}</text>
+        <text class="product-price">¥{{item.price}}</text>
+        <text class="product-desc">{{item.desc}}</text>
+      </view>
+    </view>
+
+    <!-- 空结果 -->
+    <view class="empty-result" wx:if="{{filteredProducts.length === 0}}">
+      <text>未找到相关商品</text>
+    </view>
+
+    <!-- 底部占位 -->
+    <view class="bottom-nav-placeholder"></view>
+
+  </scroll-view>
+</view>

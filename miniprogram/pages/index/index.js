@@ -1,0 +1,31 @@
+const app = getApp()
+
+Page({
+  data: {
+    statusBarHeight: 44,
+    statusBarPadding: 7
+  },
+
+  onLoad() {
+    const winInfo = wx.getWindowInfo()
+    this.setData({
+      statusBarHeight: winInfo.statusBarHeight || 44,
+      statusBarPadding: (winInfo.statusBarHeight || 44) > 30 ? 14 : 7
+    })
+  },
+
+  /* Hero 点击 → 直接进敲鼓 */
+  onHeroTap() {
+    wx.navigateTo({ url: '/pages/drum/drum' })
+  },
+
+  /* AR 拍照 */
+  onARTap() {
+    wx.navigateTo({ url: '/pages/ar/ar' })
+  },
+
+  /* 涂色装饰 */
+  onColorTap() {
+    wx.navigateTo({ url: '/pages/color/color' })
+  }
+})

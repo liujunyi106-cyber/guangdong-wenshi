@@ -1,0 +1,196 @@
+/* 商店样式（对齐 design-spec.md §5.14） */
+
+.page {
+  height: 100vh;
+  background: #FFFFFF;
+}
+
+/* 可滚动内容区 */
+.page-scroll {
+  height: 100vh;
+}
+
+/* 页面标题 */
+.shop-title {
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #000000;
+  padding: 4rpx 0 8rpx;
+}
+
+/* Hero 卡片（商店版 335×142，对齐 Figma 68:2） */
+.hero-card {
+  width: 670rpx;
+  height: 284rpx;
+  border-radius: 32rpx;
+  margin: 52rpx 40rpx 24rpx;
+  background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%);
+  position: relative;
+  overflow: visible;
+}
+.hero-hello {
+  position: absolute;
+  left: 34rpx;
+  top: 26rpx;
+  font-family: "DIN", "DIN Alternate", sans-serif;
+  font-size: 76rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+  z-index: 1;
+}
+.hero-exclaim {
+  position: absolute;
+  left: 243rpx;
+  top: 22rpx;
+  font-family: "DIN", "DIN Alternate", sans-serif;
+  font-size: 76rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+  z-index: 1;
+}
+.hero-title {
+  position: absolute;
+  left: 34rpx;
+  top: 96rpx;
+  font-size: 60rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  z-index: 1;
+}
+.hero-cta {
+  position: absolute;
+  left: 34rpx;
+  top: 192rpx;
+  display: flex;
+  align-items: center;
+  width: 318rpx;
+  height: 62rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.hero-cta-text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* 商店 Hero IP 图片（absolute 溢出卡片上方，随 Hero 一起滚动） */
+.shop-hero-lion {
+  position: absolute;
+  right: 22rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 342rpx;
+  height: 510rpx;
+  z-index: 10;
+  pointer-events: none;
+}
+/* 圆点（90×69px SVG，Figma x=245,y=11） */
+.shop-hero-dots {
+  position: absolute;
+  right: 0;
+  top: 22rpx;
+  width: 180rpx;
+  height: 138rpx;
+  z-index: 1;
+}
+
+/* 分类标签（对齐 Figma 68:2：14px MiSans, gap:12px, y=244） */
+.category-tabs {
+  white-space: nowrap;
+  padding: 16rpx 40rpx 8rpx;
+}
+.cat-tab {
+  font-size: 28rpx;
+  color: #AAAAAA;
+  font-weight: 400;
+  display: inline-block;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+.cat-tab:last-child {
+  margin-right: 0;
+}
+.cat-tab.cat-active {
+  color: #E31E15;
+  font-weight: 600;
+}
+
+/* 商品网格（对齐 Figma 68:2 双列布局） */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 16rpx 40rpx 24rpx;
+}
+.product-card {
+  width: 320rpx;
+  height: 532rpx;
+  border-radius: 32rpx;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+.product-card:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+.product-img {
+  width: 320rpx;
+  height: 382rpx;
+  background: #edeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-img-inner {
+  width: 262rpx;
+  height: 356rpx;
+}
+.product-img-placeholder {
+  font-size: 80rpx;
+  color: #CCCCCC;
+}
+.product-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #000000;
+  padding: 0 16rpx;
+  display: block;
+  margin-top: 14rpx;
+}
+.product-price {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #E31E15;
+  padding: 0 16rpx;
+  display: block;
+  margin-top: 18rpx;
+}
+.product-desc {
+  font-size: 24rpx;
+  font-weight: 300;
+  color: #7d7d7d;
+  padding: 0 16rpx;
+  display: block;
+  margin-top: 10rpx;
+}
+
+/* 空结果 */
+.empty-result {
+  padding: 120rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: #AAAAAA;
+}
+
+.bottom-nav-placeholder {
+  height: 132rpx;
+}

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>敲鼓游戏 · 低保真原型</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f0f0; display: flex; justify-content: center; }
+.phone { width: 375px; height: 812px; background: #FFFFFF; position: relative; overflow: hidden; border: 1px solid #ccc; }
+
+.status-bar { height: 44px; display: flex; align-items: center; padding: 0 14px; }
+.status-bar .time { font-size: 14px; font-weight: 500; color: #999; }
+
+/* ====== Page: Song List (曲目列表) ====== */
+#page-songlist { display: flex; flex-direction: column; height: calc(100% - 44px); }
+.song-header { display: flex; align-items: center; padding: 12px 20px; gap: 12px; }
+.back-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid #999; border-radius: 8px; color: #999; font-size: 18px; cursor: pointer; background: none; }
+.back-btn:active { background: #f0f0f0; }
+.song-title { font-size: 20px; font-weight: 700; color: #333; }
+
+.song-list { padding: 0 20px; }
+.song-card { width: 335px; height: 100px; border: 2px solid #ddd; border-radius: 16px; margin-bottom: 12px; padding: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: transform 0.12s, opacity 0.12s; }
+.song-card:active { transform: scale(0.97); opacity: 0.85; }
+.song-card .song-info h4 { font-size: 18px; font-weight: 600; color: #333; }
+.song-card .song-info p { font-size: 12px; color: #999; margin-top: 4px; }
+.song-card .song-stars { font-size: 18px; color: #999; letter-spacing: 2px; }
+.song-card .song-rating { font-size: 12px; color: #aaa; margin-top: 2px; }
+
+.lion-status { margin: 16px 20px; padding: 16px; border: 2px dashed #ddd; border-radius: 12px; }
+.lion-status .lion-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; }
+.lion-status .lion-row + .lion-row { margin-top: 8px; }
+.lion-status .unlocked { color: #333; font-weight: 500; }
+.lion-status .locked { color: #aaa; }
+
+/* ====== Page: Countdown (倒计时) ====== */
+#page-countdown { display: none; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 44px); }
+.cd-lion { width: 120px; height: 120px; border: 2px dashed #ccc; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 24px; margin-bottom: 40px; animation: breathe 1s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.cd-number { font-size: 80px; font-weight: 700; color: #333; transition: transform 0.3s, opacity 0.3s; }
+.cd-number.pulse { transform: scale(1.2); opacity: 0.8; }
+
+/* ====== Page: Game (单人游戏) ====== */
+#page-game { display: none; flex-direction: column; height: calc(100% - 44px); }
+.game-header { display: flex; align-items: center; padding: 12px 20px; gap: 12px; }
+.game-progress-wrap { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin: 0 12px; }
+.game-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #4a4, #da4, #a44); border-radius: 4px; transition: width 0.3s; }
+.progress-pct { font-size: 12px; font-weight: 600; color: #666; min-width: 40px; text-align: right; }
+
+.game-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.lion-stand { width: 80px; height: 60px; border: 2px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 14px; margin-bottom: 30px; }
+.drum-area { width: 280px; height: 280px; background: #2a2a2a; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.drum-area:active { background: #3a3a3a; }
+.drum-center { width: 120px; height: 120px; background: #444; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-size: 20px; font-weight: 600; }
+.drum-center .tap-hint { font-size: 11px; color: #999; margin-top: 2px; }
+.drum-light { position: absolute; width: 16px; height: 16px; background: #999; border-radius: 50%; transition: all 0.15s; }
+.drum-light.active { background: #fff; box-shadow: 0 0 12px #fff; transform: scale(1.3); }
+.drum-light.hit-perfect { background: #e4c14a; box-shadow: 0 0 20px #e4c14a; }
+.drum-light.hit-good { background: #fff; }
+.drum-light.hit-miss { background: #555; opacity: 0.4; }
+
+.judge-text { position: absolute; font-size: 24px; font-weight: 700; pointer-events: none; opacity: 0; transition: none; }
+.judge-text.perfect { color: #e4c14a; opacity: 1; transform: translateY(-20px); }
+.judge-text.good { color: #fff; opacity: 1; transform: translateY(-15px); }
+.judge-text.miss { color: #999; opacity: 1; transform: translateY(-10px); }
+
+/* ====== Page: Result (游戏结果) ====== */
+#page-result { display: none; flex-direction: column; align-items: center; justify-content: center; height: calc(100% - 44px); }
+.result-stars { font-size: 36px; letter-spacing: 6px; margin-bottom: 16px; }
+.result-title { font-size: 22px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.result-detail { font-size: 14px; color: #666; margin-bottom: 32px; text-align: center; line-height: 1.8; }
+.result-detail .fold { color: #aaa; cursor: pointer; text-decoration: underline; font-size: 12px; }
+.result-actions { display: flex; gap: 16px; }
+.result-btn { width: 130px; height: 48px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; border: 2px solid #ddd; background: #fff; color: #333; display: flex; align-items: center; justify-content: center; }
+.result-btn:active { background: #f0f0f0; }
+.result-btn.home { background: #333; color: #fff; border-color: #333; }
+
+/* Toast */
+.toast { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; padding: 10px 20px; border-radius: 8px; z-index: 200; display: none; animation: fadeIn 0.2s; }
+.toast.show { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <!-- Status Bar -->
+  <div class="status-bar"><span class="time">9:41</span></div>
+
+  <!-- ====== Page 1: 曲目列表 ====== -->
+  <div id="page-songlist">
+    <div class="song-header">
+      <button class="back-btn" onclick="showToast('返回首页')">←</button>
+      <span class="song-title">选择曲目</span>
+    </div>
+
+    <div class="song-list">
+      <div class="song-card" onclick="startGame('easy')">
+        <div class="song-info">
+          <h4>鼓点入门</h4>
+          <p>节奏简单 · 适合新手</p>
+        </div>
+        <div>
+          <div class="song-stars">★☆☆</div>
+          <div class="song-rating">最佳: S</div>
+        </div>
+      </div>
+      <div class="song-card" onclick="startGame('medium')">
+        <div class="song-info">
+          <h4>狮王争霸</h4>
+          <p>节奏明快 · 挑战升级</p>
+        </div>
+        <div>
+          <div class="song-stars">★★☆</div>
+          <div class="song-rating">未挑战</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lion-status">
+      <div class="lion-row"><span>🔥 火火狮</span><span class="unlocked">🔓 敲鼓通关即得</span></div>
+      <div class="lion-row"><span>🌿 木木狮</span><span class="locked">🔒 S/A评级解锁</span></div>
+    </div>
+  </div>
+
+  <!-- ====== Page 2: 倒计时 ====== -->
+  <div id="page-countdown">
+    <div class="cd-lion">🦁 蓄势</div>
+    <div class="cd-number" id="cd-number">3</div>
+  </div>
+
+  <!-- ====== Page 3: 单人游戏 ====== -->
+  <div id="page-game">
+    <div class="game-header">
+      <button class="back-btn" onclick="pauseGame()">←</button>
+      <div class="game-progress-wrap"><div class="game-progress-fill" id="progress-fill"></div></div>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="game-body">
+      <div class="lion-stand">🦁 狮子上桩</div>
+      <div class="drum-area" id="drum" onclick="hitDrum(event)">
+        <div class="drum-center">
+          <div>🥁</div>
+          <div class="tap-hint">敲这里！</div>
+        </div>
+        <div class="judge-text" id="judge"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Page 4: 成绩 ====== -->
+  <div id="page-result">
+    <div class="result-stars" id="result-stars"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-detail" id="result-detail"></div>
+    <div class="result-actions">
+      <div class="result-btn" onclick="retryGame()">🔄 重试</div>
+      <div class="result-btn home" onclick="showToast('返回首页')">🏠 返回</div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+// State
+let gameState = 'idle'; // idle | countdown | playing | paused | result
+let progress = 0;
+let totalBeats = 20;
+let currentBeat = 0;
+let perfectCount = 0, goodCount = 0, missCount = 0;
+let comboCount = 0;
+let maxCombo = 0;
+let countdownTimer = null;
+let autoBeatTimer = null;
+
+// Light positions on drum ring (5 positions)
+const lightPositions = [
+  { name:'top', x:'50%', y:'12%' },
+  { name:'right', x:'82%', y:'50%' },
+  { name:'bottom', x:'50%', y:'82%' },
+  { name:'left', x:'12%', y:'50%' },
+  { name:'center', x:'50%', y:'50%' },
+];
+
+// Create light indicators
+function createLights() {
+  const drum = document.getElementById('drum');
+  lightPositions.forEach((pos, i) => {
+    const div = document.createElement('div');
+    div.className = 'drum-light';
+    div.id = 'light-' + i;
+    div.style.left = pos.x;
+    div.style.top = pos.y;
+    div.style.transform = 'translate(-50%, -50%)';
+    drum.appendChild(div);
+  });
+}
+createLights();
+
+// Page navigation
+function showPage(id) {
+  document.querySelectorAll('[id^="page-"]').forEach(p => p.style.display = 'none');
+  document.getElementById(id).style.display = 'flex';
+}
+
+// Start game: enter countdown
+function startGame(difficulty) {
+  gameState = 'countdown';
+  showPage('page-countdown');
+  
+  let count = 3;
+  const cd = document.getElementById('cd-number');
+  cd.textContent = count;
+  cd.classList.add('pulse');
+  
+  countdownTimer = setInterval(() => {
+    count--;
+    if (count > 0) {
+      cd.textContent = count;
+      cd.classList.toggle('pulse');
+      setTimeout(() => cd.classList.toggle('pulse'), 150);
+    } else if (count === 0) {
+      cd.textContent = '开始！';
+      cd.style.fontSize = '48px';
+      cd.classList.add('pulse');
+    } else {
+      clearInterval(countdownTimer);
+      cd.style.fontSize = '80px';
+      beginPlaying(difficulty);
+    }
+  }, 600);
+}
+
+// Begin gameplay
+function beginPlaying(difficulty) {
+  gameState = 'playing';
+  progress = 0;
+  currentBeat = 0;
+  perfectCount = 0; goodCount = 0; missCount = 0;
+  comboCount = 0; maxCombo = 0;
+  
+  totalBeats = difficulty === 'easy' ? 15 : 20;
+  
+  showPage('page-game');
+  updateProgress();
+  
+  // Auto light cycle
+  scheduleNextBeat();
+}
+
+let activeLightIdx = -1;
+function scheduleNextBeat() {
+  if (gameState !== 'playing') return;
+  if (currentBeat >= totalBeats) { endGame(); return; }
+  
+  currentBeat++;
+  
+  // Random light position
+  const idx = Math.floor(Math.random() * lightPositions.length);
+  activeLightIdx = idx;
+  
+  const light = document.getElementById('light-' + idx);
+  light.classList.add('active');
+  
+  // Auto-miss after 600ms (simplified: no timing window in this prototype)
+  // In real game: player must tap within time window
+  autoBeatTimer = setTimeout(() => {
+    if (activeLightIdx === idx && gameState === 'playing') {
+      // Miss if not tapped
+      light.classList.remove('active');
+      light.classList.add('hit-miss');
+      setTimeout(() => light.classList.remove('hit-miss'), 300);
+      missCount++;
+      comboCount = 0;
+      showJudge('miss', '💪');
+      updateProgress();
+      scheduleNextBeat();
+    }
+  }, 800);
+}
+
+function hitDrum(event) {
+  if (gameState !== 'playing') return;
+  if (activeLightIdx < 0) { showJudge('miss', '?'); return; }
+  
+  const light = document.getElementById('light-' + activeLightIdx);
+  if (!light) return;
+  
+  clearTimeout(autoBeatTimer);
+  light.classList.remove('active');
+  
+  // Simplified: always "good" on tap (prototype has no timing system)
+  // For demonstration, alternate perfect/good
+  const roll = Math.random();
+  let judge, symbol;
+  if (roll < 0.4) {
+    light.classList.add('hit-perfect');
+    judge = 'perfect'; symbol = '🔥 +2';
+    perfectCount++; comboCount++;
+    if (comboCount > maxCombo) maxCombo = comboCount;
+  } else {
+    light.classList.add('hit-good');
+    judge = 'good'; symbol = '👌 +1';
+    goodCount++; comboCount++;
+    if (comboCount > maxCombo) maxCombo = comboCount;
+  }
+  
+  setTimeout(() => { 
+    light.classList.remove('hit-perfect'); 
+    light.classList.remove('hit-good'); 
+  }, 300);
+  
+  showJudge(judge, symbol);
+  updateProgress();
+  
+  setTimeout(() => scheduleNextBeat(), 300);
+}
+
+function showJudge(type, text) {
+  const el = document.getElementById('judge');
+  el.textContent = text;
+  el.className = 'judge-text ' + type;
+  requestAnimationFrame(() => {
+    el.style.transition = 'all 0.6s ease-out';
+    el.style.transform = 'translateY(-30px)';
+    el.style.opacity = '0';
+  });
+  setTimeout(() => {
+    el.style.transition = 'none';
+    el.style.transform = 'translateY(0)';
+    el.style.opacity = '0';
+    el.className = 'judge-text';
+  }, 600);
+}
+
+function updateProgress() {
+  const pct = Math.min(100, Math.round((currentBeat / totalBeats) * 100));
+  progress = pct;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+function pauseGame() {
+  if (gameState === 'playing') {
+    if (confirm('退出当前挑战？')) {
+      clearTimeout(autoBeatTimer);
+      gameState = 'idle';
+      showPage('page-songlist');
+    }
+  } else if (gameState === 'countdown') {
+    clearInterval(countdownTimer);
+    gameState = 'idle';
+    showPage('page-songlist');
+  }
+}
+
+function endGame() {
+  gameState = 'result';
+  clearTimeout(autoBeatTimer);
+  showPage('page-result');
+  
+  const totalTaps = perfectCount + goodCount;
+  const total = totalTaps + missCount;
+  const perfectRate = total > 0 ? perfectCount / total : 0;
+  const missRate = total > 0 ? missCount / total : 0;
+  
+  let stars, title;
+  if (perfectRate >= 0.6 && missRate < 0.1) { stars = '⭐⭐⭐⭐⭐'; title = '舞狮大师！'; }
+  else if (perfectRate >= 0.35 && missRate < 0.2) { stars = '⭐⭐⭐⭐'; title = '舞狮小能手！'; }
+  else if (missRate < 0.4) { stars = '⭐⭐⭐'; title = '继续加油！'; }
+  else { stars = '⭐⭐'; title = '再试一次吧！'; }
+  
+  document.getElementById('result-stars').textContent = stars;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-detail').innerHTML = 
+    '🔥 perfect ' + perfectCount + '&nbsp;&nbsp;👌 good ' + goodCount + '&nbsp;&nbsp;💪 miss ' + missCount +
+    '<br>最高连击 ' + maxCombo + '&nbsp;&nbsp;总分 ' + (perfectCount * 2000 + goodCount * 1000);
+  
+  // Show unlock toast if first clear
+  if (stars.includes('⭐⭐⭐') || stars.includes('⭐⭐⭐⭐') || stars.includes('⭐⭐⭐⭐⭐')) {
+    setTimeout(() => showToast('🎉 恭喜通关！火火狮解锁条件达成'), 500);
+  }
+}
+
+function retryGame() {
+  showPage('page-songlist');
+  gameState = 'idle';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Set light positions precisely after load
+window.addEventListener('DOMContentLoaded', () => {
+  const drum = document.getElementById('drum');
+  const dw = drum.offsetWidth, dh = drum.offsetHeight;
+  document.getElementById('light-0').style.cssText += `left:${dw/2}px;top:${dh*0.12}px;`;
+  document.getElementById('light-1').style.cssText += `left:${dw*0.82}px;top:${dh/2}px;`;
+  document.getElementById('light-2').style.cssText += `left:${dw/2}px;top:${dh*0.82}px;`;
+  document.getElementById('light-3').style.cssText += `left:${dw*0.12}px;top:${dh/2}px;`;
+  document.getElementById('light-4').style.cssText += `left:${dw/2}px;top:${dh/2}px;`;
+});
+</script>
+</body>
+</html>

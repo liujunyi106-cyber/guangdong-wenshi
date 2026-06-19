@@ -1,0 +1,65 @@
+- generic [ref=e2]:
+  - generic [ref=e3]: 9:41
+  - generic [ref=e4]:
+    - generic [ref=e5]: 🛒 商店
+    - button "🔍" [ref=e6] [cursor=pointer]
+  - generic [ref=e7]:
+    - generic [ref=e8] [cursor=pointer]: 全部
+    - generic [ref=e9] [cursor=pointer]: 小狮公仔
+    - generic [ref=e10] [cursor=pointer]: 周边
+  - generic [ref=e11]:
+    - generic [ref=e94] [cursor=pointer]:
+      - generic [ref=e95]: 🔥
+      - generic [ref=e96]:
+        - generic [ref=e97]: 火火狮系列
+        - generic [ref=e98]: 火火狮公仔
+        - generic [ref=e99]: 活泼好动的小狮，敲鼓他最在行！
+        - generic [ref=e100]:
+          - generic [ref=e101]: ¥99
+          - generic [ref=e102]: 已售 286+
+    - generic [ref=e103] [cursor=pointer]:
+      - generic [ref=e104]: 💧
+      - generic [ref=e105]:
+        - generic [ref=e106]: 水水狮系列
+        - generic [ref=e107]: 水水狮公仔
+        - generic [ref=e108]: 温和又稳重的小狮，最喜欢拍照。
+        - generic [ref=e109]:
+          - generic [ref=e110]: ¥99
+          - generic [ref=e111]: 已售 178+
+    - generic [ref=e112] [cursor=pointer]:
+      - generic [ref=e113]: ⭐
+      - generic [ref=e114]:
+        - generic [ref=e115]: 金金狮系列
+        - generic [ref=e116]: 金金狮公仔
+        - generic [ref=e117]: 闪闪发光的小明星，涂色冠军！
+        - generic [ref=e118]:
+          - generic [ref=e119]: ¥109
+          - generic [ref=e120]: 已售 153+
+    - generic [ref=e121] [cursor=pointer]:
+      - generic [ref=e122]: 🌿
+      - generic [ref=e123]:
+        - generic [ref=e124]: 木木狮系列
+        - generic [ref=e125]: 木木狮公仔
+        - generic [ref=e126]: 沉稳坚毅的森林伙伴，高分达人。
+        - generic [ref=e127]:
+          - generic [ref=e128]: ¥99
+          - generic [ref=e129]: 已售 97+
+    - generic [ref=e130] [cursor=pointer]:
+      - generic [ref=e131]: 🟤
+      - generic [ref=e132]:
+        - generic [ref=e133]: 土土狮系列
+        - generic [ref=e134]: 土土狮公仔
+        - generic [ref=e135]: 憨厚可靠的大个子，收集齐才能找到他！
+        - generic [ref=e136]:
+          - generic [ref=e137]: ¥129
+          - generic [ref=e138]: 已售 62+
+  - generic [ref=e84]:
+    - generic [ref=e85] [cursor=pointer]:
+      - generic [ref=e86]: 🏠
+      - generic [ref=e87]: 首页
+    - generic [ref=e88] [cursor=pointer]:
+      - generic [ref=e89]: 🛒
+      - generic [ref=e90]: 商店
+    - generic [ref=e91] [cursor=pointer]:
+      - generic [ref=e92]: 👤
+      - generic [ref=e93]: 我的

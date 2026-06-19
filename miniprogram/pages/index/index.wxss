@@ -1,0 +1,183 @@
+/* 首页样式（严格对齐 design-spec.md V2.2） */
+
+.page {
+  min-height: 100vh;
+  background: #FFFFFF;
+}
+
+.page-scroll {
+  height: 100vh;
+}
+
+/* 页面标题 */
+.page-title {
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #000000;
+  padding: 4rpx 0 16rpx;
+}
+
+/* Hero 卡片 */
+.hero-card {
+  width: 670rpx;
+  height: 404rpx;
+  border-radius: 32rpx;
+  margin: 0 40rpx;
+  background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-dots-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 180rpx;
+  height: 138rpx;
+  z-index: 0;
+}
+.hero-hello {
+  position: absolute;
+  left: 34rpx;
+  top: 58rpx;
+  font-family: "DIN", "DIN Alternate", sans-serif;
+  font-size: 76rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.hero-exclaim {
+  position: absolute;
+  left: 243rpx;
+  top: 54rpx;
+  font-family: "DIN", "DIN Alternate", sans-serif;
+  font-size: 76rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.hero-title {
+  position: absolute;
+  left: 34rpx;
+  top: 128rpx;
+  font-size: 60rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+.hero-mode {
+  position: absolute;
+  left: 34rpx;
+  top: 208rpx;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+.hero-cta {
+  position: absolute;
+  left: 28rpx;
+  bottom: 34rpx;
+  display: flex;
+  align-items: center;
+  width: 292rpx;
+  height: 62rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 0 16rpx;
+  box-sizing: border-box;
+}
+.hero-cta-text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #000000;
+}
+.hero-lion {
+  position: absolute;
+  right: 0;
+  top: 18rpx;
+  width: 386rpx;
+  height: 386rpx;
+}
+.hero-cta-play-img {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: auto;
+}
+
+/* 次级功能卡片行 */
+.secondary-row {
+  display: flex;
+  gap: 30rpx;
+  margin: 36rpx 40rpx 0;
+}
+.secondary-card {
+  width: 320rpx;
+  height: 242rpx;
+  border-radius: 32rpx;
+  overflow: hidden;
+  position: relative;
+}
+.sc-icon {
+  position: absolute;
+}
+.ar-icon {
+  right: 0;
+  top: 86rpx;
+  width: 156rpx;
+  height: 156rpx;
+}
+.color-icon {
+  right: 0;
+  top: 102rpx;
+  width: 140rpx;
+  height: 140rpx;
+}
+.sc-title {
+  position: absolute;
+  left: 34rpx;
+  top: 20rpx;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.sc-sub {
+  position: absolute;
+  left: 34rpx;
+  top: 70rpx;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.75);
+}
+.sc-dots {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 320rpx;
+  height: 96rpx;
+}
+
+/* 舞狮趣闻 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #252525;
+  margin: 40rpx 40rpx 0;
+}
+.news-placeholder {
+  margin: 20rpx 40rpx;
+  padding: 60rpx 0;
+  border: 2rpx dashed #D9D9D9;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.news-empty {
+  font-size: 26rpx;
+  color: #AAAAAA;
+}
+
+/* 底部占位 */
+.bottom-nav-placeholder {
+  height: 132rpx;
+}
+
+

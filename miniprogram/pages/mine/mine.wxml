@@ -1,0 +1,52 @@
+<!-- 个人中心 -->
+<scroll-view scroll-y class="page" style="padding-top:{{statusBarHeight}}px;">
+
+  <!-- 用户头像区 -->
+  <view class="profile-section">
+    <view class="avatar-wrap">
+      <image class="avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
+      <view class="avatar-placeholder" wx:else>🦁</view>
+    </view>
+    <text class="nickname">{{nickname || '小狮子'}}</text>
+  </view>
+
+  <!-- 小狮收藏 -->
+  <view class="section-header">
+    <text class="section-title">🦁 我的小狮</text>
+  </view>
+  <view class="lion-collection">
+    <view class="lion-item {{item.unlocked ? '' : 'lion-locked'}}" wx:for="{{lions}}" wx:key="id">
+      <image wx:if="{{item.unlocked && item.image}}" src="{{item.image}}" mode="aspectFit" class="lion-img"></image>
+      <text wx:else class="lion-emoji">{{item.emoji}}</text>
+      <text class="lion-name">{{item.name}}</text>
+      <image wx:if="{{!item.unlocked}}" src="/images/lock.png" mode="aspectFit" class="lion-lock"></image>
+    </view>
+  </view>
+
+  <!-- 成就 -->
+  <view class="section-header">
+    <text class="section-title">🏆 我的成就</text>
+  </view>
+  <view class="achievement-list">
+    <view class="achi-item" wx:for="{{achievements}}" wx:key="id">
+      <text class="achi-icon">{{item.icon}}</text>
+      <text class="achi-name">{{item.name}}</text>
+      <text class="achi-desc">{{item.desc}}</text>
+    </view>
+  </view>
+
+  <!-- 我的作品 -->
+  <view class="section-header">
+    <text class="section-title">🎨 我的作品</text>
+  </view>
+  <view class="work-grid">
+    <view class="work-item" wx:for="{{works}}" wx:key="*this">
+      <text class="work-placeholder">🎨</text>
+    </view>
+  </view>
+  <view wx:if="{{works.length === 0}}" class="empty-text">还没有作品，去创作吧~</view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-nav-placeholder"></view>
+
+</scroll-view>

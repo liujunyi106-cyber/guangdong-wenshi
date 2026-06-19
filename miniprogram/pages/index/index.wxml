@@ -1,0 +1,53 @@
+<!-- 首页 · 小狮子 -->
+<view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;">
+    <text class="status-bar-time">9:41</text>
+  </view>
+
+  <!-- 可滚动内容区 -->
+  <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
+
+    <!-- 页面标题 -->
+    <view class="page-title">小狮子</view>
+
+    <!-- Hero 卡片 -->
+    <view class="hero-card" bindtap="onHeroTap">
+      <image class="hero-dots-bg" src="/images/hero-dots.svg" mode="aspectFit"></image>
+      <view class="hero-hello">Hello</view>
+      <view class="hero-exclaim">!</view>
+      <view class="hero-title">一起来敲鼓</view>
+      <view class="hero-mode">单人游戏/亲子游戏</view>
+      <image class="hero-lion" src="/images/hero-lion.png" mode="aspectFit"></image>
+      <view class="hero-cta">
+        <text class="hero-cta-text">快来一起来敲鼓吧</text>
+        <image class="hero-cta-play-img" src="/images/btn-play.svg" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <!-- 次级功能卡片行 -->
+    <view class="secondary-row">
+      <view class="secondary-card" style="background:#F36F59;" bindtap="onARTap">
+        <view class="sc-title">狮子拍照</view>
+        <view class="sc-sub">快来一起拍照吧</view>
+        <image class="sc-dots" src="/images/card-ar-dots.svg" mode="aspectFit"></image>
+        <image class="sc-icon ar-icon" src="/images/icon-ar.png" mode="aspectFit"></image>
+      </view>
+      <view class="secondary-card" style="background:#F36F59;" bindtap="onColorTap">
+        <view class="sc-title">狮子绘画</view>
+        <view class="sc-sub">画你的专属狮子吧</view>
+        <image class="sc-dots" src="/images/card-ar-dots.svg" mode="aspectFit"></image>
+        <image class="sc-icon color-icon" src="/images/icon-color.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <!-- 舞狮趣闻 -->
+    <view class="section-title">舞狮趣闻</view>
+    <view class="news-placeholder">
+      <text class="news-empty">更多趣闻即将上线</text>
+    </view>
+
+    <!-- 底部导航占位 -->
+    <view class="bottom-nav-placeholder"></view>
+  </scroll-view>
+</view>

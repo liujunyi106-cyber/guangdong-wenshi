@@ -1,0 +1,40 @@
+const app = getApp()
+
+Page({
+  data: {
+    statusBarHeight: 44,
+    avatarUrl: '',
+    nickname: '',
+    lions: [
+      { id: 1, name: '火火狮', emoji: '🔥', unlocked: false, image: '/images/fire-lion.png' },
+      { id: 2, name: '水水狮', emoji: '💧', unlocked: false, image: '/images/water-lion.png' },
+      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/gold-lion.png' },
+      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/wood-lion.png' },
+      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/earth-lion.png' }
+    ],
+    achievements: [
+      { id: 1, icon: '🥇', name: '鼓点入门', desc: '首次通关' },
+      { id: 2, icon: '📸', name: '首张照片', desc: '第一次拍照' },
+      { id: 3, icon: '🎨', name: '小画家', desc: '完成涂色' }
+    ],
+    works: []
+  },
+
+  onLoad() {
+    const winInfo = wx.getWindowInfo()
+    this.setData({ statusBarHeight: winInfo.statusBarHeight || 44 })
+    this.loadUserData()
+  },
+
+  onShow() {
+    this.loadUserData()
+  },
+
+  loadUserData() {
+    // 从本地存储加载数据
+    const nickname = wx.getStorageSync('nickname') || ''
+    const avatarUrl = wx.getStorageSync('avatarUrl') || ''
+    const lions = wx.getStorageSync('lions') || this.data.lions
+    this.setData({ nickname, avatarUrl, lions })
+  }
+})

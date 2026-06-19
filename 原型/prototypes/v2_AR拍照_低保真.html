@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>广东醒狮文创 · AR 拍照原型</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; margin: 0; padding: 0; }
+body {
+  --red: #E31E15; --coral: #F36F59; --gold: #D9A441;
+  --gray: #AAAAAA; --slate: #94A3B8; --bg: #F5F5F5; --white: #FFFFFF;
+  --radius-card: 16px; --radius-btn: 8px; --nav-h: 66px; --margin: 20px;
+  font-family: 'MiSans Latin', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #333; margin: 0; padding: 0;
+}
+.phone {
+  width: 375px; height: 812px; background: var(--white);
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4); margin: 0 auto;
+}
+
+/* Status bar - global */
+.status-bar {
+  height: 44px; display: flex; align-items: center; padding: 0 14px;
+  font-family: Inter, sans-serif; font-size: 14px; font-weight: 500; color: #333333;
+  flex-shrink: 0; position: relative; z-index: 30;
+}
+
+/* Page group */
+.page-group { position: absolute; top: 44px; left: 0; width: 100%; bottom: 0; display: none; overflow-y: auto; }
+.page-group.show { display: block; }
+#pg-camera.show { display: flex; flex-direction: column; overflow: hidden; }
+#pg-sticker-select.show { display: flex; flex-direction: column; }
+#pg-edit.show { display: flex; flex-direction: column; }
+#pg-done.show { display: flex; flex-direction: column; }
+
+/* Top bar: back + title */
+.top-bar {
+  display: flex; align-items: center; padding: 0 var(--margin);
+  height: 56px; flex-shrink: 0; position: relative; z-index: 5;
+}
+.top-bar .btn-back {
+  width: 32px; height: 32px; border-radius: 8px; border: 2px solid #AAAAAA;
+  background: none; font-size: 18px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; color: #AAAAAA; text-decoration: none;
+  flex-shrink: 0;
+}
+.top-bar .title {
+  position: absolute; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: 700; color: #000;
+}
+
+/* ===== Page 1: Camera ===== */
+#pg-camera { background: #000; }
+#pg-camera .camera-view {
+  flex: 1; position: relative; display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#pg-camera .camera-fake {
+  width: 100%; height: 100%; position: relative;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #2d1f1f 100%);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+}
+#pg-camera .camera-fake .lens-icon {
+  width: 72px; height: 72px; border-radius: 50%; border: 3px solid rgba(255,255,255,.25);
+  position: relative;
+}
+#pg-camera .camera-fake .lens-icon::before {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,.15);
+}
+#pg-camera .camera-fake .lens-icon::after {
+  content: ''; position: absolute; top: 8px; left: 8px;
+  width: 14px; height: 14px; border-radius: 50% 50% 0 50%;
+  border: 2px solid rgba(255,255,255,.3); border-right: none; border-bottom: none;
+}
+#pg-camera .camera-fake .lens-label {
+  color: rgba(255,255,255,.35); font-size: 14px; font-family: Inter, sans-serif;
+}
+#pg-camera .camera-toolbar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 180px;
+  background: linear-gradient(transparent, rgba(0,0,0,.8) 40%);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px;
+}
+#pg-camera .shutter-outer {
+  width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--white);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: transform .1s;
+}
+#pg-camera .shutter-outer:active { transform: scale(.92); }
+#pg-camera .shutter-inner {
+  width: 64px; height: 64px; border-radius: 50%; background: var(--white);
+  border: 3px solid #000;
+}
+#pg-camera .album-entry {
+  position: absolute; bottom: 48px; left: 40px; width: 44px; height: 44px;
+  border-radius: 6px; border: 2px solid rgba(255,255,255,.5); background: rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,.6);
+  font-size: 20px;
+}
+#pg-camera .flip-btn {
+  position: absolute; bottom: 48px; right: 40px; width: 44px; height: 44px;
+  border-radius: 50%; background: rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.3);
+  display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,.6);
+  font-size: 22px;
+}
+/* Permission modal */
+.permission-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.55); z-index: 20;
+  display: none; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.permission-overlay.show { display: flex; }
+.permission-dialog {
+  pointer-events: auto;
+  width: 300px; background: var(--white); border-radius: var(--radius-card);
+  padding: 28px 24px; text-align: center; animation: modalIn .25s ease;
+}
+.permission-dialog .pd-icon { font-size: 48px; margin-bottom: 12px; }
+.permission-dialog .pd-title { font-size: 18px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.permission-dialog .pd-desc { font-size: 14px; color: #888; line-height: 1.5; margin-bottom: 20px; }
+.permission-dialog .pd-btns { display: flex; gap: 12px; }
+.permission-dialog .pd-btns button {
+  flex:1; height: 44px; border-radius: var(--radius-btn); font-size: 16px; font-weight: 600;
+  border: none; cursor: pointer;
+}
+.pd-btn-deny { background: var(--bg); color: #999; }
+.pd-btn-allow { background: var(--red); color: var(--white); }
+
+/* ===== Page 2: Sticker Selection ===== */
+#pg-sticker-select { background: var(--white); }
+#pg-sticker-select .photo-preview {
+  margin: 18px 20px 0; height: 202px; border-radius: 16px;
+  background: linear-gradient(135deg, #ffe0e0, #ffc8c8, #ffe8d0);
+  position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+#pg-sticker-select .photo-preview::after {
+  content: '📸'; font-size: 40px; opacity: .5;
+}
+#pg-sticker-select .section-label {
+  font-size: 16px; font-weight: 600; color: #555; margin: 20px 20px 0;
+}
+#pg-sticker-select .sticker-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+  margin: 18px 20px 0;
+}
+#pg-sticker-select .sticker-card {
+  border-radius: 16px; display: flex;
+  flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s;
+  border: 2.5px solid transparent; position: relative; overflow: hidden;
+  aspect-ratio: 1; min-height: 80px;
+}
+#pg-sticker-select .sticker-card.unlocked {
+  background: linear-gradient(160deg, #fff8f8, #fff2f2);
+}
+#pg-sticker-select .sticker-card.locked {
+  background: #f4f4f4; cursor: default;
+}
+#pg-sticker-select .sticker-card.selected {
+  border-color: var(--red); transform: scale(1.05); box-shadow: 0 0 0 3px rgba(227,30,21,.15), 0 4px 16px rgba(227,30,21,.12);
+}
+#pg-sticker-select .sticker-card .sc-icon {
+  font-size: 44px; line-height: 1;
+}
+#pg-sticker-select .sticker-card.locked .sc-icon { filter: grayscale(1); opacity: .35; }
+#pg-sticker-select .sticker-card .sc-name {
+  font-size: 13px; font-weight: 600; color: #555;
+}
+#pg-sticker-select .sticker-card.locked .sc-name { color: #bbb; }
+#pg-sticker-select .sticker-card.locked .sc-lock {
+  position: absolute; top: 7px; right: 7px; font-size: 14px; color: #ccc;
+}
+#pg-sticker-select .sticker-actions {
+  margin: 24px 20px 0;
+}
+#pg-sticker-select .sticker-actions button {
+  width: 100%; height: 50px; border-radius: 8px; font-size: 16px;
+  font-weight: 700; border: none; cursor: pointer; transition: opacity .2s, background .2s;
+}
+.btn-edit { background: var(--red); color: var(--white); }
+.btn-disabled { background: #C9CDD4 !important; color: #bbb !important; cursor: not-allowed !important; pointer-events: none !important; }
+
+/* Locked toast → center modal */
+.locked-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.55); z-index: 20;
+  display: none; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.locked-overlay.show { display: flex; }
+.locked-dialog {
+  pointer-events: auto;
+  width: 300px; background: var(--white); border-radius: var(--radius-card);
+  padding: 28px 24px; text-align: center; animation: modalIn .25s ease;
+}
+.locked-dialog .lt-icon { font-size: 48px; margin-bottom: 12px; }
+.locked-dialog .lt-title { font-size: 18px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.locked-dialog .lt-condition { font-size: 14px; color: #888; line-height: 1.5; margin-bottom: 20px; }
+.locked-dialog .lt-close {
+  display: block; margin: 0 auto; padding: 10px 36px; border-radius: var(--radius-btn);
+  background: var(--bg); border: none; font-size: 16px; font-weight: 600; color: #666; cursor: pointer;
+}
+
+/* ===== Page 3: Sticker Edit ===== */
+#pg-edit { background: #111; }
+#pg-edit .top-bar .btn-back,
+#pg-edit .top-bar .title { color: var(--white); }
+#pg-edit .top-bar .btn-back { background: rgba(255,255,255,.2); border-color: #FFFFFF; color: #fff; }
+#pg-edit .top-bar .btn-done {
+  position: absolute; right: var(--margin); top: 50%; transform: translateY(-50%);
+  background: var(--red); color: var(--white); border: none; border-radius: 8px;
+  padding: 6px 16px; font-size: 15px; font-weight: 600; cursor: pointer;
+}
+#pg-edit .edit-area {
+  flex: 1; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #2a2a2a, #1f1f1f, #2a2020);
+  display: flex; align-items: center; justify-content: center;
+}
+#pg-edit .edit-photo {
+  width: 300px; height: 400px; background: linear-gradient(135deg, #ffe0d0, #ffd0c0, #ffe8d8);
+  border-radius: 16px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+#pg-edit .edit-photo::before {
+  content: '📸 照片'; font-size: 24px; color: rgba(0,0,0,.15);
+}
+#pg-edit .sticker-overlay {
+  position: absolute; width: 100px; height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px; cursor: grab; user-select: none;
+  transition: transform .15s;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+}
+#pg-edit .sticker-overlay.selected { outline: 2px dashed var(--gold); outline-offset: 4px; border-radius: 4px; }
+#pg-edit .sticker-overlay:active { cursor: grabbing; }
+
+/* Edit controls - aligned with photo (300px) */
+.edit-ctrls {
+  width: 300px; margin: 0 auto; flex-shrink: 0; padding: 12px 0 4px; background: #1a1a1a;
+}
+.edit-ctrls .ctrl-row {
+  display: flex; align-items: center; gap: 10px; padding: 6px 0;
+}
+.edit-ctrls .ctrl-label {
+  font-size: 12px; color: rgba(255,255,255,.35); white-space: nowrap; min-width: 28px;
+}
+.edit-ctrls .ctrl-label.right { text-align: right; }
+.edit-ctrls input[type=range] {
+  flex: 1; accent-color: var(--coral); height: 4px;
+}
+.edit-ctrls .ctrl-value {
+  font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); min-width: 32px; text-align: right;
+}
+
+/* Delete button - left aligned with photo */
+.edit-delete {
+  width: 300px; margin: 0 auto; flex-shrink: 0; padding: 8px 0 20px; background: #1a1a1a;
+}
+.edit-delete .tool-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(255,100,100,.35);
+  background: rgba(255,100,100,.08); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; color: rgba(255,100,100,.6); transition: background .15s;
+}
+.edit-delete .tool-btn:active { background: rgba(255,100,100,.2); }
+
+/* ===== Page 4: Save Complete ===== */
+#pg-done { background: var(--white); }
+#pg-done .done-content {
+  flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px var(--margin) 40px;
+}
+#pg-done .done-icon { font-size: 56px; margin-bottom: 16px; animation: popIn .4s ease; }
+#pg-done .done-title { font-size: 22px; font-weight: 700; color: #333; margin-bottom: 20px; }
+#pg-done .done-preview {
+  width: 260px; height: 340px; border-radius: var(--radius-card);
+  background: linear-gradient(135deg, #ffe0c0, #ffc8a8, #ffe8d0);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; margin-bottom: 24px;
+}
+#pg-done .done-preview::before { content: '📸'; font-size: 36px; opacity: .4; }
+#pg-done .done-preview .done-sticker {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%); font-size: 80px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+}
+#pg-done .done-btns { display: flex; gap: 12px; width: 100%; padding: 0 var(--margin); }
+#pg-done .done-btns button {
+  flex: 1; height: 48px; border-radius: var(--radius-btn); font-size: 16px;
+  font-weight: 600; border: none; cursor: pointer;
+}
+.btn-again { background: var(--bg); color: #555; }
+.btn-share { background: var(--gold); color: #fff; }
+
+/* Unlock overlay */
+.unlock-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,.7); z-index: 20;
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+}
+.unlock-overlay.show { display: flex; }
+.unlock-overlay .uo-icon {
+  font-size: 80px; animation: bounceUnlock .6s ease infinite alternate;
+}
+.unlock-overlay .uo-title {
+  color: var(--white); font-size: 24px; font-weight: 700; margin: 16px 0 4px;
+}
+.unlock-overlay .uo-sub {
+  color: rgba(255,255,255,.7); font-size: 16px; margin-bottom: 24px;
+}
+.unlock-overlay .uo-close {
+  padding: 10px 36px; border-radius: 8px; background: var(--gold); border: none;
+  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
+}
+
+/* Toast */
+.toast {
+  position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: rgba(0,0,0,.78); color: var(--white); padding: 10px 24px; border-radius: 20px;
+  font-size: 14px; white-space: nowrap; opacity: 0; transition: opacity .25s, transform .25s;
+  z-index: 30; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Animations */
+@keyframes modalIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes bounceUnlock { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+@keyframes flash {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.4); }
+  50% { box-shadow: 0 0 0 12px rgba(255,255,255,0); }
+}
+.flash-anim { animation: flash .4s ease; }
+</style>
+</head>
+<body>
+<div class="phone" id="app">
+
+  <!-- Global Status Bar -->
+  <div class="status-bar">9:41</div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== Camera Page ===== -->
+  <div class="page-group show" id="pg-camera">
+    <div class="top-bar" style="position:absolute;top:0;left:0;right:0;z-index:25;">
+      <button class="btn-back" onclick="goHome()" style="border-color:#FFFFFF;color:#fff;">←</button>
+      <span class="title" style="color:#fff">拍照</span>
+    </div>
+    <div class="camera-view">
+      <div class="camera-fake">
+        <div class="lens-icon"></div>
+        <span class="lens-label">相机预览</span>
+      </div>
+    </div>
+    <div class="camera-toolbar">
+      <div class="shutter-outer" onclick="takePhoto()">
+        <div class="shutter-inner"></div>
+      </div>
+      <div class="album-entry" onclick="requestAlbum()">🖼</div>
+      <div class="flip-btn" onclick="flipCamera()">🔄</div>
+    </div>
+    <!-- Permission Modal -->
+    <div class="permission-overlay show" id="perm-modal">
+      <div class="permission-dialog">
+        <div class="pd-icon">📸</div>
+        <div class="pd-title">需要相机权限</div>
+        <div class="pd-desc">用相机给小狮子拍照吧！</div>
+        <div class="pd-btns">
+          <button class="pd-btn-deny" onclick="document.getElementById('perm-modal').classList.remove('show');showToast('没有相机权限，无法拍照哦~')">暂不</button>
+          <button class="pd-btn-allow" onclick="allowCamera()">允许</button>
+        </div>
+      </div>
+    </div>
+    <!-- Album Permission Modal -->
+    <div class="permission-overlay" id="perm-album">
+      <div class="permission-dialog">
+        <div class="pd-icon">🖼</div>
+        <div class="pd-title">需要相册权限</div>
+        <div class="pd-desc">从相册选一张照片来贴小狮吧！</div>
+        <div class="pd-btns">
+          <button class="pd-btn-deny" onclick="document.getElementById('perm-album').classList.remove('show');showToast('没有相册权限，不能选照片哦~')">暂不</button>
+          <button class="pd-btn-allow" onclick="allowAlbum()">允许</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Sticker Selection Page ===== -->
+  <div class="page-group" id="pg-sticker-select">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showPage('pg-camera')">←</button>
+      <span class="title">选贴纸</span>
+    </div>
+    <div class="photo-preview"></div>
+    <div class="section-label">选一只小狮贴纸 👇</div>
+    <div class="sticker-grid" id="sticker-grid"></div>
+    <div class="sticker-actions">
+      <button class="btn-edit btn-disabled" id="btn-edit" onclick="goEdit()" disabled>下一步：编辑位置</button>
+    </div>
+    <div class="locked-overlay" id="locked-overlay">
+      <div class="locked-dialog">
+        <div class="lt-icon">🔒</div>
+        <div class="lt-title" id="lt-title"></div>
+        <div class="lt-condition" id="lt-condition"></div>
+        <button class="lt-close" onclick="hideLockedToast()">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Sticker Edit Page ===== -->
+  <div class="page-group" id="pg-edit">
+    <div class="top-bar" style="position:absolute;top:0;left:0;right:0;z-index:10;">
+      <button class="btn-back" onclick="showPage('pg-sticker-select')" style="border-color:#FFFFFF;color:#fff;">←</button>
+      <span class="title" style="color:#fff">调整贴纸</span>
+      <button class="btn-done" onclick="goDone()">完成 ✓</button>
+    </div>
+    <div class="edit-area" id="edit-area">
+      <div class="edit-photo" id="edit-photo">
+        <div class="sticker-overlay selected" id="sticker-1" style="top:40%;left:40%;">🔥</div>
+      </div>
+    </div>
+    <div class="edit-ctrls">
+      <div class="ctrl-row">
+        <span class="ctrl-label">大小</span>
+        <input type="range" min="30" max="150" value="100" id="size-slider" oninput="updateStickerSize(this.value)">
+        <span class="ctrl-value" id="ctrl-size">100</span>
+      </div>
+      <div class="ctrl-row">
+        <span class="ctrl-label">旋转</span>
+        <input type="range" min="-180" max="180" value="0" step="15" id="rot-slider" oninput="updateStickerRot(this.value)">
+        <span class="ctrl-value" id="ctrl-rot">0</span>
+      </div>
+    </div>
+    <div class="edit-delete">
+      <button class="tool-btn" onclick="removeSticker()">🗑</button>
+    </div>
+  </div>
+
+  <!-- ===== Save Complete Page ===== -->
+  <div class="page-group" id="pg-done">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showPage('pg-sticker-select')">←</button>
+      <span class="title">完成啦</span>
+    </div>
+    <div class="done-content">
+      <div class="done-icon">✅</div>
+      <div class="done-title">已保存到相册</div>
+      <div class="done-preview" id="done-preview">
+        <div class="done-sticker" id="done-sticker">🔥</div>
+      </div>
+      <div class="done-btns">
+        <button class="btn-again" onclick="showPage('pg-camera');document.getElementById('perm-modal').classList.remove('show');resetStickerState()">再做一张</button>
+        <button class="btn-share" onclick="showToast('分享给好友啦~')">分享好友</button>
+      </div>
+    </div>
+    <!-- Unlock overlay -->
+    <div class="unlock-overlay" id="unlock-overlay">
+      <div class="uo-icon">💧</div>
+      <div class="uo-title">解锁水水狮！</div>
+      <div class="uo-sub">首次拍照，温柔的水水狮来啦~</div>
+      <button class="uo-close" onclick="closeUnlock()">太棒啦！</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---- Data ----
+const stickers = [
+  { id: 'fire', icon: '🔥', name: '火火狮', color: '#E31E15', unlocked: true, condition: '' },
+  { id: 'water', icon: '💧', name: '水水狮', color: '#5AB8E8', unlocked: false, condition: '拍照 1 次即可解锁' },
+  { id: 'gold', icon: '⭐', name: '金金狮', color: '#D9A441', unlocked: false, condition: '涂色完成 1 幅作品' },
+  { id: 'wood', icon: '🌲', name: '木木狮', color: '#65B96A', unlocked: false, condition: '敲鼓获得 S/A 评级' },
+  { id: 'earth', icon: '🟤', name: '土土狮', color: '#9A6A3E', unlocked: false, condition: '集齐前 4 只小狮' },
+];
+
+let selectedStickerIdx = -1;
+let firstPhoto = true; // track first photo for unlock
+
+// ---- Init ----
+renderStickers();
+
+function renderStickers() {
+  const grid = document.getElementById('sticker-grid');
+  grid.innerHTML = stickers.map((s, i) => {
+    const cls = s.unlocked ? 'unlocked' : 'locked';
+    const selCls = selectedStickerIdx === i ? ' selected' : '';
+    const lockEl = s.unlocked ? '' : '<span class="sc-lock">🔒</span>';
+    return `<div class="sticker-card ${cls}${selCls}" data-idx="${i}" onclick="selectSticker(${i}, this)">
+      ${lockEl}
+      <span class="sc-icon">${s.icon}</span>
+      <span class="sc-name">${s.name}</span>
+    </div>`;
+  }).join('');
+}
+
+function selectSticker(idx, el) {
+  const s = stickers[idx];
+  if (!s.unlocked) {
+    document.getElementById('lt-title').textContent = s.name + ' 还没解锁呢~';
+    document.getElementById('lt-condition').textContent = s.condition;
+    document.getElementById('locked-overlay').classList.add('show');
+    return;
+  }
+  selectedStickerIdx = idx;
+  renderStickers();
+  document.getElementById('btn-edit').disabled = false;
+  document.getElementById('btn-edit').classList.remove('btn-disabled');
+  // Update edit page sticker
+  document.getElementById('sticker-1').textContent = s.icon;
+}
+
+function hideLockedToast() {
+  document.getElementById('locked-overlay').classList.remove('show');
+}
+
+// ---- Page navigation ----
+function showPage(id) {
+  document.querySelectorAll('.page-group').forEach(p => p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+}
+
+function goHome() {
+  window.location.href = 'v2_敲鼓玩法_低保真.html';
+}
+
+// ---- Camera ----
+function takePhoto() {
+  document.getElementById('perm-modal').classList.remove('show');
+  const shutter = document.querySelector('.shutter-outer');
+  shutter.classList.add('flash-anim');
+  setTimeout(() => { shutter.classList.remove('flash-anim'); }, 400);
+  setTimeout(() => {
+    resetStickerState();
+    showPage('pg-sticker-select');
+  }, 350);
+}
+
+function flipCamera() {
+  showToast('翻转摄像头');
+}
+
+function allowCamera() {
+  document.getElementById('perm-modal').classList.remove('show');
+  showToast('相机已就绪~');
+}
+
+function requestAlbum() {
+  document.getElementById('perm-album').classList.add('show');
+}
+
+function allowAlbum() {
+  document.getElementById('perm-album').classList.remove('show');
+  showToast('从相册选择了一张照片~');
+  resetStickerState();
+  showPage('pg-sticker-select');
+}
+
+// ---- Edit ----
+function goEdit() {
+  if (selectedStickerIdx < 0) { showToast('先选一只小狮贴纸吧~'); return; }
+  showPage('pg-edit');
+}
+
+function goDone() {
+  if (selectedStickerIdx < 0) { showToast('先选一只小狮贴纸吧~'); return; }
+  // Update done page sticker
+  const s = stickers[selectedStickerIdx];
+  document.getElementById('done-sticker').textContent = s.icon;
+  showPage('pg-done');
+
+  // First photo: unlock water lion
+  if (firstPhoto) {
+    firstPhoto = false;
+    // Unlock water lion
+    const waterIdx = stickers.findIndex(s => s.id === 'water');
+    if (waterIdx >= 0 && !stickers[waterIdx].unlocked) {
+      stickers[waterIdx].unlocked = true;
+      setTimeout(() => {
+        document.getElementById('unlock-overlay').classList.add('show');
+      }, 800);
+    }
+  }
+}
+
+function closeUnlock() {
+  document.getElementById('unlock-overlay').classList.remove('show');
+  renderStickers();
+  selectedStickerIdx = stickers.findIndex(s => s.id === 'water');
+  document.getElementById('btn-edit').disabled = false;
+  document.getElementById('btn-edit').classList.remove('btn-disabled');
+  document.getElementById('sticker-1').textContent = '💧';
+  document.getElementById('done-sticker').textContent = '💧';
+}
+
+function updateStickerSize(val) {
+  const pct = val / 100;
+  document.getElementById('sticker-1').style.transform = `scale(${pct}) rotate(${currentRot}deg)`;
+  document.getElementById('ctrl-size').textContent = val;
+}
+
+let currentRot = 0;
+function updateStickerRot(val) {
+  currentRot = parseInt(val);
+  const pct = document.getElementById('size-slider').value / 100;
+  document.getElementById('sticker-1').style.transform = `scale(${pct}) rotate(${currentRot}deg)`;
+  document.getElementById('ctrl-rot').textContent = currentRot;
+}
+
+function rotateSticker(deg) {
+  currentRot += deg;
+  if (currentRot > 180) currentRot -= 360;
+  if (currentRot < -180) currentRot += 360;
+  document.getElementById('rot-slider').value = currentRot;
+  const pct = document.getElementById('size-slider').value / 100;
+  document.getElementById('sticker-1').style.transform = `scale(${pct}) rotate(${currentRot}deg)`;
+  document.getElementById('ctrl-rot').textContent = currentRot;
+}
+
+function removeSticker() {
+  showToast('贴纸已移除');
+  document.getElementById('sticker-1').style.display = 'none';
+}
+
+function resetStickerState() {
+  selectedStickerIdx = -1;
+  document.getElementById('btn-edit').disabled = true;
+  document.getElementById('btn-edit').classList.add('btn-disabled');
+  document.getElementById('size-slider').value = 100;
+  document.getElementById('rot-slider').value = 0;
+  currentRot = 0;
+  document.getElementById('sticker-1').style.display = '';
+  document.getElementById('sticker-1').style.transform = 'scale(1) rotate(0deg)';
+  document.getElementById('ctrl-size').textContent = '100';
+  document.getElementById('ctrl-rot').textContent = '0';
+  renderStickers();
+}
+
+// ---- Drag sticker (simple) ----
+(function () {
+  const sticker = document.getElementById('sticker-1');
+  const area = document.getElementById('edit-photo');
+  let dragging = false, startX, startY, origLeft, origTop;
+  sticker.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    dragging = true;
+    sticker.setPointerCapture(e.pointerId);
+    startX = e.clientX; startY = e.clientY;
+    const r = sticker.getBoundingClientRect();
+    const p = area.getBoundingClientRect();
+    origLeft = r.left - p.left; origTop = r.top - p.top;
+  });
+  sticker.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    sticker.style.left = (origLeft + dx) + 'px';
+    sticker.style.top = (origTop + dy) + 'px';
+    sticker.style.transform = '';
+  });
+  sticker.addEventListener('pointerup', () => { dragging = false; });
+})();
+
+// ---- Toast ----
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+</script>
+</body>
+</html>

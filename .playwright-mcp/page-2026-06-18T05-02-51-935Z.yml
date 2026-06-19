@@ -1,0 +1,41 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: 9:41
+  - generic [ref=e5]: 小狮子
+  - generic [ref=e6]:
+    - generic [ref=e7]: Hello
+    - generic [ref=e8]: "!"
+    - generic [ref=e9]: 一起来敲鼓
+    - generic [ref=e10]: 单人游戏/亲子游戏
+    - generic [ref=e12] [cursor=pointer]: 快来一起来敲鼓吧
+    - generic [ref=e14]: 🦁 IP
+  - generic [ref=e32]:
+    - generic [ref=e33]:
+      - generic [ref=e34]: 狮子拍照
+      - generic [ref=e35]: 快来一起拍照吧
+      - generic [ref=e36]: 📸 IP
+    - generic [ref=e43]:
+      - generic [ref=e44]: 狮子绘画
+      - generic [ref=e45]: 画你的专属狮子吧
+      - generic [ref=e46]: 🎨 IP
+  - generic [ref=e53]: 舞狮趣闻
+  - generic [ref=e54]:
+    - generic [ref=e55]:
+      - generic [ref=e56]: 🏠
+      - generic [ref=e57]: 首页
+    - generic [ref=e58]:
+      - generic [ref=e59]: 🛒
+      - generic [ref=e60]: 商店
+    - generic [ref=e61]:
+      - generic [ref=e62]: 👤
+      - generic [ref=e63]: 我的
+  - generic [ref=e65]:
+    - generic [ref=e67]: 选择玩法
+    - generic [ref=e68]: 选择一种游戏模式开始吧！
+    - generic [ref=e69]:
+      - generic [ref=e70] [cursor=pointer]:
+        - generic [ref=e71]: 🥁 图标
+        - generic [ref=e72]: 单人敲鼓
+      - generic [ref=e73] [cursor=pointer]:
+        - generic [ref=e74]: 👨‍👦 图标
+        - generic [ref=e75]: 亲子配合
+    - generic [ref=e77] [cursor=pointer]: 取消

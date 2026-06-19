@@ -1,0 +1,31 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: 9:41
+  - generic [ref=e5]:
+    - generic [ref=e6]: 小狮子
+    - generic [ref=e7]:
+      - generic [ref=e8]: Hello
+      - generic [ref=e9]: "!"
+      - generic [ref=e10]: 一起来敲鼓
+      - generic [ref=e11]: 单人游戏/亲子游戏
+      - generic [ref=e13] [cursor=pointer]: 快来一起来敲鼓吧
+      - generic [ref=e15]: 🦁 IP
+    - generic [ref=e33]:
+      - generic [ref=e34] [cursor=pointer]:
+        - generic [ref=e35]: 狮子拍照
+        - generic [ref=e36]: 快来一起拍照吧
+        - generic [ref=e37]: 📸 IP
+      - generic [ref=e44] [cursor=pointer]:
+        - generic [ref=e45]: 狮子绘画
+        - generic [ref=e46]: 画你的专属狮子吧
+        - generic [ref=e47]: 🎨 IP
+    - generic [ref=e54]: 舞狮趣闻
+  - generic [ref=e55]:
+    - generic [ref=e56]:
+      - generic [ref=e57]: 🏠
+      - generic [ref=e58]: 首页
+    - generic [ref=e59]:
+      - generic [ref=e60]: 🛒
+      - generic [ref=e61]: 商店
+    - generic [ref=e62]:
+      - generic [ref=e63]: 👤
+      - generic [ref=e64]: 我的

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>广东醒狮文创 · 敲鼓玩法原型</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "MiSans Latin","PingFang SC","Microsoft YaHei",sans-serif; background: #f0f0f0; margin: 0; padding: 0; }
+
+.phone { width: 375px; height: 812px; background: #FFFFFF; position: relative; overflow: hidden; border: 1px solid #ccc; margin: 0 auto; }
+
+.status-bar { height: 44px; display: flex; align-items: center; padding: 0 14px; font-family: Inter, sans-serif; position: relative; z-index: 30; }
+.status-bar .time { font-size: 14px; font-weight: 500; color: #333; }
+/* Page groups */
+.page-group { position: absolute; top: 44px; left: 0; right: 0; bottom: 0; overflow-y: auto; display: none; }
+.page-group.show { display: block; }
+#pg-game.show { display: flex; flex-direction: column; overflow: visible; }
+#pg-result.show { display: flex; flex-direction: column; overflow-y: auto; }
+
+/* ====== Home Page ====== */
+.page-title { text-align: center; font-size: 20px; font-weight: 700; color: #000; padding: 2px 0 4px; }
+
+.hero-card { margin: 0 20px; height: 202px; background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%); border-radius: 16px; position: relative; overflow: hidden; }
+.hero-cta { display: flex; align-items: center; width: 146px; height: 31px; background: #fff; border-radius: 8px; padding: 0 8px; cursor: pointer; transition: transform 0.12s,opacity 0.12s; }
+.hero-cta:active { transform: scale(0.95); opacity: 0.85; }
+.hero-cta-text { font-size: 12px; font-weight: 600; color: #000; flex: 1; }
+.hero-cta-play { width: 14px; height: 14px; background: #E31E15; border-radius: 50%; margin-left: auto; display: flex; align-items: center; justify-content: center; }
+.hero-cta-play::after { content: ''; width: 0; height: 0; border-left: 5px solid #1E1E1E; border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; margin-left: 1px; }
+
+.secondary-row { display: flex; gap: 15px; margin: 18px 20px 0; }
+    .secondary-card { width: 160px; height: 121px; background: #F36F59; border-radius: 16px; position: relative; overflow: hidden; cursor: pointer; transition: transform .15s; }
+    .secondary-card:active { transform: scale(.96); }
+.secondary-card .card-dots { position: absolute; bottom: 0; left: 0; right: 0; height: 47px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 14px 17px; }
+.secondary-card .card-dots div { width: 9px; height: 9px; background: #D9D9D9; border-radius: 2px; }
+
+.news-title { font-size: 16px; font-weight: 600; color: #252525; margin: 20px 20px 0; }
+
+.bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; height: 66px; background: #fff; display: flex; justify-content: space-around; align-items: center; z-index: 50; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.nav-icon { width: 37px; height: 38px; border: 2px dashed #ccc; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #ccc; }
+.nav-label { font-size: 12px; font-family: Inter, sans-serif; }
+.nav-label.active { color: #E31E15; font-weight: 600; }
+.nav-label.inactive { color: #aaa; font-weight: 500; }
+
+/* Modal */
+.modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 100; display: none; }
+.modal-overlay.show { display: block; }
+.modal-sheet { position: absolute; bottom: 0; left: 0; right: 0; height: 320px; background: #fff; border-radius: 16px 16px 0 0; z-index: 101; display: none; animation: slideUp 0.3s ease-out; }
+.modal-sheet.show { display: block; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-drag { width: 40px; height: 4px; background: #d9d9d9; border-radius: 2px; margin: 8px auto 0; }
+.modal-title { text-align: center; font-size: 20px; font-weight: 700; color: #333; margin-top: 16px; }
+.modal-sub { text-align: center; font-size: 12px; color: #94A3B8; margin-top: 6px; }
+.modal-options { display: flex; gap: 31px; margin: 24px 20px 0; }
+.modal-option { flex: 1; height: 130px; background: #F36F59; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: transform 0.12s; }
+.modal-option:active { transform: scale(0.95); }
+.modal-option .option-icon { width: 60px; height: 50px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 20px; }
+.modal-option .option-label { font-size: 20px; font-weight: 700; color: #fff; }
+.modal-cancel { margin: 26px 20px 0; height: 44px; background: #F5F5F5; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.modal-cancel:active { background: #ddd; }
+.modal-cancel .cancel-text { font-size: 16px; color: #aaa; }
+
+/* ====== Header bar for sub-pages ====== */
+.sub-header { display: flex; align-items: center; padding: 0 20px; height: 56px; gap: 12px; }
+.back-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid #AAAAAA; border-radius: 8px; color: #AAAAAA; font-size: 18px; cursor: pointer; background: none; }
+.back-btn:active { background: #f0f0f0; }
+.sub-title { font-size: 20px; font-weight: 700; color: #333; }
+
+/* ====== Song List ====== */
+.song-card { width: 335px; height: 100px; border: 2px solid #ddd; border-radius: 16px; margin: 0 auto 12px; padding: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: transform 0.12s,opacity 0.12s; }
+.song-card:active { transform: scale(0.97); opacity: 0.85; }
+.song-card .song-info h4 { font-size: 18px; font-weight: 600; color: #333; }
+.song-card .song-info p { font-size: 12px; color: #999; margin-top: 4px; }
+.song-rating { font-size: 12px; color: #aaa; margin-top: 2px; text-align: center; }
+.song-stars { font-size: 18px; color: #999; letter-spacing: 2px; text-align: center; }
+.lion-status { margin: 16px 20px; padding: 16px; border: 2px dashed #ddd; border-radius: 12px; }
+.lion-status .lion-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; }
+.lion-status .lion-row+.lion-row { margin-top: 8px; }
+.lion-status .unlocked { color: #333; font-weight: 500; }
+.lion-status .locked { color: #aaa; }
+
+/* ====== Countdown ====== */
+.cd-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 80px; }
+.cd-lion { width: 120px; height: 120px; border: 2px dashed #ccc; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 24px; margin-bottom: 50px; animation: breathe 1s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.cd-number { font-size: 80px; font-weight: 700; color: #333; transition: transform 0.3s,opacity 0.3s; }
+.cd-number.pulse { transform: scale(1.2); opacity: 0.8; }
+
+/* ====== Game ====== */
+.game-header { display: flex; align-items: center; padding: 0 20px; height: 56px; gap: 12px; }
+.game-progress-wrap { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin: 0 12px; }
+.game-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#4a4,#da4,#a44); border-radius: 4px; transition: width 0.3s; }
+.progress-pct { font-size: 12px; font-weight: 600; color: #666; min-width: 40px; text-align: right; }
+
+.game-body { flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.lion-stand { width: 80px; height: 60px; border: 2px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 14px; margin: 8px auto 0; flex-shrink: 0; }
+
+/* Drum Stage */
+.drum-stage { width: 375px; flex: 1; position: relative; overflow: visible; min-height: 200px; }
+.drum-area { width: 340px; height: 340px; background: #2a2a2a; border-radius: 50%; position: absolute; left: 50%; bottom: 66px; transform: translateX(-50%); }
+.drum-center { width: 200px; height: 200px; background: #444; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; font-size: 28px; font-weight: 600; z-index: 2; }
+.drum-center .tap-hint { font-size: 12px; color: #999; margin-top: 4px; }
+
+/* Hit zone markers on center circle */
+.hit-zone { position: absolute; pointer-events: none; z-index: 3; opacity: 0; transition: opacity 0.15s; }
+.hit-zone.active { opacity: 1; animation: zoneGlow 0.8s ease-in-out infinite alternate; }
+.hit-zone-left { left: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
+.hit-zone-right { right: 20px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
+.hit-zone-center { left: 50%; top: 50%; transform: translate(-50%,-50%); width: 80px; height: 80px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; }
+@keyframes zoneGlow { 0% { border-color: rgba(255,255,255,0.3); box-shadow: 0 0 8px rgba(255,255,255,0.1); } 100% { border-color: rgba(255,255,255,0.7); box-shadow: 0 0 20px rgba(255,255,255,0.25); } }
+
+.rim-marker { position: absolute; pointer-events: none; z-index: 3; opacity: 0; transition: opacity 0.15s; }
+.rim-marker.active { opacity: 1; animation: rimGlow 0.8s ease-in-out infinite alternate; }
+@keyframes rimGlow { 0% { border-color: rgba(255,255,255,0.35); box-shadow: 0 0 6px rgba(255,255,255,0.08); } 100% { border-color: rgba(255,255,255,0.8); box-shadow: 0 0 18px rgba(255,255,255,0.25); } }
+.rim-left { left: -8px; top: 50%; transform: translateY(-50%); width: 24px; height: 56px; border: 2px dashed rgba(255,255,255,0.35); border-radius: 6px; }
+.rim-right { right: -8px; top: 50%; transform: translateY(-50%); width: 24px; height: 56px; border: 2px dashed rgba(255,255,255,0.35); border-radius: 6px; }
+
+/* Sound wave */
+.wave-ring { position: absolute; border: 3px solid rgba(255,255,255,0.6); border-radius: 50%; pointer-events: none; opacity: 0; z-index: 4; }
+.wave-ring.contract { animation: waveIn 0.45s ease-in forwards; }
+@keyframes waveIn { 0% { width: 100px; height: 100px; margin-left: -50px; margin-top: -50px; opacity: 0.7; } 100% { width: 16px; height: 16px; margin-left: -8px; margin-top: -8px; opacity: 0; } }
+
+/* Drumstick */
+.drumstick { position: absolute; width: 160px; height: 14px; pointer-events: none; z-index: 5; opacity: 0; display: none; }
+.drumstick::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 7px; border: 3px solid #ddd; background: transparent; }
+.drumstick::after { content: ''; position: absolute; top: 3px; left: 20px; right: 20px; bottom: 3px; background: rgba(200,200,200,0.08); border-radius: 4px; }
+
+/* Stick positions for center hits */
+.stick-center-left { display: block; left: -80px; top: 100px; transform: rotate(-25deg); }
+.stick-center-right { display: block; right: -80px; top: 100px; transform: rotate(25deg); }
+
+/* Stick positions for rim hits */
+.stick-rim-left { display: block; left: -100px; top: 60px; transform: rotate(-45deg); }
+.stick-rim-right { display: block; right: -100px; top: 60px; transform: rotate(45deg); }
+
+/* Strike animations - targets near drum bottom area */
+@keyframes strikeToCenterLeft {
+  0% { opacity: 0; left: -120px; top: 280px; transform: rotate(-35deg); }
+  15% { opacity: 1; }
+  50% { left: 30px; top: 340px; transform: rotate(-15deg); opacity: 1; }
+  100% { left: 70px; top: 370px; transform: rotate(0deg); opacity: 0; }
+}
+@keyframes strikeToCenterRight {
+  0% { opacity: 0; right: -120px; top: 280px; transform: rotate(35deg); }
+  15% { opacity: 1; }
+  50% { right: 30px; top: 340px; transform: rotate(15deg); opacity: 1; }
+  100% { right: 70px; top: 370px; transform: rotate(0deg); opacity: 0; }
+}
+@keyframes strikeToRimLeft {
+  0% { opacity: 0; left: -140px; top: 220px; transform: rotate(-55deg); }
+  15% { opacity: 1; }
+  50% { left: -10px; top: 270px; transform: rotate(-35deg); opacity: 1; }
+  100% { left: 20px; top: 310px; transform: rotate(-20deg); opacity: 0; }
+}
+@keyframes strikeToRimRight {
+  0% { opacity: 0; right: -140px; top: 220px; transform: rotate(55deg); }
+  15% { opacity: 1; }
+  50% { right: -10px; top: 270px; transform: rotate(35deg); opacity: 1; }
+  100% { right: 20px; top: 310px; transform: rotate(20deg); opacity: 0; }
+}
+
+.judge-text { position: absolute; font-size: 26px; font-weight: 700; pointer-events: none; opacity: 0; z-index: 6; left: 50%; top: 50%; transform: translate(-50%,-50%); }
+.judge-text.flash { animation: judgePop 0.8s ease-out forwards; }
+.judge-text.perfect { color: #e4c14a; }
+.judge-text.good { color: #fff; }
+.judge-text.miss { color: #999; }
+@keyframes judgePop { 0% { opacity: 1; transform: translate(-50%,-50%) scale(0.5); } 30% { opacity: 1; transform: translate(-50%,-50%) scale(1.3); } 100% { opacity: 0; transform: translate(-50%,-90%) scale(1); } }
+
+.beat-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #555; z-index: 7; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+.beat-hint.show { opacity: 1; }
+
+/* ====== Result ====== */
+.result-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding-bottom: 40px; }
+.result-ip { width: 120px; height: 120px; border: 2px dashed #ddd; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 40px; margin-bottom: 24px; }
+.result-stars { font-size: 36px; letter-spacing: 6px; margin-bottom: 16px; }
+.result-title { font-size: 22px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.result-detail { font-size: 14px; color: #666; margin-bottom: 32px; text-align: center; line-height: 1.8; }
+.result-actions { display: flex; gap: 16px; }
+.result-btn { width: 130px; height: 48px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; border: 2px solid #ddd; background: #fff; color: #333; display: flex; align-items: center; justify-content: center; }
+.result-btn:active { background: #f0f0f0; }
+.result-btn.home { background: #333; color: #fff; border-color: #333; }
+
+/* Toast */
+.toast { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; padding: 10px 20px; border-radius: 8px; z-index: 200; display: none; animation: fadeIn 0.2s; }
+.toast.show { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <!-- Status Bar -->
+  <div class="status-bar"><span class="time">9:41</span></div>
+
+  <!-- ==================== HOME PAGE ==================== -->
+  <div class="page-group show" id="pg-home">
+    <div class="page-title">小狮子</div>
+
+    <div class="hero-card">
+      <div style="position:absolute;left:17px;top:29px;font-family:'DIN','DIN Alternate','Arial',sans-serif;font-size:38px;font-weight:700;color:#fff;line-height:1;">Hello</div>
+      <div style="position:absolute;left:121.71px;top:27px;font-family:'DIN','DIN Alternate','Arial',sans-serif;font-size:38px;font-weight:700;color:#fff;line-height:1;">!</div>
+      <div style="position:absolute;left:17px;top:64px;font-size:30px;font-weight:700;color:#fff;line-height:1.2;">一起来敲鼓</div>
+      <div style="position:absolute;left:17px;top:104px;font-size:12px;color:rgba(255,255,255,0.7);">单人游戏/亲子游戏</div>
+      <div class="hero-cta" onclick="showModal()" style="position:absolute;left:14px;top:149px;">
+        <span class="hero-cta-text">快来一起来敲鼓吧</span><span class="hero-cta-play"></span>
+      </div>
+      <div style="position:absolute;right:0;top:9px;width:193px;height:193px;border:2px dashed rgba(255,255,255,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:28px;">🦁 IP</div>
+      <div style="position:absolute;right:20px;top:11px;width:90px;height:69px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:4px;padding:4px;">
+        <div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div>
+        <div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div>
+        <div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div>
+        <div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div><div style="width:10px;height:10px;background:rgba(255,255,255,0.12);border-radius:2px;"></div>
+      </div>
+    </div>
+
+    <div class="secondary-row">
+      <div class="secondary-card" onclick="window.location.href='v2_AR拍照_低保真.html'">
+        <div style="position:absolute;left:17px;top:10px;font-size:20px;font-weight:700;color:#fff;">狮子拍照</div>
+        <div style="position:absolute;left:17px;top:35px;font-size:12px;color:rgba(255,255,255,0.75);">快来一起拍照吧</div>
+        <div style="position:absolute;right:0;top:43px;width:78px;height:78px;border:2px dashed rgba(255,255,255,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.25);font-size:18px;">📸 IP</div>
+        <div class="card-dots"><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+      <div class="secondary-card" onclick="window.location.href='v2_涂色装饰_低保真.html'">
+        <div style="position:absolute;left:17px;top:10px;font-size:20px;font-weight:700;color:#fff;">狮子绘画</div>
+        <div style="position:absolute;left:17px;top:35px;font-size:12px;color:rgba(255,255,255,0.75);">画你的专属狮子吧</div>
+        <div style="position:absolute;right:0;top:51px;width:70px;height:70px;border:2px dashed rgba(255,255,255,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.25);font-size:18px;">🎨 IP</div>
+        <div class="card-dots"><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+    </div>
+
+    <div class="news-title">舞狮趣闻</div>
+  </div>
+
+  <!-- ==================== SONG LIST ==================== -->
+  <div class="page-group" id="pg-songlist">
+    <div class="sub-header">
+      <button class="back-btn" onclick="goHome()">←</button>
+      <span class="sub-title">选择曲目</span>
+    </div>
+    <div class="song-card" onclick="startCountdown()">
+      <div class="song-info"><h4>鼓点入门</h4><p>节奏简单 · 适合新手</p></div>
+      <div><div class="song-stars">★☆☆</div><div class="song-rating">最佳: S</div></div>
+    </div>
+    <div class="song-card" onclick="startCountdown()">
+      <div class="song-info"><h4>狮王争霸</h4><p>节奏明快 · 挑战升级</p></div>
+      <div><div class="song-stars">★★☆</div><div class="song-rating">未挑战</div></div>
+    </div>
+    <div class="lion-status">
+      <div class="lion-row"><span>🔥 火火狮</span><span class="unlocked">🔓 敲鼓通关即得</span></div>
+      <div class="lion-row"><span>🌿 木木狮</span><span class="locked">🔒 S/A评级解锁</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== COUNTDOWN ==================== -->
+  <div class="page-group" id="pg-countdown">
+    <div class="sub-header">
+      <button class="back-btn" onclick="cancelCountdown()">←</button>
+      <span class="sub-title">准备</span>
+    </div>
+    <div class="cd-wrap">
+      <div class="cd-lion">🦁 蓄势</div>
+      <div class="cd-number" id="cd-number">3</div>
+    </div>
+  </div>
+
+  <!-- ==================== GAME ==================== -->
+  <div class="page-group" id="pg-game">
+    <div class="game-header">
+      <button class="back-btn" onclick="pauseGame()">←</button>
+      <div class="game-progress-wrap"><div class="game-progress-fill" id="progress-fill"></div></div>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+    <div class="game-body">
+      <div class="lion-stand">🦁 狮子上桩</div>
+      <div class="drum-stage" id="drum-stage">
+        <!-- Left drumstick -->
+        <div class="drumstick" id="stick-left"></div>
+        <!-- Right drumstick -->
+        <div class="drumstick" id="stick-right"></div>
+        <!-- Drum -->
+        <div class="drum-area" id="drum">
+          <!-- Center circle hit zones -->
+          <div class="hit-zone hit-zone-left" id="hz-left"></div>
+          <div class="hit-zone hit-zone-right" id="hz-right"></div>
+          <div class="hit-zone hit-zone-center" id="hz-center"></div>
+          <!-- Rim hit markers -->
+          <div class="rim-marker rim-left" id="rm-left"></div>
+          <div class="rim-marker rim-right" id="rm-right"></div>
+          <!-- Center face -->
+          <div class="drum-center"><div>🥁</div><div class="tap-hint">敲这里！</div></div>
+          <!-- Wave ring -->
+          <div class="wave-ring" id="wave-ring"></div>
+          <!-- Judge text -->
+          <div class="judge-text" id="judge"></div>
+        </div>
+        <!-- Beat hint -->
+        <div class="beat-hint" id="beat-hint"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== RESULT ==================== -->
+  <div class="page-group" id="pg-result">
+    <div class="result-wrap">
+      <div class="result-ip" id="result-ip">🦁 IP</div>
+      <div class="result-stars" id="result-stars"></div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-detail" id="result-detail"></div>
+      <div class="result-actions">
+        <div class="result-btn" onclick="retryGame()">🔄 重试</div>
+        <div class="result-btn home" onclick="goHome()">🏠 返回</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav (always visible on home) -->
+  <div class="bottom-nav" id="bottom-nav">
+    <div class="nav-item"><div class="nav-icon">🏠</div><span class="nav-label active">首页</span></div>
+    <div class="nav-item" onclick="goShop()"><div class="nav-icon" style="width:45px">🛒</div><span class="nav-label inactive">商店</span></div>
+    <div class="nav-item"><div class="nav-icon" style="width:43px;height:44px">👤</div><span class="nav-label inactive">我的</span></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="overlay" onclick="hideModal()"></div>
+  <div class="modal-sheet" id="modal">
+    <div class="modal-drag"></div>
+    <div class="modal-title">选择玩法</div>
+    <div class="modal-sub">选择一种游戏模式开始吧！</div>
+    <div class="modal-options">
+      <div class="modal-option" onclick="selectMode('single')"><div class="option-icon">🥁 图标</div><div class="option-label">单人敲鼓</div></div>
+      <div class="modal-option" onclick="selectMode('parent')"><div class="option-icon">👨‍👦 图标</div><div class="option-label">亲子配合</div></div>
+    </div>
+    <div class="modal-cancel" onclick="hideModal()"><span class="cancel-text">取消</span></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+// ========== Navigation ==========
+function showPage(id) {
+  document.querySelectorAll('.page-group').forEach(p => p.classList.remove('show'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('show');
+  // Show bottom nav only on home
+  document.getElementById('bottom-nav').style.display = (id === 'pg-home') ? 'flex' : 'none';
+}
+
+function goHome() {
+  gameState = 'idle'; clearTimers();
+  showPage('pg-home');
+}
+function goShop() { window.location.href = 'v2_商店_低保真.html'; }
+
+// ========== Modal ==========
+function showModal() {
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('modal').classList.add('show');
+}
+function hideModal() {
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('modal').classList.remove('show');
+}
+function selectMode(mode) {
+  hideModal();
+  showPage('pg-songlist');
+}
+
+// ========== Countdown ==========
+let countdownTimer = null;
+function startCountdown() {
+  gameState = 'countdown';
+  showPage('pg-countdown');
+  let count = 3;
+  const cd = document.getElementById('cd-number'); cd.textContent = count;
+  cd.classList.add('pulse');
+  countdownTimer = setInterval(() => {
+    count--;
+    if (count > 0) { cd.textContent = count; cd.classList.toggle('pulse'); setTimeout(() => cd.classList.toggle('pulse'), 150); }
+    else if (count === 0) { cd.textContent = '开始！'; cd.style.fontSize = '48px'; cd.classList.add('pulse'); }
+    else { clearInterval(countdownTimer); cd.style.fontSize = '80px'; beginPlaying(); }
+  }, 600);
+}
+function cancelCountdown() { clearInterval(countdownTimer); goHome(); }
+
+// ========== Game ==========
+let gameState = 'idle', totalBeats = 16;
+let currentBeat = 0, perfectCount = 0, goodCount = 0, missCount = 0, comboCount = 0, maxCombo = 0;
+let autoBeatTimer = null, beatPlaying = false, currentBeatType = '';
+
+// 4 interaction types:
+//   center-left  = single stick from left → hits center face left half
+//   center-right = single stick from right → hits center face right half
+//   center-both  = both sticks → hit center face together
+//   rim-left     = single stick from left → hits drum rim left edge
+//   rim-right    = single stick from right → hits drum rim right edge
+//   rim-both     = both sticks → hit left+right rim simultaneously
+const beatSequence = [
+  'center-left','center-right',
+  'center-left','rim-left',
+  'center-right','rim-right',
+  'center-both','rim-both',
+  'center-left','rim-right',
+  'center-right','rim-left',
+  'center-both','center-right',
+  'rim-both','center-left'
+];
+
+function beginPlaying() {
+  gameState = 'playing'; currentBeat = 0;
+  perfectCount = 0; goodCount = 0; missCount = 0; comboCount = 0; maxCombo = 0; beatPlaying = false;
+  showPage('pg-game'); updateProgress(); scheduleNextBeat();
+}
+
+function scheduleNextBeat() {
+  if (gameState !== 'playing') return;
+  if (currentBeat >= totalBeats) { endGame(); return; }
+  
+  currentBeatType = beatSequence[currentBeat] || 'center-left';
+  currentBeat++;
+  beatPlaying = true;
+  
+  // Clear old states
+  clearIndicators();
+  
+  // Show hint text
+  const hint = document.getElementById('beat-hint');
+  const hints = {
+    'center-left': '👈 敲左边！', 'center-right': '敲右边！ 👉',
+    'center-both': '👈 一起敲中间！ 👉', 'rim-left': '👈 敲左边鼓边！',
+    'rim-right': '敲右边鼓边！ 👉', 'rim-both': '👈 两边一起敲！ 👉'
+  };
+  hint.textContent = hints[currentBeatType] || '';
+  hint.classList.add('show');
+  
+  // 1. Show hit zone indicators
+  showHitZone(currentBeatType);
+  
+  // 2. Show wave ring
+  showWave(currentBeatType);
+  
+  // 3. Show drumstick strike
+  setTimeout(() => {
+    if (gameState !== 'playing') return;
+    showStickStrike(currentBeatType);
+  }, 200);
+  
+  // 4. Auto-miss timeout
+  autoBeatTimer = setTimeout(() => {
+    if (beatPlaying && gameState === 'playing') {
+      beatPlaying = false;
+      missCount++; comboCount = 0;
+      showJudge('miss', '😅 漏掉啦');
+      clearIndicators();
+      hideHint();
+      updateProgress(); scheduleNextBeat();
+    }
+  }, 2500); // slower for prototype
+}
+
+function clearIndicators() {
+  ['hz-left','hz-right','hz-center','rm-left','rm-right'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+}
+
+function hideHint() {
+  document.getElementById('beat-hint').classList.remove('show');
+}
+
+function showHitZone(type) {
+  clearIndicators();
+  if (type === 'center-left') {
+    document.getElementById('hz-left').classList.add('active');
+  } else if (type === 'center-right') {
+    document.getElementById('hz-right').classList.add('active');
+  } else if (type === 'center-both') {
+    document.getElementById('hz-center').classList.add('active');
+  } else if (type === 'rim-left') {
+    document.getElementById('rm-left').classList.add('active');
+  } else if (type === 'rim-right') {
+    document.getElementById('rm-right').classList.add('active');
+  } else if (type === 'rim-both') {
+    document.getElementById('rm-left').classList.add('active');
+    document.getElementById('rm-right').classList.add('active');
+  }
+}
+
+function showWave(type) {
+  const wave = document.getElementById('wave-ring');
+  let x, y;
+  if (type.includes('left') && !type.includes('both')) { x = '10%'; y = '35%'; }
+  else if (type.includes('right') && !type.includes('both')) { x = '90%'; y = '35%'; }
+  else if (type === 'center-both') { x = '50%'; y = '50%'; }
+  else if (type === 'rim-both') { x = '50%'; y = '50%'; }
+  else { x = '50%'; y = '50%'; }
+  
+  wave.style.left = x; wave.style.top = y;
+  wave.classList.remove('contract');
+  void wave.offsetWidth;
+  wave.classList.add('contract');
+}
+
+function showStickStrike(type) {
+  const ls = document.getElementById('stick-left');
+  const rs = document.getElementById('stick-right');
+  
+  // Reset
+  [ls, rs].forEach(s => { s.style.animation = 'none'; s.style.display = 'none'; s.style.opacity = '0'; });
+  void ls.offsetWidth; void rs.offsetWidth;
+  
+  if (type === 'center-left') {
+    ls.style.display = 'block'; ls.style.animation = 'strikeToCenterLeft 0.4s ease-in forwards';
+  } else if (type === 'center-right') {
+    rs.style.display = 'block'; rs.style.animation = 'strikeToCenterRight 0.4s ease-in forwards';
+  } else if (type === 'rim-left') {
+    ls.style.display = 'block'; ls.style.animation = 'strikeToRimLeft 0.4s ease-in forwards';
+  } else if (type === 'rim-right') {
+    rs.style.display = 'block'; rs.style.animation = 'strikeToRimRight 0.4s ease-in forwards';
+  } else {
+    // center-both or rim-both: both sticks
+    if (type === 'center-both') {
+      ls.style.display = 'block'; ls.style.animation = 'strikeToCenterLeft 0.4s ease-in forwards';
+      rs.style.display = 'block'; rs.style.animation = 'strikeToCenterRight 0.4s ease-in forwards';
+    } else {
+      ls.style.display = 'block'; ls.style.animation = 'strikeToRimLeft 0.4s ease-in forwards';
+      rs.style.display = 'block'; rs.style.animation = 'strikeToRimRight 0.4s ease-in forwards';
+    }
+  }
+  
+  setTimeout(() => { ls.style.display = 'none'; rs.style.display = 'none'; }, 450);
+}
+
+function hitDrum(event) {
+  if (gameState !== 'playing' || !beatPlaying) return;
+  
+  clearTimeout(autoBeatTimer);
+  beatPlaying = false;
+  clearIndicators();
+  hideHint();
+  
+  const roll = Math.random();
+  let judge, symbol;
+  if (roll < 0.4) { judge = 'perfect'; symbol = '✨ 超棒!'; perfectCount++; comboCount++; }
+  else { judge = 'good'; symbol = '👍 不错!'; goodCount++; comboCount++; }
+  if (comboCount > maxCombo) maxCombo = comboCount;
+  
+  showJudge(judge, symbol);
+  updateProgress();
+  
+  setTimeout(() => scheduleNextBeat(), 1000); // slower between beats
+}
+
+function showJudge(type, text) {
+  const el = document.getElementById('judge');
+  el.textContent = text; el.className = 'judge-text ' + type;
+  void el.offsetWidth;
+  el.classList.add('flash');
+}
+
+function updateProgress() {
+  const pct = Math.min(100, Math.round((currentBeat / totalBeats) * 100));
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+function attachDrumClick() {
+  const drum = document.getElementById('drum');
+  if (drum) drum.addEventListener('click', hitDrum);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', attachDrumClick);
+else attachDrumClick();
+
+function pauseGame() {
+  if (gameState === 'playing' && confirm('退出当前挑战？')) { clearTimers(); goHome(); }
+  else if (gameState === 'countdown') { cancelCountdown(); }
+}
+
+function endGame() {
+  gameState = 'result'; clearTimeout(autoBeatTimer);
+  showPage('pg-result');
+  const totalTaps = perfectCount + goodCount, total = totalTaps + missCount;
+  const perfectRate = total > 0 ? perfectCount / total : 0, missRate = total > 0 ? missCount / total : 0;
+  let stars, title;
+  if (perfectRate >= 0.6 && missRate < 0.1) { stars = '⭐⭐⭐⭐⭐'; title = '太厉害了！舞狮大师！'; }
+  else if (perfectRate >= 0.35 && missRate < 0.2) { stars = '⭐⭐⭐⭐'; title = '好棒呀！舞狮小能手！'; }
+  else if (missRate < 0.4) { stars = '⭐⭐⭐'; title = '不错哦！再练练就更好了！'; }
+  else { stars = '⭐⭐'; title = '加油加油！你可以的！'; }
+  document.getElementById('result-stars').textContent = stars;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-detail').innerHTML = 
+    '✨ 超棒 ' + perfectCount + ' 次&nbsp;&nbsp;👍 不错 ' + goodCount + ' 次&nbsp;&nbsp;💪 漏掉 ' + missCount + ' 次' +
+    '<br>最长连击 ' + maxCombo + ' 次&nbsp;&nbsp;得分 ' + (perfectCount * 2000 + goodCount * 1000) + ' 分';
+  if (stars.includes('⭐⭐⭐') || stars.includes('⭐⭐⭐⭐') || stars.includes('⭐⭐⭐⭐⭐')) {
+    setTimeout(() => showToast('🎉 恭喜通关！火火狮解锁条件达成'), 500);
+    const ip = document.getElementById('result-ip');
+    if (ip) { ip.textContent = '🔥 火火狮'; ip.style.border = '2px dashed #e4c14a'; ip.style.color = '#e4c14a'; }
+  }
+}
+
+function retryGame() { showPage('pg-songlist'); gameState = 'idle'; }
+
+function clearTimers() { clearInterval(countdownTimer); clearTimeout(autoBeatTimer); }
+
+function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+</script>
+</body>
+</html>

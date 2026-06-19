@@ -1,0 +1,102 @@
+<!-- 敲鼓页面 -->
+<view class="page">
+  <!-- ===== 曲目选择页 ===== -->
+  <view class="page-state" wx:if="{{state === 'songlist'}}">
+    <view class="sub-header songlist-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="goHome">←</view>
+      <text class="sub-title">选择曲目</text>
+      <view class="sub-spacer"></view>
+    </view>
+
+    <view class="song-card" wx:for="{{songs}}" wx:key="id" bindtap="onSelectSong" data-id="{{item.id}}">
+      <view>
+        <text class="song-name">{{item.name}}</text>
+        <text class="song-desc">{{item.desc}}</text>
+      </view>
+      <view class="song-right">
+        <view class="song-stars">
+          <image wx:for="{{item.starsFilled}}" wx:key="*this" class="star-icon" src="/images/star-filled.png" mode="aspectFit"></image>
+          <image wx:for="{{item.starsEmpty}}" wx:key="*this" class="star-icon" src="/images/star-empty.png" mode="aspectFit"></image>
+        </view>
+        <text class="song-best">{{item.best}}</text>
+      </view>
+    </view>
+
+    <view class="lion-status">
+      <view class="lion-row">
+        <view class="lion-info">
+          <image class="lion-thumb" src="/images/fire-lion.png" mode="aspectFit"></image>
+          <text class="unlocked">火火狮 · 敲鼓通关即得</text>
+        </view>
+      </view>
+      <view class="lion-row">
+        <view class="lion-info">
+          <image class="lion-thumb" src="/images/wood-lion.png" mode="aspectFit"></image>
+          <text class="locked">木木狮 · S/A评级解锁</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 倒计时页 ===== -->
+  <view class="cd-page" wx:if="{{state === 'countdown'}}">
+    <view class="cd-title-abs" style="top:{{statusBarHeight}}px;">准备</view>
+    <view class="cd-number-box">
+      <text class="cd-number {{cdPulse ? 'cd-pulse' : ''}}">{{cdText}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 游戏进行页 ===== -->
+  <view class="page-state game-page" wx:if="{{state === 'playing'}}">
+    <view class="game-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="pauseGame">←</view>
+      <view class="game-progress-wrap">
+        <view class="game-progress-fill" style="width:{{progress}}%;"></view>
+      </view>
+      <text class="progress-pct">{{progress}}%</text>
+    </view>
+
+    <view class="game-body">
+      <image class="game-ip-img" src="{{currentIpImg}}" mode="aspectFit"></image>
+
+      <!-- 鼓面 + 命中区 共用容器 -->
+      <view class="drum-stage">
+        <view class="drum-container" bindtap="hitDrum">
+          <!-- 虚幻鼓棒（CSS 伪元素绘制，无图片） -->
+          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l"></view>
+          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r"></view>
+
+          <!-- 命中区 -->
+          <view class="hit-zone hz-left {{hzState.left ? 'hz-active' : ''}}"></view>
+          <view class="hit-zone hz-right {{hzState.right ? 'hz-active' : ''}}"></view>
+          <view class="hit-zone hz-center {{hzState.center ? 'hz-active' : ''}}"></view>
+          <view class="hit-zone hz-rim-left {{hzState.rimLeft ? 'hz-active' : ''}}"></view>
+          <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active' : ''}}"></view>
+
+          <!-- 鼓面 -->
+          <image class="drum-area" src="/images/drum-face.png" mode="aspectFit"></image>
+        </view>
+
+        <!-- 判定文字 -->
+        <text class="judge-text {{judgeType}} {{judgeShow ? 'judge-flash' : ''}}">{{judgeText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 结算页 ===== -->
+  <view class="page-state result-wrap" wx:if="{{state === 'result'}}">
+    <image class="result-ip-img" src="{{resultIpImage}}" mode="aspectFit"></image>
+    <text class="result-stars">{{resultStars}}</text>
+    <text class="result-title">{{resultTitle}}</text>
+    <view class="result-detail">
+      <text>{{resultDetail}}</text>
+    </view>
+    <view class="result-actions">
+      <view class="result-btn" bindtap="retryGame"><image class="retry-icon" src="/images/3d-icons/retry.png" mode="aspectFit"></image> 重试</view>
+      <view class="result-btn result-btn-home" bindtap="goHome">🏠 返回</view>
+    </view>
+  </view>
+
+  <!-- Toast -->
+  <view class="toast" wx:if="{{toastShow}}">{{toastMsg}}</view>
+</view>
