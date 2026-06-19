@@ -103,6 +103,7 @@ Page({
 
   goHome() {
     this.clearAllTimers()
+    this.clearUnlockTimers()
     this.gameState = 'idle'
     wx.navigateBack()
   },
@@ -407,6 +408,10 @@ Page({
       perfect: this.perfectCount, good: this.goodCount, early: this.earlyCount, miss: this.missCount
     })
 
+    this._unlockTimers = []
+
+    let fireAlsoEarth = false
+
     if (isUnlock) {
       const fireResult = unlock.unlockLion('fire')
       if (fireResult) {
@@ -414,11 +419,12 @@ Page({
         this.setData({
           unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
         })
+        fireAlsoEarth = fireResult.alsoEarth
         if (fireResult.alsoEarth) {
           const m2 = unlock.getUnlockModal('earth')
-          setTimeout(() => this.setData({
+          this._unlockTimers.push(setTimeout(() => this.setData({
             unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
-          }), 3000)
+          }), 3000))
         }
       }
     }
@@ -426,25 +432,27 @@ Page({
     if (isHighScore) {
       const woodResult = unlock.unlockLion('wood')
       if (woodResult) {
-        const delay = isUnlock ? 3500 : 500
-        setTimeout(() => {
+        // fireAlsoEarth 时等土土狮弹完(3s+3s缓冲)再弹木木狮
+        const delay = fireAlsoEarth ? 6500 : (isUnlock ? 3500 : 500)
+        this._unlockTimers.push(setTimeout(() => {
           const m2 = unlock.getUnlockModal('wood')
           this.setData({
             unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
           })
           if (woodResult.alsoEarth) {
             const m3 = unlock.getUnlockModal('earth')
-            setTimeout(() => this.setData({
+            this._unlockTimers.push(setTimeout(() => this.setData({
               unlockShow: true, unlockIcon: m3.icon, unlockTitle: m3.title, unlockSub: m3.sub
-            }), 3000)
+            }), 3000))
           }
-        }, delay)
+        }, delay))
       }
     }
   },
 
   retryGame() {
     this.setData({ state: 'songlist', unlockShow: false })
+    this.clearUnlockTimers()
     this.gameState = 'idle'
   },
 
@@ -452,9 +460,17 @@ Page({
     this.setData({ unlockShow: false })
   },
 
+  clearUnlockTimers() {
+    if (this._unlockTimers) {
+      this._unlockTimers.forEach(t => clearTimeout(t))
+      this._unlockTimers = []
+    }
+  },
+
   clearAllTimers() {
     clearInterval(this.countdownTimer)
     this.clearRingTimer()
     clearTimeout(this.drumstickTimer)
+    this.clearUnlockTimers()
   }
 })

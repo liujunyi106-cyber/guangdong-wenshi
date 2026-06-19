@@ -41,7 +41,11 @@ Page({
   loadUserData() {
     const nickname = wx.getStorageSync('nickname') || ''
     const avatarUrl = wx.getStorageSync('avatarUrl') || ''
-    const userId = wx.getStorageSync('userId') || 'LION000' + Math.floor(Math.random() * 1000)
+    let userId = wx.getStorageSync('userId')
+    if (!userId) {
+      userId = 'LION000' + Math.floor(Math.random() * 1000)
+      wx.setStorageSync('userId', userId)
+    }
 
     const lions = unlock.getLions()
     const unlockedCount = unlock.getUnlockedCount()

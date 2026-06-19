@@ -228,6 +228,7 @@ Page({
   onBackToOutline() {
     // 保存完成页返回 → 不弹确认，直回
     if (this.data.state === 'done') {
+      this._clearUnlockTimers()
       this.setData({ state: 'outline', selectedIp: null, currentIpUrl: '', selectedDecoIdx: -1, eraserMode: false })
       return
     }
@@ -527,6 +528,9 @@ Page({
           ipName: ip ? ip.name : ''
         })
 
+        this._clearUnlockTimers()
+        this._unlockTimers = []
+
         const result = unlock.unlockLion('gold')
         if (result) {
           const modal = unlock.getUnlockModal('gold')
@@ -534,12 +538,12 @@ Page({
             unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
           })
           if (result.alsoEarth) {
-            setTimeout(() => {
+            this._unlockTimers.push(setTimeout(() => {
               const m2 = unlock.getUnlockModal('earth')
               this.setData({
                 unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
               })
-            }, 3000)
+            }, 3000))
           }
         }
       },
@@ -548,6 +552,7 @@ Page({
   },
 
   onRedraw() {
+    this._clearUnlockTimers()
     this.setData({ state: 'outline', selectedIp: null, currentIpUrl: '', selectedDecoIdx: -1, eraserMode: false })
   },
 
@@ -557,6 +562,13 @@ Page({
 
   dismissUnlock() {
     this.setData({ unlockShow: false })
+  },
+
+  _clearUnlockTimers() {
+    if (this._unlockTimers) {
+      this._unlockTimers.forEach(t => clearTimeout(t))
+      this._unlockTimers = []
+    }
   }
 })
 

@@ -62,6 +62,7 @@ Page({
   },
 
   goBack() {
+    this._clearUnlockTimers()
     const s = this.data.state
     if (s === 'sticker') this.setData({ state: 'camera' })
     else if (s === 'edit') this.setData({ state: 'sticker' })
@@ -178,6 +179,9 @@ Page({
       stickerName: sticker ? sticker.name : ''
     })
 
+    this._clearUnlockTimers()
+    this._unlockTimers = []
+
     const result = unlock.unlockLion('water')
     if (result) {
       const modal = unlock.getUnlockModal('water')
@@ -185,12 +189,12 @@ Page({
         unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
       })
       if (result.alsoEarth) {
-        setTimeout(() => {
+        this._unlockTimers.push(setTimeout(() => {
           const m2 = unlock.getUnlockModal('earth')
           this.setData({
             unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
           })
-        }, 3000)
+        }, 3000))
       }
     }
   },
@@ -200,7 +204,15 @@ Page({
   },
 
   onRetake() {
+    this._clearUnlockTimers()
     this.setData({ state: 'camera', selectedSticker: null })
+  },
+
+  _clearUnlockTimers() {
+    if (this._unlockTimers) {
+      this._unlockTimers.forEach(t => clearTimeout(t))
+      this._unlockTimers = []
+    }
   },
 
   onShare() {
