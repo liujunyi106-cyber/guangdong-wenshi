@@ -1,9 +1,7 @@
 <!-- 首页 · 小狮子 -->
 <view class="page">
   <!-- 状态栏 -->
-  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;">
-    <text class="status-bar-time">9:41</text>
-  </view>
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
 
   <!-- 可滚动内容区 -->
   <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">

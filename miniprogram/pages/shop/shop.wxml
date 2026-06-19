@@ -2,9 +2,7 @@
 <view class="page">
 
   <!-- 状态栏 -->
-  <view class="status-bar">
-    <text class="status-bar-time">9:41</text>
-  </view>
+  <view class="status-bar"></view>
 
   <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
 
