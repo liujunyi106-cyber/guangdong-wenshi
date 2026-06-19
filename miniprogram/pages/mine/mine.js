@@ -19,6 +19,7 @@ Page({
       { id: 2, icon: '/images/icon-camera.png', name: '首张照片', desc: '第一次拍照' },
       { id: 3, icon: '/images/icon-paint.png', name: '小画家', desc: '完成涂色' }
     ],
+    scrollTop: 0,
     works: []
   },
 
@@ -30,6 +31,10 @@ Page({
 
   onShow() {
     this.loadUserData()
+    // 重置滚动位置到顶部（toggle 触发 scroll-view 响应）
+    this.setData({ scrollTop: 0.01 }, () => {
+      this.setData({ scrollTop: 0 })
+    })
   },
 
   loadUserData() {
