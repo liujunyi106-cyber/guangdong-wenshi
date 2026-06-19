@@ -182,7 +182,7 @@
   height: 112rpx;
   gap: 24rpx;
   flex-shrink: 0;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .game-progress-wrap {
   flex: 1;
@@ -219,7 +219,7 @@
 .game-ip-img {
   width: 240rpx;
   height: 240rpx;
-  margin: 34rpx auto 0;
+  margin: 54rpx auto 0;
   flex-shrink: 0;
   display: block;
 }

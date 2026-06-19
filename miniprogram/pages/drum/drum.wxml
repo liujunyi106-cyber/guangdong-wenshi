@@ -1,9 +1,7 @@
 <!-- 敲鼓页面 -->
 <view class="page">
   <!-- 状态栏 -->
-  <view class="status-bar">
-    <text class="status-bar-time">9:41</text>
-  </view>
+  <view class="status-bar"></view>
 
   <!-- ===== 曲目选择页 ===== -->
   <view class="page-state" wx:if="{{state === 'songlist'}}">
@@ -45,7 +43,7 @@
 
   <!-- ===== 倒计时页 ===== -->
   <view class="cd-page" wx:if="{{state === 'countdown'}}">
-    <view class="cd-title-abs" style="top:{{statusBarHeight}}px;">准备</view>
+    <view class="cd-title-abs" style="top:{{statusBarHeight * 2 + 2}}px;">准备</view>
     <view class="cd-number-box">
       <text class="cd-number {{cdPulse ? 'cd-pulse' : ''}}">{{cdText}}</text>
     </view>

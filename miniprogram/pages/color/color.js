@@ -221,6 +221,11 @@ Page({
   },
 
   onBackToOutline() {
+    // 保存完成页返回 → 不弹确认，直回
+    if (this.data.state === 'done') {
+      this.setData({ state: 'outline', selectedIp: null, currentIpUrl: '', selectedDecoIdx: -1, eraserMode: false })
+      return
+    }
     if (this._actions && this._actions.length > 0) {
       wx.showModal({
         title: '要退出吗？',

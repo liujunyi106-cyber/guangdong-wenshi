@@ -91,7 +91,6 @@ page {
   width: 64rpx;
   height: 64rpx;
   border-radius: 16rpx;
-  border: 2px solid #AAAAAA;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +102,6 @@ page {
   background: #f0f0f0;
 }
 .back-btn-dark {
-  border-color: #FFFFFF;
   color: #FFFFFF;
 }
 
