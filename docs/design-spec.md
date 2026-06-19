@@ -197,7 +197,7 @@
 ┌──────────────────────────────────┐ 335×202
 │  Hello !               ░░░░░░░░ │ ← 右上角：4×4 圆点矩阵 SVG 90×69（渐变 #ED4F3E→#F05C49）
 │  一起来敲鼓               ░░░░░░ │    小狮 IP 图片 193×193 置于圆点矩阵上层
-│  单人游戏/亲子游戏          🦁   │ ← Hello(x17,y29)+!(x121.71,y27) DIN Bold 38px #FFF
+│  做游戏吧               🦁   │ ← Hello(x17,y29)+!(x121.71,y27) DIN Bold 38px #FFF
 │  ┌────────────────────────┐ ══╗ │   "!" 比 Hello 高 2px
 │  │ 快来一起来敲鼓吧       │ ▶ ║ │ ← MiSans 30px Heavy 白 / MiSans 12px Medium 白
 │  └────────────────────────┘ ══╝ │ ← CTA 白底 146×31 圆角8px, ▶ SVG 红圆播放按钮
@@ -212,7 +212,7 @@
 | "Hello" | 25:11 | DIN Bold | 38px | x=17, y=29 | `#FFFFFF` |
 | "!" | 25:18 | DIN Bold | 38px | x=121.71, y=27 | `#FFFFFF` |
 | "一起来敲鼓" | 25:17 | MiSans Heavy | 30px | x=17, y=64 | `#FFFFFF` |
-| "单人游戏/亲子游戏" | 25:206 | MiSans Medium | 12px | x=17, y=104 | `#FFFFFF` |
+| "做游戏吧" | — | MiSans Medium | 12px | x=17, y=104 | `#FFFFFF` |
 
 **Hero 装饰元素（新增 V2.3）：**
 
@@ -762,7 +762,7 @@
 | Hero 英文 | Hello | DIN 38px Bold, x=17,y=29 |
 | Hero 标点 | ! | DIN 38px Bold, x=121.71,y=27 (比 Hello 高 2px) |
 | Hero 标题 | 一起来敲鼓 | MiSans 30px Heavy |
-| Hero 模式提示 | 单人游戏/亲子游戏 | MiSans 12px Medium |
+| Hero 模式提示 | 做游戏吧 | MiSans 12px Medium |
 | Hero CTA | 快来一起来敲鼓吧 | MiSans 12px Semibold |
 | AR 卡片标题 | 狮子拍照 | MiSans 20px Bold, x=17,y=10 |
 | AR 卡片副标题 | 快来一起拍照吧 | MiSans 12px Medium, x=17,y=35 |
@@ -780,7 +780,7 @@
 | 弹窗标题 | 选择玩法 | MiSans 20px Bold #000000 |
 | 副标题 | 选择一种游戏模式开始吧！ | MiSans 12px Medium #94A3B8 |
 | 单人按钮 | 单人敲鼓 | MiSans 20px Bold #FFFFFF |
-| 亲子按钮 | 亲子配合 | MiSans 20px Bold #FFFFFF |
+| 亲子按钮（V2） | 亲子配合 | MiSans 20px Bold #FFFFFF |
 | 取消按钮 | 取消 | MiSans 16px Medium #AAAAAA |
 
 ---
