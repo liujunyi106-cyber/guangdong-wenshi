@@ -76,7 +76,7 @@
 
 /* ===== 下拉展开菜单 ===== */
 .menu-accordion-card {
-  padding: 0;
+  padding: 8rpx 0;
   overflow: hidden;
 }
 .accordion-item {
@@ -209,16 +209,24 @@
 }
 
 /* ===== 成就 ===== */
+.achi-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
 .achi-row {
-  display: flex;
+  display: inline-flex;
   gap: 16rpx;
 }
 .achi-card {
-  flex: 1;
+  width: 200rpx;
+  flex-shrink: 0;
   padding: 28rpx 16rpx 22rpx;
   border-radius: 20rpx;
   background: #FAFAFA;
   text-align: center;
+}
+.achi-card.achi-locked {
+  opacity: 0.45;
 }
 .achi-icon-img {
   width: 64rpx;

@@ -46,13 +46,15 @@
         <image class="card-head-icon" src="/images/icon-achievement.png" mode="aspectFit"></image>
         <text class="card-title">我的成就</text>
       </view>
-      <view class="achi-row">
-        <view class="achi-card" wx:for="{{achievements}}" wx:key="id">
-          <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
-          <text class="achi-name">{{item.name}}</text>
-          <text class="achi-desc">{{item.desc}}</text>
+      <scroll-view scroll-x class="achi-scroll">
+        <view class="achi-row">
+          <view class="achi-card {{item.locked ? 'achi-locked' : ''}}" wx:for="{{achievements}}" wx:key="id">
+            <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
+            <text class="achi-name">{{item.name}}</text>
+            <text class="achi-desc">{{item.locked ? '未解锁' : item.desc}}</text>
+          </view>
         </view>
-      </view>
+      </scroll-view>
     </view>
 
     <!-- ===== 我的作品 ===== -->
