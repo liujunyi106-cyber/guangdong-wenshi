@@ -414,4 +414,55 @@
   - 成就卡片：3 项成就横向排列
   - 作品网格：最近 3 张缩略图
   - 快捷菜单：敲鼓成绩 / AR 照片 / 我的订单（统一菜单样式）
-  - 整体白卡+阴影设计，灰底 #F7F7F8
+   - 整体白卡+阴影设计，灰底 #F7F7F8
+
+## 会话：2026-06-20
+
+### 任务：V1 视觉打磨 — 首页/商店/详情页/个人中心
+- **状态：** completed ✅
+- 执行的操作：
+  - **首页舞狮趣闻→舞狮故事**：3 张资讯卡片落地（狮头颜色小秘密/小狮怎么采青/刘备狮是谁）
+    - 图片来源 `全部内容/卡片1-3.png`, 双列网格左1右2
+    - 卡片图片暗色蒙版：顶部 30%→底部 65% 灰色渐变
+    - 左列刘备狮 + 右列待开发占位（虚线边框，等高对齐）
+  - **首页/商店背景渐变**：顶部白 #FFF → 55% 过渡灰 #EEE，白卡清晰分层
+  - **商店商品说明**：上调 6px + 单行截断 `text-overflow:ellipsis`
+  - **涂色保存按钮**：`💾 保存` emoji → `10_保存.png` 图标 (12KB)，橡皮擦+保存补充文字标签
+  - **故事详情页** `pages/news-detail/`：
+    - Figma node 110:26 对齐：Hero 全宽 + 白底卡片 overlap 9px
+    - 正文来自 PDF 论文（温玉婷）：狮头颜色§2.3.3 / 采青§6.3 / 刘备狮§2.3.4
+    - 标签+内容布局：品牌色渐变标签(#E31E15→#F4725C) + 左对齐正文
+    - 标题星标统一 `花纹星星4`，右侧 `scaleX(-1)` 水平翻转
+    - 删除分割线/来源标注/底部装饰
+  - **敲鼓成绩精简**：评价+分数同行，删除星级，P/G/E/M 22rpx/400weight/灰色
+  - **鼓面与结算IP模糊修复**：drum-face 340→680px/128色, ip-actions 200→400px
+  - **包体积**：2034 KB / 2048 KB
+- **Bug修复**：
+  - 待开发占位卡对齐刘备狮等高（390rpx spacer）
+  - 故事详情分割线/来源标注/底部星标按需删除
+  - 详情页 JS source 字段清理
+- **文档同步**：progress.md / findings.md / task_plan.md / 落地版PRD.md 同步至 V1.11
+
+### 创建/修改的文件
+- `miniprogram/pages/news-detail/` — 新建（wxml/wxss/js/json）
+- `miniprogram/pages/index/index.{wxml,wxss,js}` — 卡片网格+蒙版+背景渐变+跳转详情页
+- `miniprogram/pages/shop/shop.wxss` — 背景渐变+说明字段调整
+- `miniprogram/pages/color/color.{wxml,wxss}` — 保存图标+文字标签
+- `miniprogram/pages/mine/mine.{wxml,wxss}` — 鼓成绩精简
+- `miniprogram/images/card-news-*.{png,jpg}` — 3 张卡片插图
+- `miniprogram/images/deco-star-{1..5}.png` — 花纹星星装饰
+- `miniprogram/images/icon-star-{filled,empty}.png` — 星标图标
+- `miniprogram/images/icon-decor.png` — 装饰图标
+- `miniprogram/images/icon-save.png` — 保存图标
+- `miniprogram/images/drum-face.png` — 高分辨率重采样
+- `miniprogram/images/ip-actions/*.png` — 高分辨率重采样
+- `docs/progress.md` / `docs/findings.md` / `docs/task_plan.md` / `docs/落地版PRD.md` — 同步
+
+### 五问重启检查
+| 问题 | 答案 |
+|------|------|
+| 我在哪里？ | 阶段 5：打磨上线 |
+| 我要去哪里？ | 真机相机接入 / 音效 / 分享 / 商品详情页 |
+| 目标是什么？ | V1 核心闭环打通 → 可上线 |
+| 我学到了什么？ | 见 findings.md |
+| 我做了什么？ | 首页卡片+详情页+视觉打磨+Bug修复，包体积 2034KB |

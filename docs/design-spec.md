@@ -1,6 +1,6 @@
 # 广东舞狮文创小程序 · 设计规范 (Design Spec)
 
-> 版本：V2.9 | 来源：Figma `📱 首页` (19:91) + `敲鼓玩法` (43:168) + `商店` (68:2) + `AR拍照` (小程序实测) | 日期：2026-06-20
+> 版本：V2.10 | 来源：Figma `📱 首页` (19:91) + `敲鼓玩法` (43:168) + `商店` (68:2) + `故事详情` (110:26) + `AR拍照` (小程序实测) | 日期：2026-06-20
 > 
 > 本次更新：新增个人中心设计规范;商店Hero IP改为position:absolute;未解锁小狮保留原色
 >
@@ -46,7 +46,7 @@
 | `--color-gray-mid` | `#AAAAAA` | 未选中态文字 / 取消按钮文字 |
 | `--color-gray-slate` | `#94A3B8` | 次标题说明文字（弹窗副标题/卡片副标题） |
 | `--color-gray-dark` | `#333333` | 深灰文字/背景 |
-| `--color-text-dark` | `#252525` | 子区域深色标题（舞狮趣闻） |
+| `--color-text-dark` | `#252525` | 子区域深色标题（舞狮故事） |
 | `--color-cta-dark` | `#1E1E1E` | 播放按钮三角等深色图形 |
 | `--color-cancel-bg` | `#F5F5F5` | 取消按钮背景 |
 
@@ -138,7 +138,7 @@
 | **Hero English** | 38px | 700 (Bold) | DIN | "Hello!" 英文点缀 |
 | **Hero Title** | 30px | 700 (Heavy) | MiSans Latin | "一起来敲鼓" |
 | **Page Title** | 20px | 630 (Bold) | MiSans Latin | 区域标题："小狮子""狮子拍照""狮子绘画" |
-| **Sub Title** | 16px | 520 (Semibold) | MiSans Latin | 子区域标题："舞狮趣闻" |
+| **Sub Title** | 16px | 520 (Semibold) | MiSans Latin | 子区域标题："舞狮故事" |
 | **Card Subtitle** | 12px | 380 (Medium) | MiSans Latin | 副标题："画你的专属狮子吧""快来一起拍照吧" |
 | **CTA Text** | 12px | 520 (Semibold) | MiSans Latin | CTA 按钮："快来一起来敲鼓吧" |
 | **Status Bar** | — | — | — | 黑底 #1E1E1E，无文字 |
@@ -172,7 +172,7 @@
 | 页面标题 | ~40 | 27px | auto | "小狮子" 居中 |
 | Hero 卡片 | **83** | **202px** | 335px | 敲鼓主入口卡 |
 | 次级卡片行 | **301** | 121px | 2×160px | AR拍照 + 涂色装饰 |
-| 舞狮趣闻 | **438** | — | — | 趣闻列表区域 |
+| 舞狮故事 | **438** | — | — | 趣闻列表区域 |
 | 底部导航 | **746** | 66px | 375px | 3 tab 导航 |
 
 ### 4.2 间距规范
@@ -288,11 +288,11 @@
 | 颜色 | `#000000` |
 | 对齐 | 页面居中 |
 
-### 5.6 舞狮趣闻标题
+### 5.6 舞狮故事标题
 
 | 属性 | 值 |
 |------|-----|
-| 文字 | "舞狮趣闻" |
+| 文字 | "舞狮故事" |
 | 字体 | MiSans Latin Semibold 16px |
 | 颜色 | `#252525` |
 | 位置 | x=20, y=438 |
@@ -866,7 +866,7 @@
 | 底部 nav-首页 | 首页 | Inter 12px Semi Bold 600 #E31E15 |
 | 底部 nav-商店 | 商店 | Inter 12px Medium 500 #AAAAAA |
 | 底部 nav-我的 | 我的 | Inter 12px Medium 500 #AAAAAA |
-| 趣闻标题 | 舞狮趣闻 | MiSans 16px Semibold |
+| 趣闻标题 | 舞狮故事 | MiSans 16px Semibold |
 
 ### 10.2 模式选择弹窗文案
 
