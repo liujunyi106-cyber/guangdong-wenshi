@@ -62,8 +62,9 @@
         <text class="card-title">我的作品</text>
       </view>
       <view class="work-row" wx:if="{{works.length > 0}}">
-        <view class="work-thumb" wx:for="{{works}}" wx:key="*this" wx:if="{{index < 3}}">
-          <text class="work-thumb-icon">🎨</text>
+        <view class="work-thumb" wx:for="{{works}}" wx:key="time" wx:if="{{index < 3}}">
+          <image wx:if="{{item.imageUrl}}" class="work-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
+          <text wx:else class="work-thumb-icon">🎨</text>
         </view>
       </view>
       <view wx:if="{{works.length === 0}}" class="empty-hint">

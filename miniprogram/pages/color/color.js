@@ -525,7 +525,8 @@ Page({
         this.setData({ state: 'done', savedImage: res.tempFilePath })
 
         unlock.saveRecord('artwork', {
-          ipName: ip ? ip.name : ''
+          ipName: ip ? ip.name : '',
+          imageUrl: res.tempFilePath
         })
 
         this._clearUnlockTimers()
