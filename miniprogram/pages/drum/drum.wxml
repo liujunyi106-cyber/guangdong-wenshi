@@ -62,13 +62,21 @@
       <!-- 鼓面 + 命中区 共用容器 -->
       <view class="drum-stage">
         <view class="drum-container" bindtap="hitDrum">
-          <!-- 虚幻鼓棒（CSS 绘制） -->
+          <!-- 鼓棒 -->
           <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
           <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
 
-          <!-- 外圈（缩圈动画） -->
-          <view class="ring-outer {{ringShow ? 'ring-visible' : ''}} {{ringClass}}"
+          <!-- 缩圈 × 5 击打区域 -->
+          <view class="ring-zone ring-left {{ringShow && ringZone === 'center-left' ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-right {{ringShow && ringZone === 'center-right' ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-center {{ringShow && ringZone === 'center-both' ? 'ring-visible' : ''}}"
             style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-rim-left {{ringShow && (ringZone === 'rim-left' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-rim-right {{ringShow && (ringZone === 'rim-right' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
 
           <!-- 命中区（内圈） -->
           <view class="hit-zone hz-left {{hzState.left ? 'hz-active' : ''}}"></view>
@@ -93,7 +101,10 @@
     <text class="result-stars">{{resultStars}}</text>
     <text class="result-title">{{resultTitle}}</text>
     <view class="result-detail">
-      <text>{{resultDetail}}</text>
+      <text>✨ 太棒啦 </text><text style="color:{{scoreColor}};font-weight:700;">{{perfectCnt}}</text><text> 次    👍 不错哦 </text><text style="color:{{comboColor}};font-weight:700;">{{goodCnt}}</text><text> 次</text>
+    </view>
+    <view class="result-detail" style="margin-bottom:32rpx;">
+      <text>连续敲击 </text><text style="color:{{comboColor}};font-weight:700;">{{maxComboCnt}}</text><text> 次   得分 </text><text style="color:{{scoreColor}};font-weight:700;font-size:32rpx;">{{totalScore}}</text><text> 分</text>
     </view>
     <view class="result-actions">
       <view class="result-btn" bindtap="retryGame"><image class="retry-icon" src="/images/3d-icons/retry.png" mode="aspectFit"></image> 重试</view>

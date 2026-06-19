@@ -53,12 +53,17 @@ Page({
     // ring
     ringShow: false,
     ringScale: RING_MAX,
-    ringClass: '',
+    ringZone: '',
     // result
     resultIpImage: '',
     resultStars: '',
     resultTitle: '',
-    resultDetail: '',
+    perfectCnt: 0,
+    goodCnt: 0,
+    maxComboCnt: 0,
+    totalScore: 0,
+    scoreColor: '#E31E15',
+    comboColor: '#D9A441',
     // toast
     toastShow: false,
     toastMsg: ''
@@ -167,9 +172,8 @@ Page({
   startRing(type) {
     this.clearRingTimer()
     this.ringStartTime = Date.now()
-    const ringClass = type.includes('rim') ? 'ring-rim' : 'ring-center'
     this.setData({
-      ringShow: true, ringScale: RING_MAX, ringClass: ringClass,
+      ringShow: true, ringScale: RING_MAX, ringZone: type,
       hzState: { left: false, right: false, center: false, rimLeft: false, rimRight: false },
       drumstickHit: false
     })
@@ -343,31 +347,35 @@ Page({
     const perfectRate = total > 0 ? this.perfectCount / total : 0
     const missRate = total > 0 ? this.missCount / total : 0
 
-    let stars, title, ipImage
+    let stars, title, ipImage, scoreColor, comboColor
     if (perfectRate >= 0.5 && missRate < 0.15) {
       stars = '⭐⭐⭐⭐⭐'; title = '太厉害了！舞狮大师！'
       ipImage = '/images/ip-actions/威风凛凛.png'
+      scoreColor = '#E31E15'; comboColor = '#D9A441'
     } else if (perfectRate >= 0.25 && missRate < 0.3) {
       stars = '⭐⭐⭐⭐'; title = '好棒呀！舞狮小能手！'
       ipImage = '/images/ip-actions/活力满满.png'
+      scoreColor = '#D9A441'; comboColor = '#E31E15'
     } else if (missRate < 0.5) {
       stars = '⭐⭐⭐'; title = '不错哦！再练练就更好了！'
       ipImage = '/images/ip-actions/自信就位.png'
+      scoreColor = '#65B96A'; comboColor = '#65B96A'
     } else {
       stars = '⭐⭐'; title = '加油加油！你可以的！'
       ipImage = '/images/ip-actions/眼睛发亮.png'
+      scoreColor = '#AAAAAA'; comboColor = '#AAAAAA'
     }
 
     const score = this.perfectCount * 200 + this.goodCount * 100 + this.earlyCount * 50
-    const detail = '✨ 太棒啦 ' + this.perfectCount + ' 次  👍 不错哦 ' + this.goodCount +
-      ' 次  ⚡ 太快啦 ' + this.earlyCount + ' 次  💪 漏掉了 ' + this.missCount +
-      ' 次\n最长连击 ' + this.maxCombo + ' 次  得分 ' + score + ' 分'
 
     const isUnlock = stars.includes('⭐⭐⭐') || stars.includes('⭐⭐⭐⭐') || stars.includes('⭐⭐⭐⭐⭐')
 
     this.setData({
       state: 'result', resultStars: stars, resultTitle: title,
-      resultDetail: detail, resultIpImage: ipImage,
+      resultIpImage: ipImage,
+      perfectCnt: this.perfectCount, goodCnt: this.goodCount,
+      maxComboCnt: this.maxCombo, totalScore: score,
+      scoreColor: scoreColor, comboColor: comboColor,
       ringShow: false, drumstickLeft: false, drumstickRight: false
     })
 
