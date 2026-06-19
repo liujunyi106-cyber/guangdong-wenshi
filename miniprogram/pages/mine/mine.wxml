@@ -1,55 +1,98 @@
 <!-- 个人中心 -->
-<scroll-view scroll-y class="page" style="padding-top:{{statusBarHeight}}px;">
+<scroll-view scroll-y class="page">
 
   <!-- 状态栏 -->
-  <view class="status-bar"></view>
+  <view class="status-bar" style="height:{{statusBarHeight}}px;"></view>
 
-  <!-- 用户头像区 -->
-  <view class="profile-section">
-    <view class="avatar-wrap">
-      <image class="avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
-      <view class="avatar-placeholder" wx:else>🦁</view>
+  <!-- ===== 用户卡片 ===== -->
+  <view class="user-card">
+    <view class="user-avatar-wrap">
+      <image class="user-avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
+      <view class="user-avatar-placeholder" wx:else>🦁</view>
     </view>
-    <text class="nickname">{{nickname || '小狮子'}}</text>
+    <text class="user-name">{{nickname || '小狮子'}}</text>
+    <view class="user-id">ID: {{userId || 'LION0001'}}</view>
   </view>
 
-  <!-- 小狮收藏 -->
-  <view class="section-header">
-    <text class="section-title">🦁 我的小狮</text>
-  </view>
-  <view class="lion-collection">
-    <view class="lion-item {{item.unlocked ? '' : 'lion-locked'}}" wx:for="{{lions}}" wx:key="id">
-      <image wx:if="{{item.unlocked && item.image}}" src="{{item.image}}" mode="aspectFit" class="lion-img"></image>
-      <text wx:else class="lion-emoji">{{item.emoji}}</text>
-      <text class="lion-name">{{item.name}}</text>
-      <image wx:if="{{!item.unlocked}}" src="/images/lock.png" mode="aspectFit" class="lion-lock"></image>
+  <!-- ===== 小狮收集 ===== -->
+  <view class="card">
+    <view class="card-head">
+      <text class="card-title">🦁 我的小狮</text>
+      <text class="card-badge">{{unlockedCount}}/5</text>
     </view>
-  </view>
-
-  <!-- 成就 -->
-  <view class="section-header">
-    <text class="section-title">🏆 我的成就</text>
-  </view>
-  <view class="achievement-list">
-    <view class="achi-item" wx:for="{{achievements}}" wx:key="id">
-      <text class="achi-icon">{{item.icon}}</text>
-      <text class="achi-name">{{item.name}}</text>
-      <text class="achi-desc">{{item.desc}}</text>
+    <view class="card-sub" wx:if="{{unlockedCount >= 3}}">🏅 舞狮小传人</view>
+    <view class="lion-row">
+      <view class="lion-card {{item.unlocked ? '' : 'lion-locked'}}" wx:for="{{lions}}" wx:key="id">
+        <image wx:if="{{item.unlocked && item.image}}" src="{{item.image}}" mode="aspectFit" class="lion-img"></image>
+        <text wx:else class="lion-emoji">{{item.emoji}}</text>
+        <text class="lion-name">{{item.name}}</text>
+        <image wx:if="{{!item.unlocked}}" src="/images/lock.png" mode="aspectFit" class="lion-lock-icon"></image>
+      </view>
+    </view>
+    <!-- 进度条 -->
+    <view class="lion-progress">
+      <view class="lion-progress-fill" style="width:{{(unlockedCount/5)*100}}%;"></view>
     </view>
   </view>
 
-  <!-- 我的作品 -->
-  <view class="section-header">
-    <text class="section-title">🎨 我的作品</text>
-  </view>
-  <view class="work-grid">
-    <view class="work-item" wx:for="{{works}}" wx:key="*this">
-      <text class="work-placeholder">🎨</text>
+  <!-- ===== 成就 ===== -->
+  <view class="card">
+    <view class="card-head">
+      <text class="card-title">🏆 我的成就</text>
+    </view>
+    <view class="achi-row">
+      <view class="achi-card" wx:for="{{achievements}}" wx:key="id">
+        <text class="achi-icon">{{item.icon}}</text>
+        <text class="achi-name">{{item.name}}</text>
+        <text class="achi-desc">{{item.desc}}</text>
+      </view>
     </view>
   </view>
-  <view wx:if="{{works.length === 0}}" class="empty-text">还没有作品，去创作吧~</view>
 
-  <!-- 底部占位 -->
-  <view class="bottom-nav-placeholder"></view>
+  <!-- ===== 我的作品 ===== -->
+  <view class="card">
+    <view class="card-head">
+      <text class="card-title">🎨 我的作品</text>
+      <text class="card-more" wx:if="{{works.length > 0}}">全部 ›</text>
+    </view>
+    <view class="work-row" wx:if="{{works.length > 0}}">
+      <view class="work-thumb" wx:for="{{works}}" wx:key="*this" wx:if="{{index < 3}}">
+        <text class="work-thumb-icon">🎨</text>
+      </view>
+    </view>
+    <view wx:if="{{works.length === 0}}" class="empty-hint">
+      <text class="empty-icon">🎨</text>
+      <text class="empty-text">还没有作品，去创作吧~</text>
+    </view>
+  </view>
+
+  <!-- ===== 快捷入口 ===== -->
+  <view class="card">
+    <view class="menu-item" bindtap="onTapDrum">
+      <view class="menu-left">
+        <text class="menu-icon">🥁</text>
+        <text class="menu-label">敲鼓成绩</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-divider"></view>
+    <view class="menu-item" bindtap="onTapPhotos">
+      <view class="menu-left">
+        <text class="menu-icon">📸</text>
+        <text class="menu-label">AR 照片</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-divider"></view>
+    <view class="menu-item" bindtap="onTapOrders">
+      <view class="menu-left">
+        <text class="menu-icon">📦</text>
+        <text class="menu-label">我的订单</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="bottom-spacer"></view>
 
 </scroll-view>

@@ -5,6 +5,8 @@ Page({
     statusBarHeight: 44,
     avatarUrl: '',
     nickname: '',
+    userId: '',
+    unlockedCount: 0,
     lions: [
       { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/fire-lion.png' },
       { id: 2, name: '水水狮', emoji: '💧', unlocked: false, image: '/images/water-lion.png' },
@@ -21,8 +23,8 @@ Page({
   },
 
   onLoad() {
-    const winInfo = wx.getWindowInfo()
-    this.setData({ statusBarHeight: winInfo.statusBarHeight || 44 })
+    const wi = wx.getWindowInfo()
+    this.setData({ statusBarHeight: wi.statusBarHeight || 44 })
     this.loadUserData()
   },
 
@@ -31,10 +33,23 @@ Page({
   },
 
   loadUserData() {
-    // 从本地存储加载数据
     const nickname = wx.getStorageSync('nickname') || ''
     const avatarUrl = wx.getStorageSync('avatarUrl') || ''
     const lions = wx.getStorageSync('lions') || this.data.lions
-    this.setData({ nickname, avatarUrl, lions })
+    const unlockedCount = lions.filter(l => l.unlocked).length
+    const userId = wx.getStorageSync('userId') || 'LION000' + Math.floor(Math.random() * 1000)
+    this.setData({ nickname, avatarUrl, lions, unlockedCount, userId })
+  },
+
+  onTapDrum() {
+    wx.showToast({ title: '记录功能开发中', icon: 'none' })
+  },
+
+  onTapPhotos() {
+    wx.showToast({ title: '照片列表开发中', icon: 'none' })
+  },
+
+  onTapOrders() {
+    wx.showToast({ title: '订单功能开发中', icon: 'none' })
   }
 })
