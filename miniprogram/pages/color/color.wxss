@@ -278,6 +278,14 @@
   width: 44rpx;
   height: 44rpx;
 }
+.action-label {
+  font-size: 26rpx;
+  color: #333333;
+  margin-left: 8rpx;
+}
+.action-label-save {
+  color: #FFFFFF;
+}
 .action-btn.eraser-active {
   border-color: #E31E15;
   background: #FFF5F3;

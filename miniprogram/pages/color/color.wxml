@@ -42,9 +42,11 @@
         <view class="action-btn" bindtap="onUndo">↩ 撤销</view>
         <view class="action-btn {{eraserMode ? 'eraser-active' : ''}}" bindtap="onToggleEraser">
           <image class="action-icon" src="/images/icon-eraser.svg" mode="aspectFit"></image>
+          <text class="action-label">橡皮擦</text>
         </view>
         <view class="action-btn action-save" bindtap="onSaveColor">
-          <image class="action-icon" src="/images/icon-save.png" mode="aspectFit"></image>
+          <image class="action-icon action-icon-save" src="/images/icon-save.png" mode="aspectFit"></image>
+          <text class="action-label action-label-save">保存</text>
         </view>
       </view>
       <view class="canvas-area">
