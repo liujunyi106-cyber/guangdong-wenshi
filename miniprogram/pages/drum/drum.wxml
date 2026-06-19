@@ -96,7 +96,7 @@
           <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
 
           <!-- 鼓面 -->
-          <image class="drum-area {{tutorialStep > 0 ? 'drum-area-hidden' : ''}}" src="/images/drum-face.png" mode="aspectFit"></image>
+          <image class="drum-area" src="/images/drum-face.png" mode="aspectFit"></image>
         </view>
 
         <!-- 判定文字 -->
@@ -121,19 +121,21 @@
   </view>
 
   <!-- 交互式预玩教程 -->
+  <!-- 蒙版（仅暗色遮罩，穿透点击） -->
   <view class="tutorial-overlay" wx:if="{{tutorialStep > 0}}">
     <view class="tutorial-mask"></view>
-    <view class="tutorial-card" wx:if="{{tutorialStep < 4}}">
-      <text class="tutorial-step-badge">第 {{tutorialStep}} 步</text>
-      <text class="tutorial-text">{{tutorialText}}</text>
-      <text class="tutorial-hint" wx:if="{{tutorialHint}}">{{tutorialHint}}</text>
-      <text class="tutorial-feedback" wx:if="{{tutorialFeedback}}">{{tutorialFeedback}}</text>
-    </view>
-    <view class="tutorial-card tutorial-ready" wx:if="{{tutorialStep === 4}}">
-      <image class="tutorial-ready-icon" src="/images/icon-drum-hero.png" mode="aspectFit"></image>
-      <text class="tutorial-text">{{tutorialText}}</text>
-      <view class="tutorial-confirm-btn" bindtap="onConfirmTutorial">开始挑战！</view>
-    </view>
+  </view>
+  <!-- 提示卡片（独立于蒙版，可点击） -->
+  <view class="tutorial-card" wx:if="{{tutorialStep > 0 && tutorialStep < 4}}">
+    <text class="tutorial-step-badge">第 {{tutorialStep}} 步</text>
+    <text class="tutorial-text">{{tutorialText}}</text>
+    <text class="tutorial-hint" wx:if="{{tutorialHint}}">{{tutorialHint}}</text>
+    <text class="tutorial-feedback" wx:if="{{tutorialFeedback}}">{{tutorialFeedback}}</text>
+  </view>
+  <view class="tutorial-card tutorial-ready" wx:if="{{tutorialStep === 4}}">
+    <image class="tutorial-ready-icon" src="/images/icon-drum-hero.png" mode="aspectFit"></image>
+    <text class="tutorial-text">{{tutorialText}}</text>
+    <view class="tutorial-confirm-btn" bindtap="onConfirmTutorial">开始挑战！</view>
   </view>
 
   <!-- 解锁弹窗 -->
