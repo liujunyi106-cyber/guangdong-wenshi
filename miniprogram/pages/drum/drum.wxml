@@ -110,6 +110,13 @@
     </view>
   </view>
 
-  <!-- Toast -->
-  <view class="toast" wx:if="{{toastShow}}">{{toastMsg}}</view>
+  <!-- 解锁弹窗 -->
+  <view class="unlock-overlay" wx:if="{{unlockShow}}" bindtap="dismissUnlock">
+    <view class="unlock-card" catchtap="dismissUnlock">
+      <text class="unlock-icon">🎉</text>
+      <text class="unlock-title">恭喜通关！</text>
+      <text class="unlock-sub">火火狮解锁条件达成</text>
+      <view class="unlock-btn" bindtap="dismissUnlock">太棒了</view>
+    </view>
+  </view>
 </view>

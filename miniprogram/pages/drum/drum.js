@@ -66,7 +66,9 @@ Page({
     comboColor: '#D9A441',
     // toast
     toastShow: false,
-    toastMsg: ''
+    toastMsg: '',
+    // unlock modal
+    unlockShow: false
   },
 
   /* ===== 内部状态 ===== */
@@ -205,8 +207,8 @@ Page({
 
       this.setData({ ringScale: Math.round(scale * 100) / 100 })
 
-      // 鼓棒出现：外圈接近内圈时
-      if (scale <= 1.5 && !this.data.drumstickLeft && !this.data.drumstickRight) {
+      // 鼓棒出现：外圈快接近内圈时（~1.15 开始）
+      if (scale <= 1.15 && !this.data.drumstickLeft && !this.data.drumstickRight) {
         this.updateSticksForBeat(false)
       }
     }, 20) // 50fps
@@ -380,16 +382,18 @@ Page({
     })
 
     if (isUnlock) {
-      setTimeout(() => {
-        this.setData({ toastShow: true, toastMsg: '🎉 恭喜通关！火火狮解锁条件达成' })
-        setTimeout(() => this.setData({ toastShow: false }), 2000)
-      }, 500)
+      this.setData({ unlockShow: true })
+      setTimeout(() => this.setData({ unlockShow: false }), 2500)
     }
   },
 
   retryGame() {
-    this.setData({ state: 'songlist' })
+    this.setData({ state: 'songlist', unlockShow: false })
     this.gameState = 'idle'
+  },
+
+  dismissUnlock() {
+    this.setData({ unlockShow: false })
   },
 
   clearAllTimers() {
