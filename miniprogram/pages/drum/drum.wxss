@@ -557,9 +557,9 @@
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 350;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 460rpx;
+  pointer-events: none;
 }
 .tutorial-mask {
   position: absolute;
@@ -576,6 +576,7 @@
   text-align: center;
   box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
   animation: tutorialSlideUp 0.35s ease-out;
+  pointer-events: auto;
 }
 @keyframes tutorialSlideUp {
   from { opacity: 0; transform: translateY(40rpx); }
