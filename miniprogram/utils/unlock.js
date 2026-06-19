@@ -20,9 +20,9 @@ const UNLOCK_MODAL_TEXT = {
 function getLions() {
   const stored = wx.getStorageSync(STORAGE_KEY)
   if (stored && stored.length) return stored
-  const defaults = LION_DEFS.map((d, i) => ({
+  const defaults = LION_DEFS.map(d => ({
     ...d,
-    unlocked: i === 0
+    unlocked: false
   }))
   wx.setStorageSync(STORAGE_KEY, defaults)
   return defaults

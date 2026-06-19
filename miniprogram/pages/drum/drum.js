@@ -408,39 +408,37 @@ Page({
     })
 
     if (isUnlock) {
-      const result = unlock.unlockLion('fire')
-      if (result) {
+      const fireResult = unlock.unlockLion('fire')
+      if (fireResult) {
         const modal = unlock.getUnlockModal('fire')
         this.setData({
           unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
         })
-        if (isHighScore) {
-          setTimeout(() => {
-            const r2 = unlock.unlockLion('wood')
-            if (r2) {
-              const m2 = unlock.getUnlockModal('wood')
-              this.setData({
-                unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
-              })
-              if (r2.alsoEarth) {
-                setTimeout(() => {
-                  const m3 = unlock.getUnlockModal('earth')
-                  this.setData({
-                    unlockShow: true, unlockIcon: m3.icon, unlockTitle: m3.title, unlockSub: m3.sub
-                  })
-                }, 3000)
-              }
-            }
-          }, 3000)
+        if (fireResult.alsoEarth) {
+          const m2 = unlock.getUnlockModal('earth')
+          setTimeout(() => this.setData({
+            unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
+          }), 3000)
         }
-        if (result.alsoEarth) {
-          setTimeout(() => {
+      }
+    }
+
+    if (isHighScore) {
+      const woodResult = unlock.unlockLion('wood')
+      if (woodResult) {
+        const delay = isUnlock ? 3500 : 500
+        setTimeout(() => {
+          const m2 = unlock.getUnlockModal('wood')
+          this.setData({
+            unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
+          })
+          if (woodResult.alsoEarth) {
             const m3 = unlock.getUnlockModal('earth')
-            this.setData({
+            setTimeout(() => this.setData({
               unlockShow: true, unlockIcon: m3.icon, unlockTitle: m3.title, unlockSub: m3.sub
-            })
-          }, 3000)
-        }
+            }), 3000)
+          }
+        }, delay)
       }
     }
   },
