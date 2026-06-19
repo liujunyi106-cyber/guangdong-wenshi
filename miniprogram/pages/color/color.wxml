@@ -43,7 +43,9 @@
         <view class="action-btn {{eraserMode ? 'eraser-active' : ''}}" bindtap="onToggleEraser">
           <image class="action-icon" src="/images/icon-eraser.svg" mode="aspectFit"></image>
         </view>
-        <view class="action-btn action-save" bindtap="onSaveColor">💾 保存</view>
+        <view class="action-btn action-save" bindtap="onSaveColor">
+          <image class="action-icon" src="/images/icon-save.png" mode="aspectFit"></image>
+        </view>
       </view>
       <view class="canvas-area">
         <canvas type="2d" id="colorCanvas" class="paint-canvas"></canvas>
