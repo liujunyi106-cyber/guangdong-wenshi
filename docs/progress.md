@@ -404,8 +404,14 @@
   - "开始！" 右移 10px（margin-left: 40rpx→20rpx）
   - 鼓棒早现修复：删除 `scheduleNextBeat` 中提前调用的 `updateSticksForBeat(false)`，鼓棒仅在外圈缩至 scale≤1.0 时出现
   - 鼓棒颜色按判定实时着色：perfect红(#E31E15) / good绿(#65B96A) / early金(#FFB020) / miss灰(#C9CDD4)
-   - 新增 `drumstickJudge` 数据字段，CSS 类 `drumstick-perfect/good/early/miss` 控制边框色
-- 文档一致性审查（2 轮）：
-  - 首轮：PRD + 交互设计 + 测试用例 8 处修正（判定规则4种/判定语/价格/返回按钮/状态栏/Hero IP/已知Bug#1）
-  - 次轮：design-spec 5 处修正（鼓棒规格/判定颜色/命中区尺寸/球例/结算页）
-  - 发现线稿选择页设计（分级线稿） vs 实现（IP形象选择）根本不一致 → findings.md #11 → 已全量更新 PRD/交互/品牌/故事地图/测试用例
+  - 新增 `drumstickJudge` 数据字段，CSS 类 `drumstick-perfect/good/early/miss` 控制边框色
+- 文档一致性审查（3 轮审计全部通过）：
+  - 修正 6 份文档 50+ 处不一致，12 次提交
+  - 亲子模式全量标注 V2，Hero 文案同步
+- **个人中心视觉重塑**：
+  - 用户卡片：红→橙渐变背景 + 头像 + 昵称 + ID
+  - 小狮收集：5 张卡片横向排列 + 进度条 + ≥3只显示"舞狮小传人"
+  - 成就卡片：3 项成就横向排列
+  - 作品网格：最近 3 张缩略图
+  - 快捷菜单：敲鼓成绩 / AR 照片 / 我的订单（统一菜单样式）
+  - 整体白卡+阴影设计，灰底 #F7F7F8
