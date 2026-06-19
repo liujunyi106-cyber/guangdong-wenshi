@@ -226,15 +226,7 @@
   position: relative;
 }
 .achi-card.achi-locked {
-  opacity: 0.55;
-}
-.achi-lock-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 48rpx;
-  height: 48rpx;
+  opacity: 0.40;
 }
 .achi-icon-img {
   width: 64rpx;
