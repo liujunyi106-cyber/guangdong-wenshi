@@ -1,9 +1,8 @@
 # 广东舞狮文创小程序 · 设计规范 (Design Spec)
 
-> 版本：V2.8 | 来源：Figma `📱 首页` (19:91) + `敲鼓玩法` (43:168) + `商店` (68:2) + `AR拍照` (小程序实测) | 日期：2026-06-19
+> 版本：V2.9 | 来源：Figma `📱 首页` (19:91) + `敲鼓玩法` (43:168) + `商店` (68:2) + `AR拍照` (小程序实测) | 日期：2026-06-20
 > 
-> 本次更新：商店Hero重写(渐变+SVG圆点+IP置顶);删除搜索栏;商品图3D形象;涂色橡皮擦/装饰缩放/参考图缩放
-> 2026-06-19 V2.8: 商店Hero重写(渐变+SVG圆点+IP置顶);删除搜索栏;商品图3D形象;涂色橡皮擦/装饰缩放/参考图缩放
+> 本次更新：新增个人中心设计规范;商店Hero IP改为position:absolute;未解锁小狮保留原色
 >
 > 本文档为后续所有 Figma 绘制、小程序 UI 开发、原型产出的**唯一设计规范参考**。与 `品牌.md` 冲突时以此为准。
 
@@ -654,7 +653,7 @@
 | "Hello" | DIN Bold 38px #FFFFFF, x=17, y=13 |
 | "!" | DIN Bold 38px #FFFFFF, x=121.71, y=11（比 Hello 高 2px） |
 | "小狮子" | MiSans Heavy 30px #FFFFFF, x=17, y=48 |
-| IP形象 | "元气十足" 342×510rpx (114×170px×1.5), position:fixed 置顶于卡片上方, right:22rpx, 垂直居中 |
+| IP形象 | "元气十足" 342×510rpx (114×170px×1.5), position:absolute 置于卡片内上层, right:22rpx, top:50%// 垂直居中 |
 | SVG圆点 | `shop-hero-dots.svg` (28点, 90×69px, 渐变填充 #ED4F3E→#F05C49, x=245,y=11) |
 | CTA 容器 | 159×31 px, x=17, y=96, 白底 #FFFFFF 圆角8px |
 | CTA 文字 | "快来挑选你喜欢的狮子吧", MiSans Semibold 12px #000000 |
@@ -683,6 +682,102 @@
 | 描述 | MiSans Regular 330 12px #7d7d7d, x=8, y=242 |
 
 ---
+
+### 5.15 个人中心页 (`pages/mine/mine`)
+
+**页面结构：** `page > status-bar + scroll-view`，底部导航栏始终显示。
+
+#### 5.15.1 用户卡片（Hero 风格，对齐商店 Hero）
+
+| 属性 | 值 |
+|------|-----|
+| 尺寸 | 670×284rpx |
+| 圆角 | 32rpx |
+| 背景 | `linear-gradient(90deg, #E31E15 0%, #F4725C 100%)` |
+| 位置 | `margin: 52rpx 40rpx 24rpx` |
+| 圆点 SVG | `mine-hero-dots.svg`, right:0, top:22rpx, 180×138rpx, z-index:1 (来源：`全部内容/背景/背景1.svg`) |
+| 头像框 | 144rpx 圆形, `position:absolute; left:34rpx; top:50%`, 白色半透明边框 `6rpx solid rgba(255,255,255,0.4)`, 半透明底色 `rgba(255,255,255,0.2)` |
+| 默认头像 | `icon-mine-avatar.png`, 80rpx, 居中于头像框内 |
+| 昵称 | "小狮子", 40rpx Bold #FFFFFF |
+| ID | "ID: LION0001", 24rpx rgba(255,255,255,0.65) |
+| 布局 | `position: relative; overflow: visible`（IP头像 absolute 左侧，文字 absolute 右侧 left:204rpx） |
+
+#### 5.15.2 通用卡片
+
+| 属性 | 值 |
+|------|-----|
+| 外边距 | `0 40rpx 24rpx` |
+| 背景 | #FFFFFF |
+| 圆角 | 24rpx |
+| 内边距 | `32rpx 32rpx 24rpx` |
+| 阴影 | `0 4rpx 20rpx rgba(0,0,0,0.04)` |
+| 标题图标 | 40rpx, `icon-collect.png` / `icon-achievement.png` / `icon-color.png` |
+| 标题文字 | 30rpx Bold #1A1A1A |
+
+#### 5.15.3 小狮收集
+
+| 属性 | 值 |
+|------|-----|
+| 小狮卡片 | `flex:1`, 200rpx 高, 20rpx 圆角, 背景 #FAFAFA, `position:relative` |
+| 已解锁 | 3D IP 形象图, 72rpx (`mine-fire.png` 等), 名称 22rpx #333333 |
+| 未解锁 | 3D IP 形象图, **opacity 0.55（保留原色）**, `lock-3d.png` 40rpx absolute 居中 |
+| 称号 | "🏅 舞狮小传人", 26rpx Bold #E31E15, 背景 #FFF0EF, 居中文案 |
+| 进度条 | 8rpx 高, 背景 #F0F0F0, 填充渐变 `#E31E15→#FF5A4A` |
+| Badge | "X/5", 26rpx #E31E15, 背景 #FFF0EF, padding 6rpx 20rpx, 20rpx 圆角 |
+
+**小狮 3D 形象来源（`全部内容/IP形象/3D形象/`）：**
+
+| 文件 | 用途 |
+|------|------|
+| `mine-fire.png` | 火火狮 |
+| `mine-water.png` | 水水狮 |
+| `mine-gold.png` | 金金狮 |
+| `mine-wood.png` | 木木狮 |
+| `mine-earth.png` | 土土狮 |
+
+#### 5.15.4 成就卡片
+
+| 属性 | 值 |
+|------|-----|
+| 卡片 | `flex:1`, #FAFAFA, 20rpx 圆角, `padding:28rpx 16rpx 22rpx` |
+| 图标 | 64rpx 3D 图标 (`icon-combo.png` / `icon-camera.png` / `icon-paint.png`) |
+| 名称 | 24rpx Bold #1A1A1A |
+| 描述 | 20rpx #949494 |
+
+#### 5.15.5 作品网格
+
+| 属性 | 值 |
+|------|-----|
+| 缩略图 | `flex:1`, `aspect-ratio:1`, 20rpx 圆角, 背景 #FAFAFA, 🎨 emoji 48rpx #CCCCCC |
+| 空状态 | "还没有作品，去创作吧~", 26rpx #AAAAAA, `padding:48rpx 0` |
+
+#### 5.15.6 快捷菜单
+
+| 属性 | 值 |
+|------|-----|
+| 菜单项 | `display:flex; justify-content:space-between`, `padding:28rpx 8rpx` |
+| pressed 态 | `opacity: 0.6` |
+| 图标 | 44rpx (`icon-drum-record.png` / `icon-ar-record.png` / `icon-order.png`) |
+| 文字 | 28rpx Medium #1A1A1A |
+| 箭头 | `›`, 36rpx #CCCCCC |
+| 分隔线 | 2rpx #F5F5F5, `margin:0 8rpx` |
+| 底部占位 | 156rpx（避免被底部导航遮挡） |
+
+**3D 图标来源（`全部内容/3Dicon/` + `全部内容/图标png/`）：**
+
+| 文件 | 用途 |
+|------|------|
+| `lock-3d.png` | 未解锁锁定图标 |
+| `icon-combo.png` | 连击成就 |
+| `icon-camera.png` | 拍照成就 |
+| `icon-paint.png` | 绘画成就 |
+| `icon-drum-record.png` | 敲鼓成绩菜单 |
+| `icon-ar-record.png` | AR 照片菜单 |
+| `icon-order.png` | 我的订单菜单 |
+| `icon-collect.png` | 小狮收集标题 |
+| `icon-achievement.png` | 成就标题 |
+| `icon-color.png` | 作品标题 |
+| `icon-mine-avatar.png` | 默认头像占位 |
 
 ## 6. 圆角与阴影
 | 元素 | 圆角 | 阴影 |
