@@ -105,17 +105,29 @@
   border-radius: 1rpx;
 }
 
-/* 正文段落 */
+/* 正文区 — 标签+内容 */
 .card-body {
   margin-bottom: 48rpx;
 }
-.body-para {
+.section-block {
+  margin-bottom: 36rpx;
+}
+.section-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #E31E15 0%, #F4725C 100%);
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  margin-bottom: 16rpx;
+  line-height: 1.4;
+}
+.section-text {
   display: block;
   font-size: 30rpx;
   color: #333333;
   line-height: 2;
-  text-indent: 2em;
-  margin-bottom: 16rpx;
 }
 
 /* 知识点小结 */

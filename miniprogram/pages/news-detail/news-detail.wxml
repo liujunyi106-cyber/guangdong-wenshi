@@ -33,11 +33,12 @@
         <image class="divider-star" src="/images/icon-star-filled.png" mode="aspectFit"></image>
       </view>
 
-      <!-- 正文 -->
+      <!-- 正文区 — 标签+内容 -->
       <view class="card-body">
-        <block wx:for="{{newsData.paragraphs}}" wx:key="index">
-          <text class="body-para">{{item}}</text>
-        </block>
+        <view class="section-block" wx:for="{{newsData.sections}}" wx:key="index">
+          <view class="section-tag">{{item.tag}}</view>
+          <text class="section-text">{{item.body}}</text>
+        </view>
       </view>
 
       <!-- 知识点小结 -->
