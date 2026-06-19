@@ -14,7 +14,7 @@
       <view class="hero-hello">Hello</view>
       <view class="hero-exclaim">!</view>
       <view class="hero-title">小狮子</view>
-      <image class="shop-hero-dots" src="/images/shop-hero-dots.svg" mode="aspectFit"></image>
+      <image class="shop-hero-dots" src="/images/shop-hero-dots.png" mode="aspectFit"></image>
       <view class="hero-cta">
         <text class="hero-cta-text">快来挑选你喜欢的狮子吧</text>
       </view>

@@ -29,13 +29,13 @@
       <view class="lion-row">
         <view class="lion-info">
           <image class="lion-thumb" src="/images/fire-lion.png" mode="aspectFit"></image>
-          <text class="unlocked">火火狮 · 敲鼓通关即得</text>
+          <text class="{{lionFire.unlocked ? 'unlocked' : 'locked'}}">火火狮 · {{lionFire.unlocked ? '已解锁' : '敲鼓通关即得'}}</text>
         </view>
       </view>
       <view class="lion-row">
         <view class="lion-info">
           <image class="lion-thumb" src="/images/wood-lion.png" mode="aspectFit"></image>
-          <text class="locked">木木狮 · S/A评级解锁</text>
+          <text class="{{lionWood.unlocked ? 'unlocked' : 'locked'}}">木木狮 · {{lionWood.unlocked ? '已解锁' : 'S/A评级解锁'}}</text>
         </view>
       </view>
     </view>

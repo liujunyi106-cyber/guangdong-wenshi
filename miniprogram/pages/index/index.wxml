@@ -15,7 +15,7 @@
 
     <!-- Hero 卡片 -->
     <view class="hero-card" bindtap="onHeroTap">
-      <image class="hero-dots-bg" src="/images/hero-dots.svg" mode="aspectFit"></image>
+      <image class="hero-dots-bg" src="/images/hero-dots.png" mode="aspectFit"></image>
       <view class="hero-hello">Hello</view>
       <view class="hero-exclaim">!</view>
       <view class="hero-title">一起来敲鼓</view>
@@ -23,7 +23,7 @@
       <image class="hero-lion" src="/images/hero-lion.png" mode="aspectFit"></image>
       <view class="hero-cta">
         <text class="hero-cta-text">快来一起来敲鼓吧</text>
-        <image class="hero-cta-play-img" src="/images/btn-play.svg" mode="aspectFit"></image>
+        <image class="hero-cta-play-img" src="/images/btn-play.png" mode="aspectFit"></image>
       </view>
     </view>
 
@@ -32,13 +32,13 @@
       <view class="secondary-card" style="background:#F36F59;" bindtap="onARTap">
         <view class="sc-title">狮子拍照</view>
         <view class="sc-sub">快来一起拍照吧</view>
-        <image class="sc-dots" src="/images/card-ar-dots.svg" mode="aspectFit"></image>
+        <image class="sc-dots" src="/images/card-ar-dots.png" mode="aspectFit"></image>
         <image class="sc-icon ar-icon" src="/images/icon-ar.png" mode="aspectFit"></image>
       </view>
       <view class="secondary-card" style="background:#F36F59;" bindtap="onColorTap">
         <view class="sc-title">狮子绘画</view>
         <view class="sc-sub">画你的专属狮子吧</view>
-        <image class="sc-dots" src="/images/card-ar-dots.svg" mode="aspectFit"></image>
+        <image class="sc-dots" src="/images/card-ar-dots.png" mode="aspectFit"></image>
         <image class="sc-icon color-icon" src="/images/icon-color.png" mode="aspectFit"></image>
       </view>
     </view>

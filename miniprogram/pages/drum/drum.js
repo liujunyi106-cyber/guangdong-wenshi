@@ -77,6 +77,9 @@ Page({
     unlockSub: '',
     // guide overlay
     guideShow: false,
+    // 狮子解锁状态（曲目列表页）
+    lionFire: { unlocked: false },
+    lionWood: { unlocked: false },
   },
 
   /* ===== 内部状态 ===== */
@@ -99,6 +102,14 @@ Page({
   onLoad(options) {
     const winInfo = wx.getWindowInfo()
     this.setData({ statusBarHeight: winInfo.statusBarHeight || 44 })
+    this.loadLionStatus()
+  },
+
+  loadLionStatus() {
+    const lions = unlock.getLions()
+    const fire = lions.find(l => l.id === 'fire') || { unlocked: false }
+    const wood = lions.find(l => l.id === 'wood') || { unlocked: false }
+    this.setData({ lionFire: fire, lionWood: wood })
   },
 
   goHome() {
@@ -451,6 +462,7 @@ Page({
   },
 
   retryGame() {
+    this.loadLionStatus()
     this.setData({ state: 'songlist', unlockShow: false })
     this.clearUnlockTimers()
     this.gameState = 'idle'
