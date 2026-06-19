@@ -62,11 +62,15 @@
       <!-- 鼓面 + 命中区 共用容器 -->
       <view class="drum-stage">
         <view class="drum-container" bindtap="hitDrum">
-          <!-- 虚幻鼓棒（CSS 伪元素绘制，无图片） -->
-          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l"></view>
-          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r"></view>
+          <!-- 虚幻鼓棒（CSS 绘制） -->
+          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
+          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
 
-          <!-- 命中区 -->
+          <!-- 外圈（缩圈动画） -->
+          <view class="ring-outer {{ringShow ? 'ring-visible' : ''}} {{ringClass}}"
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
+
+          <!-- 命中区（内圈） -->
           <view class="hit-zone hz-left {{hzState.left ? 'hz-active' : ''}}"></view>
           <view class="hit-zone hz-right {{hzState.right ? 'hz-active' : ''}}"></view>
           <view class="hit-zone hz-center {{hzState.center ? 'hz-active' : ''}}"></view>

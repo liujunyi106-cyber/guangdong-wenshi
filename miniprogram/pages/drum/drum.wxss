@@ -383,7 +383,7 @@
   background: rgba(227,30,21,0.1);
 }
 
-/* 判定文字 */
+/* 判定文字 4 色体系 */
 .judge-text {
   position: absolute;
   font-size: 52rpx;
@@ -395,9 +395,10 @@
   transform: translate(-50%, -50%);
   z-index: 6;
 }
-.judge-text.perfect { color: #D9A441; }
-.judge-text.good { color: #FFFFFF; }
-.judge-text.miss { color: #999999; }
+.judge-text.perfect { color: #E31E15; }
+.judge-text.good     { color: #65B96A; }
+.judge-text.early    { color: #FFB020; }
+.judge-text.miss     { color: #C9CDD4; }
 .judge-text.judge-flash {
   animation: judgePop 0.8s ease-out forwards;
 }
@@ -405,6 +406,44 @@
   0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
   30% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
   100% { opacity: 0; transform: translate(-50%, -160%) scale(1); }
+}
+
+/* ===== 缩圈系统 ===== */
+.ring-outer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  border: 6rpx solid rgba(255,255,255,0.7);
+  box-shadow: 0 0 40rpx rgba(227,30,21,0.4), inset 0 0 40rpx rgba(227,30,21,0.1);
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.ring-outer.ring-visible {
+  opacity: 1;
+}
+/* 鼓面中心圈 */
+.ring-outer.ring-center {
+  /* 默认居中，无需额外偏移 */
+}
+/* 鼓面边缘圈（偏左/偏右由 JS 控制 scale transform） */
+.ring-outer.ring-rim {
+  border-color: rgba(90,184,232,0.7);
+  box-shadow: 0 0 40rpx rgba(90,184,232,0.4), inset 0 0 40rpx rgba(90,184,232,0.1);
+}
+
+/* 鼓棒敲击动画 */
+.drumstick.drumstick-hit::before {
+  border-color: #E31E15 !important;
+  animation: stickFlash 0.3s ease-out;
+}
+@keyframes stickFlash {
+  0% { border-color: #FFB020; border-width: 10rpx; }
+  100% { border-color: #E31E15; border-width: 6rpx; }
 }
 
 /* 拍点提示 */
@@ -454,7 +493,7 @@
 }
 .result-detail {
   font-size: 28rpx;
-  color: #E31E15;
+  color: #AAAAAA;
   margin-bottom: 48rpx;
   text-align: center;
   line-height: 1.8;
