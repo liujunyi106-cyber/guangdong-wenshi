@@ -15,9 +15,9 @@ Page({
       { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/mine-earth.png' }
     ],
     achievements: [
-      { id: 1, icon: '🥇', name: '鼓点入门', desc: '首次通关' },
-      { id: 2, icon: '📸', name: '首张照片', desc: '第一次拍照' },
-      { id: 3, icon: '🎨', name: '小画家', desc: '完成涂色' }
+      { id: 1, icon: '/images/icon-combo.png', name: '鼓点入门', desc: '首次通关' },
+      { id: 2, icon: '/images/icon-camera.png', name: '首张照片', desc: '第一次拍照' },
+      { id: 3, icon: '/images/icon-paint.png', name: '小画家', desc: '完成涂色' }
     ],
     works: []
   },

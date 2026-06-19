@@ -178,10 +178,11 @@
   background: #FAFAFA;
   text-align: center;
 }
-.achi-icon {
-  font-size: 44rpx;
+.achi-icon-img {
+  width: 64rpx;
+  height: 64rpx;
   display: block;
-  margin-bottom: 10rpx;
+  margin: 0 auto 10rpx;
 }
 .achi-name {
   font-size: 24rpx;

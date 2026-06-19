@@ -31,7 +31,7 @@
           <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFit" class="lion-img"></image>
           <text wx:else class="lion-emoji">{{item.emoji}}</text>
           <text class="lion-name">{{item.name}}</text>
-          <image wx:if="{{!item.unlocked}}" src="/images/lock.png" mode="aspectFit" class="lion-lock-icon"></image>
+          <image wx:if="{{!item.unlocked}}" src="/images/lock-3d.png" mode="aspectFit" class="lion-lock-icon"></image>
         </view>
       </view>
       <view class="lion-progress">
@@ -47,7 +47,7 @@
       </view>
       <view class="achi-row">
         <view class="achi-card" wx:for="{{achievements}}" wx:key="id">
-          <text class="achi-icon">{{item.icon}}</text>
+          <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
           <text class="achi-name">{{item.name}}</text>
           <text class="achi-desc">{{item.desc}}</text>
         </view>
