@@ -84,27 +84,6 @@
   line-height: 1.3;
 }
 
-/* 装饰分割线 */
-.card-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20rpx;
-  margin-bottom: 40rpx;
-}
-.divider-star {
-  width: 28rpx;
-  height: 28rpx;
-  flex-shrink: 0;
-  opacity: 0.6;
-}
-.divider-line {
-  width: 80rpx;
-  height: 2rpx;
-  background: #E8E8E8;
-  border-radius: 1rpx;
-}
-
 /* 正文区 — 标签+内容 */
 .card-body {
   margin-bottom: 48rpx;
