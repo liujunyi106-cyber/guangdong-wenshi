@@ -22,11 +22,10 @@ Page({
     const wi = wx.getWindowInfo()
     this.setData({ statusBarHeight: wi.statusBarHeight || 44 })
 
-    // 网络检查（运行时读取，避免模块加载时序问题）
+    // 网络检查（非阻塞：仅提示，不阻断页面加载）
     const errorUtils = getApp().globalData.utils
     if (!errorUtils || !errorUtils.isOnline()) {
       wx.showToast({ title: '网络已断开', icon: 'none', duration: 2000 })
-      return
     }
 
     this.filterProducts()
