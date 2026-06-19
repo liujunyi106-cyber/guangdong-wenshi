@@ -577,15 +577,15 @@
   padding: 40rpx 48rpx;
   text-align: center;
   box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
-  animation: tutorialSlideUp 0.35s ease-out;
   pointer-events: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: tutorialFadeIn 0.3s ease-out;
 }
-@keyframes tutorialSlideUp {
-  from { opacity: 0; transform: translateY(40rpx); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes tutorialFadeIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 .tutorial-step-badge {
   display: inline-block;
