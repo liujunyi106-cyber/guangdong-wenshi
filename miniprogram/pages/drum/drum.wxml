@@ -61,7 +61,7 @@
 
       <!-- 鼓面 + 命中区 共用容器 -->
       <view class="drum-stage">
-        <view class="drum-container" bindtap="hitDrum">
+        <view class="drum-container">
           <!-- 鼓棒 -->
           <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
           <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}}"></view>
@@ -78,12 +78,12 @@
           <view class="ring-zone ring-rim-right {{ringShow && (ringZone === 'rim-right' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"
             style="transform: translateY(-50%) scale({{ringScale}});"></view>
 
-          <!-- 命中区（内圈） -->
-          <view class="hit-zone hz-left {{hzState.left ? 'hz-active' : ''}}"></view>
-          <view class="hit-zone hz-right {{hzState.right ? 'hz-active' : ''}}"></view>
-          <view class="hit-zone hz-center {{hzState.center ? 'hz-active' : ''}}"></view>
-          <view class="hit-zone hz-rim-left {{hzState.rimLeft ? 'hz-active' : ''}}"></view>
-          <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active' : ''}}"></view>
+          <!-- 命中区（内圈，仅活跃时可点击） -->
+          <view class="hit-zone hz-left {{hzState.left ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-right {{hzState.right ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-center {{hzState.center ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-rim-left {{hzState.rimLeft ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
 
           <!-- 鼓面 -->
           <image class="drum-area" src="/images/drum-face.png" mode="aspectFit"></image>
@@ -101,10 +101,8 @@
     <text class="result-stars">{{resultStars}}</text>
     <text class="result-title">{{resultTitle}}</text>
     <view class="result-detail">
-      <text>✨ 太棒啦 </text><text style="color:{{scoreColor}};font-weight:700;">{{perfectCnt}}</text><text> 次    👍 不错哦 </text><text style="color:{{comboColor}};font-weight:700;">{{goodCnt}}</text><text> 次</text>
-    </view>
-    <view class="result-detail" style="margin-bottom:32rpx;">
-      <text>连续敲击 </text><text style="color:{{comboColor}};font-weight:700;">{{maxComboCnt}}</text><text> 次   得分 </text><text style="color:{{scoreColor}};font-weight:700;font-size:32rpx;">{{totalScore}}</text><text> 分</text>
+      <text>✨ 太棒啦 </text><text style="color:{{scoreColor}};font-weight:700;">{{perfectCnt}}</text><text> 次    👍 不错哦 </text><text style="color:{{comboColor}};font-weight:700;">{{goodCnt}}</text><text> 次\n</text>
+      <text>连续敲击 </text><text style="color:{{comboColor}};font-weight:700;">{{maxComboCnt}}</text><text> 次    得分 </text><text style="color:{{scoreColor}};font-weight:700;font-size:36rpx;">{{totalScore}}</text><text> 分</text>
     </view>
     <view class="result-actions">
       <view class="result-btn" bindtap="retryGame"><image class="retry-icon" src="/images/3d-icons/retry.png" mode="aspectFit"></image> 重试</view>

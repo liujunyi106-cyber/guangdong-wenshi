@@ -23,7 +23,7 @@ const HINTS = {
 // 缩圈参数：scale 从 MAX → MIN，持续 DURATION ms
 const RING_MAX = 2.5
 const RING_MIN = 0.4
-const RING_DURATION = 2500
+const RING_DURATION = 1500
 const RING_MISS_THRESHOLD = 0.4 // 缩到这个值以下→自动 miss
 
 Page({
