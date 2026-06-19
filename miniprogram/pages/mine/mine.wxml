@@ -4,14 +4,16 @@
   <!-- 状态栏 -->
   <view class="status-bar" style="height:{{statusBarHeight}}px;"></view>
 
-  <!-- ===== 用户卡片 ===== -->
-  <view class="user-card">
-    <view class="user-avatar-wrap">
-      <image class="user-avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
-      <view class="user-avatar-placeholder" wx:else>🦁</view>
+  <!-- ===== 用户卡片（对齐商店 Hero 卡片规格 335×142） ===== -->
+  <view class="hero-card">
+    <view class="hero-avatar-wrap">
+      <image class="hero-avatar" src="{{avatarUrl}}" mode="aspectFill" wx:if="{{avatarUrl}}"></image>
+      <text wx:else class="hero-avatar-emoji">🦁</text>
     </view>
-    <text class="user-name">{{nickname || '小狮子'}}</text>
-    <view class="user-id">ID: {{userId || 'LION0001'}}</view>
+    <view class="hero-info">
+      <text class="hero-name">小狮子</text>
+      <text class="hero-id">ID: {{userId || 'LION0001'}}</text>
+    </view>
   </view>
 
   <!-- ===== 小狮收集 ===== -->
@@ -29,7 +31,6 @@
         <image wx:if="{{!item.unlocked}}" src="/images/lock.png" mode="aspectFit" class="lion-lock-icon"></image>
       </view>
     </view>
-    <!-- 进度条 -->
     <view class="lion-progress">
       <view class="lion-progress-fill" style="width:{{(unlockedCount/5)*100}}%;"></view>
     </view>
