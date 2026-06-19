@@ -10,6 +10,15 @@
 }
 
 /* ===== 用户卡片（335×142，与商店 Hero 完全一致） ===== */
+/* 圆点背景（对齐商店 Hero） */
+.hero-dots {
+  position: absolute;
+  right: 0;
+  top: 22rpx;
+  width: 180rpx;
+  height: 138rpx;
+  z-index: 1;
+}
 .hero-card {
   width: 670rpx;
   height: 284rpx;
