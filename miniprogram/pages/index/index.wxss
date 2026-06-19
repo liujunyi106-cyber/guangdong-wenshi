@@ -2,7 +2,7 @@
 
 .page {
   min-height: 100vh;
-  background: #FFFFFF;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 42%, #EEEEEE 42%, #EEEEEE 100%);
 }
 
 .page-scroll {
