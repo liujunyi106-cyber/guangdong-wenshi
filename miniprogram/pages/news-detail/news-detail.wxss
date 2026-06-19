@@ -164,28 +164,6 @@
   flex: 1;
 }
 
-/* 来源标注 */
-.card-source {
-  display: flex;
-  align-items: center;
-  gap: 12rpx;
-  padding: 20rpx 24rpx;
-  background: #F9F9F9;
-  border-radius: 16rpx;
-}
-.source-icon {
-  width: 32rpx;
-  height: 32rpx;
-  flex-shrink: 0;
-  opacity: 0.5;
-}
-.source-text {
-  font-size: 24rpx;
-  color: #999999;
-  line-height: 1.4;
-  flex: 1;
-}
-
 /* 底部装饰星标 */
 .bottom-deco {
   display: flex;

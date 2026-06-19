@@ -53,12 +53,6 @@
           </view>
         </view>
       </view>
-
-      <!-- 来源标注 -->
-      <view class="card-source">
-        <image class="source-icon" src="/images/icon-decor.png" mode="aspectFit"></image>
-        <text class="source-text">{{newsData.source}}</text>
-      </view>
     </view>
 
     <!-- 底部装饰 -->

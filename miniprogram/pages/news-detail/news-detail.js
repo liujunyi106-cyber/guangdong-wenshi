@@ -16,8 +16,7 @@ const NEWS_DATA = {
       '红脸 = 关公狮（忠义·胜利·最常见）',
       '黑脸 = 张飞狮（侠义·勇猛·压阵）',
       '脸谱源自粤剧，三种颜色对应三种英雄性格'
-    ],
-    source: '温玉婷《基于广东醒狮文化的数字化互动体验设计与研究》第2章'
+    ]
   },
   caiqing: {
     title: '小狮怎么采青',
@@ -42,7 +41,6 @@ const NEWS_DATA = {
       '核心寓意：驱邪纳福·步步高升·财源广进',
       '食青是高潮，吐青是将祝福送给观众'
     ],
-    source: '温玉婷《基于广东醒狮文化的数字化互动体验设计与研究》第6章'
   },
   liubei: {
     title: '刘备狮是谁',
@@ -60,7 +58,6 @@ const NEWS_DATA = {
       '常出现在庙会·开业·婚礼等喜庆场合',
       '体现「以武修德、克己复礼」的儒家精神'
     ],
-    source: '温玉婷《基于广东醒狮文化的数字化互动体验设计与研究》第2章'
   }
 }
 
@@ -68,7 +65,7 @@ Page({
   data: {
     statusBarHeight: 44,
     statusBarPadding: 7,
-    newsData: { title: '', image: '', paragraphs: [], highlights: [], source: '' }
+    newsData: { title: '', image: '', paragraphs: [], highlights: [] }
   },
 
   onLoad(options) {
