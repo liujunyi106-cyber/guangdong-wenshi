@@ -1,7 +1,7 @@
 <!-- 涂色装饰页面 -->
 <view class="page">
   <!-- 状态栏 -->
-  <view class="status-bar"></view>
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
 
   <!-- ===== 线稿选择页 ===== -->
   <view wx:if="{{state === 'outline'}}" class="state-show">

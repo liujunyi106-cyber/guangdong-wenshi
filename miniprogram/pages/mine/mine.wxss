@@ -287,13 +287,13 @@
   gap: 20rpx;
 }
 .menu-icon-img {
-  width: 44rpx;
-  height: 44rpx;
+  width: 40rpx;
+  height: 40rpx;
   flex-shrink: 0;
 }
 .menu-label {
-  font-size: 28rpx;
-  font-weight: 500;
+  font-size: 30rpx;
+  font-weight: 700;
   color: #1A1A1A;
 }
 .menu-arrow {
@@ -342,7 +342,7 @@
 .record-head {
   display: flex;
   align-items: baseline;
-  gap: 20rpx;
+  justify-content: space-between;
 }
 .record-rating {
   font-size: 28rpx;
@@ -356,7 +356,7 @@
 }
 .record-stats {
   display: flex;
-  gap: 24rpx;
+  gap: 12rpx;
 }
 .stat {
   font-size: 22rpx;

@@ -2,12 +2,16 @@
 <view class="page">
 
   <!-- 状态栏 -->
-  <view class="status-bar"></view>
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
 
   <scroll-view scroll-y class="page-scroll" style="padding-top:{{statusBarHeight}}px;">
 
     <!-- 页面标题 -->
-    <view class="shop-title">商店</view>
+    <view class="sub-header">
+      <view class="sub-spacer"></view>
+      <text class="sub-title">商店</text>
+      <view class="sub-spacer"></view>
+    </view>
 
     <!-- Hero 卡片（商店版 335×142，对齐 Figma 68:2） -->
     <view class="hero-card">

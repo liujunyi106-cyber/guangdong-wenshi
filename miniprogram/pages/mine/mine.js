@@ -4,6 +4,7 @@ const unlock = require('../../utils/unlock')
 Page({
   data: {
     statusBarHeight: 44,
+    statusBarPadding: 7,
     scrollTop: 0,
     avatarUrl: '',
     nickname: '',
@@ -29,7 +30,10 @@ Page({
 
   onLoad() {
     const wi = wx.getWindowInfo()
-    this.setData({ statusBarHeight: wi.statusBarHeight || 44 })
+    this.setData({
+      statusBarHeight: wi.statusBarHeight || 44,
+      statusBarPadding: (wi.statusBarHeight || 44) > 30 ? 14 : 7
+    })
     this.loadUserData()
   },
 

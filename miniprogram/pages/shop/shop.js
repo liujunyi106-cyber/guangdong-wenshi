@@ -3,6 +3,7 @@ const app = getApp()
 Page({
   data: {
     statusBarHeight: 44,
+    statusBarPadding: 7,
     categories: ['全部', '小狮公仔', '周边'],
     catIdx: 0,
     products: [
@@ -20,7 +21,10 @@ Page({
 
   onLoad() {
     const wi = wx.getWindowInfo()
-    this.setData({ statusBarHeight: wi.statusBarHeight || 44 })
+    this.setData({
+      statusBarHeight: wi.statusBarHeight || 44,
+      statusBarPadding: (wi.statusBarHeight || 44) > 30 ? 14 : 7
+    })
 
     // 网络检查（非阻塞：仅提示，不阻断页面加载）
     const errorUtils = getApp().globalData.utils
