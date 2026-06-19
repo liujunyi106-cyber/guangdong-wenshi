@@ -247,12 +247,12 @@
 }
 
 .edit-ctrls {
-  padding: 36rpx 40rpx 0;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding: 24rpx 40rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
   background: #FFFFFF;
 }
 .ctrl-done {
-  height: 88rpx;
+  height: 96rpx;
   background: #E31E15;
   border-radius: 16rpx;
   display: flex;
@@ -261,7 +261,6 @@
   font-size: 32rpx;
   font-weight: 600;
   color: #FFFFFF;
-  margin-top: -10rpx;
 }
 .ctrl-done:active {
   opacity: 0.85;
