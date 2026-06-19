@@ -222,7 +222,6 @@
   flex-shrink: 0;
   padding: 28rpx 16rpx 22rpx;
   border-radius: 20rpx;
-  background: #FAFAFA;
   text-align: center;
   position: relative;
 }
