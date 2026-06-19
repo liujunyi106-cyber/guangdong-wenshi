@@ -1,4 +1,5 @@
 const app = getApp()
+const unlock = require('../../utils/unlock')
 
 Page({
   data: {
@@ -33,6 +34,10 @@ Page({
     brushSize: 6,
     savedImage: '',
     eraserMode: false,
+    unlockShow: false,
+    unlockIcon: '',
+    unlockTitle: '',
+    unlockSub: '',
     decoGhostShow: false,
     decoGhostX: 0,
     decoGhostY: 0,
@@ -514,7 +519,30 @@ Page({
     }
     wx.canvasToTempFilePath({
       canvas: this._cv,
-      success: (res) => this.setData({ state: 'done', savedImage: res.tempFilePath }),
+      success: (res) => {
+        const ip = this.data.ipList.find(ip => ip.id === this.data.selectedIp)
+        this.setData({ state: 'done', savedImage: res.tempFilePath })
+
+        unlock.saveRecord('artwork', {
+          ipName: ip ? ip.name : ''
+        })
+
+        const result = unlock.unlockLion('gold')
+        if (result) {
+          const modal = unlock.getUnlockModal('gold')
+          this.setData({
+            unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
+          })
+          if (result.alsoEarth) {
+            setTimeout(() => {
+              const m2 = unlock.getUnlockModal('earth')
+              this.setData({
+                unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
+              })
+            }, 3000)
+          }
+        }
+      },
       fail: () => wx.showToast({ title: '保存失败', icon: 'none' })
     })
   },
@@ -525,6 +553,10 @@ Page({
 
   onShareWork() {
     wx.showToast({ title: '分享功能开发中', icon: 'none' })
+  },
+
+  dismissUnlock() {
+    this.setData({ unlockShow: false })
   }
 })
 

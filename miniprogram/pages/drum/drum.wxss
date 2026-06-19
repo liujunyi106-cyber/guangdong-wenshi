@@ -551,6 +551,75 @@
 }
 
 /* 解锁居中弹窗 */
+/* 首次游玩引导遮罩 */
+.guide-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 350;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+.guide-content {
+  width: 600rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 56rpx 48rpx 48rpx;
+  text-align: center;
+}
+.guide-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #E31E15;
+  display: block;
+  margin-bottom: 40rpx;
+}
+.guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+  margin-bottom: 48rpx;
+}
+.guide-step {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  text-align: left;
+}
+.guide-step-num {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #E31E15;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.guide-step-text {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.5;
+}
+.guide-btn {
+  width: 320rpx;
+  height: 88rpx;
+  border-radius: 16rpx;
+  background: #E31E15;
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 .unlock-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;

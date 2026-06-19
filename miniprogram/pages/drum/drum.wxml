@@ -120,12 +120,34 @@
     </view>
   </view>
 
+  <!-- 首次游玩引导遮罩 -->
+  <view class="guide-overlay" wx:if="{{guideShow}}">
+    <view class="guide-content">
+      <text class="guide-title">怎么玩？</text>
+      <view class="guide-steps">
+        <view class="guide-step">
+          <view class="guide-step-num">1</view>
+          <text class="guide-step-text">看鼓面光点提示</text>
+        </view>
+        <view class="guide-step">
+          <view class="guide-step-num">2</view>
+          <text class="guide-step-text">在光点闪烁时点击鼓面</text>
+        </view>
+        <view class="guide-step">
+          <view class="guide-step-num">3</view>
+          <text class="guide-step-text">左右鼓面、鼓边都要敲哦！</text>
+        </view>
+      </view>
+      <view class="guide-btn" bindtap="dismissGuide">知道了</view>
+    </view>
+  </view>
+
   <!-- 解锁弹窗 -->
   <view class="unlock-overlay" wx:if="{{unlockShow}}" bindtap="dismissUnlock">
     <view class="unlock-card" catchtap="dismissUnlock">
-      <text class="unlock-icon">🎉</text>
-      <text class="unlock-title">恭喜通关！</text>
-      <text class="unlock-sub">火火狮解锁条件达成</text>
+      <text class="unlock-icon">{{unlockIcon}}</text>
+      <text class="unlock-title">{{unlockTitle}}</text>
+      <text class="unlock-sub">{{unlockSub}}</text>
       <view class="unlock-btn" bindtap="dismissUnlock">太棒了</view>
     </view>
   </view>

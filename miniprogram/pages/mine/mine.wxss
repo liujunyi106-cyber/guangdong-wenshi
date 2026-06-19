@@ -270,3 +270,82 @@
 .bottom-spacer {
   height: 156rpx;
 }
+
+/* ===== 详情页 ===== */
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+.back-text-btn {
+  font-size: 32rpx;
+  color: #E31E15;
+  font-weight: 600;
+  line-height: 1;
+}
+.back-text-btn:active {
+  opacity: 0.6;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+.record-item:last-child {
+  border-bottom: none;
+}
+.record-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.record-stars {
+  font-size: 36rpx;
+}
+.record-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+.record-right {
+  text-align: right;
+}
+.record-score {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #E31E15;
+  display: block;
+}
+.record-meta {
+  font-size: 22rpx;
+  color: #AAAAAA;
+  margin-top: 4rpx;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.photo-thumb {
+  width: calc((100% - 32rpx) / 3);
+  aspect-ratio: 1;
+  background: #FAFAFA;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+.photo-thumb-emoji {
+  font-size: 56rpx;
+}
+.photo-thumb-name {
+  font-size: 22rpx;
+  color: #949494;
+}

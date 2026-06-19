@@ -26,7 +26,7 @@
         <text class="card-title">我的小狮</text>
         <text class="card-badge">{{unlockedCount}}/5</text>
       </view>
-      <view class="card-sub" wx:if="{{unlockedCount >= 3}}">🏅 舞狮小传人</view>
+      <view class="card-sub" wx:if="{{title}}">{{title}}</view>
       <view class="lion-row">
         <view class="lion-card {{item.unlocked ? '' : 'lion-locked'}}" wx:for="{{lions}}" wx:key="id">
           <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFit" class="lion-img"></image>
@@ -72,7 +72,7 @@
     </view>
 
     <!-- ===== 快捷入口 ===== -->
-    <view class="card">
+    <view class="card" wx:if="{{menuState === 'main'}}">
       <view class="menu-item" bindtap="onTapDrum">
         <view class="menu-left">
           <image class="menu-icon-img" src="/images/icon-drum-record.png" mode="aspectFit"></image>
@@ -95,6 +95,44 @@
           <text class="menu-label">我的订单</text>
         </view>
         <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 敲鼓成绩详情 -->
+    <view class="card" wx:if="{{menuState === 'drum'}}">
+      <view class="detail-header">
+        <view class="back-text-btn" bindtap="onBackToMain">‹ 返回</view>
+        <text class="card-title">敲鼓成绩</text>
+      </view>
+      <view wx:if="{{drumRecords.length === 0}}" class="empty-hint">
+        <text class="empty-text">还没有敲鼓记录，去首页挑战吧~</text>
+      </view>
+      <view class="record-item" wx:for="{{drumRecords}}" wx:key="time">
+        <view class="record-left">
+          <text class="record-stars">{{item.stars}}</text>
+          <text class="record-title">{{item.rating}}</text>
+        </view>
+        <view class="record-right">
+          <text class="record-score">{{item.score}} 分</text>
+          <text class="record-meta">P{{item.perfect}} G{{item.good}} E{{item.early}} M{{item.miss}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- AR 照片详情 -->
+    <view class="card" wx:if="{{menuState === 'photo'}}">
+      <view class="detail-header">
+        <view class="back-text-btn" bindtap="onBackToMain">‹ 返回</view>
+        <text class="card-title">AR 照片</text>
+      </view>
+      <view wx:if="{{photoRecords.length === 0}}" class="empty-hint">
+        <text class="empty-text">还没有 AR 照片，去拍照吧~</text>
+      </view>
+      <view class="photo-grid">
+        <view class="photo-thumb" wx:for="{{photoRecords}}" wx:key="time">
+          <text class="photo-thumb-emoji">🦁</text>
+          <text class="photo-thumb-name">{{item.stickerName}}</text>
+        </view>
       </view>
     </view>
 

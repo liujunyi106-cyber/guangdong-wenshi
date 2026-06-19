@@ -1,4 +1,5 @@
 const app = getApp()
+const unlock = require('../../utils/unlock')
 
 const BEAT_SEQUENCE = [
   'center-left', 'center-right',
@@ -70,7 +71,12 @@ Page({
     toastShow: false,
     toastMsg: '',
     // unlock modal
-    unlockShow: false
+    unlockShow: false,
+    unlockIcon: '🎉',
+    unlockTitle: '',
+    unlockSub: '',
+    // guide overlay
+    guideShow: false,
   },
 
   /* ===== 内部状态 ===== */
@@ -140,7 +146,22 @@ Page({
       ringShow: false, ringScale: RING_MAX,
       drumstickLeft: false, drumstickRight: false, drumstickHit: false
     })
+
+    if (!unlock.isGuideDone()) {
+      this.setData({ guideShow: true })
+      this._guidePendingStart = true
+      return
+    }
     this.scheduleNextBeat()
+  },
+
+  dismissGuide() {
+    this.setData({ guideShow: false })
+    unlock.saveGuideDone()
+    if (this._guidePendingStart) {
+      this._guidePendingStart = false
+      this.scheduleNextBeat()
+    }
   },
 
   /* ========== 缩圈系统 ========== */
@@ -370,6 +391,7 @@ Page({
     const score = this.perfectCount * 200 + this.goodCount * 100 + this.earlyCount * 50
 
     const isUnlock = stars.includes('⭐⭐⭐') || stars.includes('⭐⭐⭐⭐') || stars.includes('⭐⭐⭐⭐⭐')
+    const isHighScore = stars.includes('⭐⭐⭐⭐') || stars.includes('⭐⭐⭐⭐⭐')
 
     this.setData({
       state: 'result', resultStars: stars, resultTitle: title,
@@ -380,9 +402,46 @@ Page({
       ringShow: false, drumstickLeft: false, drumstickRight: false
     })
 
+    unlock.saveRecord('drum', {
+      stars, rating: title, score,
+      perfect: this.perfectCount, good: this.goodCount, early: this.earlyCount, miss: this.missCount
+    })
+
     if (isUnlock) {
-      this.setData({ unlockShow: true })
-      setTimeout(() => this.setData({ unlockShow: false }), 2500)
+      const result = unlock.unlockLion('fire')
+      if (result) {
+        const modal = unlock.getUnlockModal('fire')
+        this.setData({
+          unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
+        })
+        if (isHighScore) {
+          setTimeout(() => {
+            const r2 = unlock.unlockLion('wood')
+            if (r2) {
+              const m2 = unlock.getUnlockModal('wood')
+              this.setData({
+                unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
+              })
+              if (r2.alsoEarth) {
+                setTimeout(() => {
+                  const m3 = unlock.getUnlockModal('earth')
+                  this.setData({
+                    unlockShow: true, unlockIcon: m3.icon, unlockTitle: m3.title, unlockSub: m3.sub
+                  })
+                }, 3000)
+              }
+            }
+          }, 3000)
+        }
+        if (result.alsoEarth) {
+          setTimeout(() => {
+            const m3 = unlock.getUnlockModal('earth')
+            this.setData({
+              unlockShow: true, unlockIcon: m3.icon, unlockTitle: m3.title, unlockSub: m3.sub
+            })
+          }, 3000)
+        }
+      }
     }
   },
 

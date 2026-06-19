@@ -111,4 +111,14 @@
     <text class="lock-modal-hint">{{lockModalHint}}</text>
     <view class="lock-modal-btn" bindtap="hideLockModal">我知道了</view>
   </view>
+
+  <!-- 解锁弹窗 -->
+  <view class="unlock-overlay" wx:if="{{unlockShow}}" bindtap="dismissUnlock">
+    <view class="unlock-card" catchtap="dismissUnlock">
+      <text class="unlock-icon">{{unlockIcon}}</text>
+      <text class="unlock-title">{{unlockTitle}}</text>
+      <text class="unlock-sub">{{unlockSub}}</text>
+      <view class="unlock-btn" bindtap="dismissUnlock">太棒了</view>
+    </view>
+  </view>
 </view>

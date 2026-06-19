@@ -1,16 +1,27 @@
 const app = getApp()
+const unlock = require('../../utils/unlock')
+
+const STICKER_HINTS = {
+  fire: '敲鼓通关即可解锁',
+  water: 'AR拍照使用即可解锁',
+  gold: '涂色完成1幅作品即可解锁',
+  wood: '敲鼓获得S/A评级即可解锁',
+  earth: '集齐4只小狮即可解锁'
+}
+
+const STICKER_IMAGES = [
+  '/images/ip-3d-fire.png',
+  '/images/ip-3d-water.png',
+  '/images/ip-3d-gold.png',
+  '/images/ip-3d-wood.png',
+  '/images/ip-3d-earth.png'
+]
 
 Page({
   data: {
     statusBarHeight: 44,
     state: 'camera',
-    stickers: [
-      { id: 1, name: '火火狮', emoji: '🔥', unlocked: true, image: '/images/ip-3d-fire.png', unlockHint: '敲鼓通关即可解锁' },
-      { id: 2, name: '水水狮', emoji: '💧', unlocked: true, image: '/images/ip-3d-water.png', unlockHint: 'AR拍照使用即可解锁' },
-      { id: 3, name: '金金狮', emoji: '✨', unlocked: false, image: '/images/ip-3d-gold.png', unlockHint: '涂色完成1幅作品即可解锁' },
-      { id: 4, name: '木木狮', emoji: '🌿', unlocked: false, image: '/images/ip-3d-wood.png', unlockHint: '敲鼓获得S/A评级即可解锁' },
-      { id: 5, name: '土土狮', emoji: '🪨', unlocked: false, image: '/images/ip-3d-earth.png', unlockHint: '集齐4只小狮即可解锁' }
-    ],
+    stickers: [],
     selectedSticker: null,
     editStickerImage: '',
     editStickerEmoji: '',
@@ -20,12 +31,34 @@ Page({
     stickerY: 0,
     showLockModal: false,
     lockModalLion: '',
-    lockModalHint: ''
+    lockModalHint: '',
+    unlockShow: false,
+    unlockIcon: '',
+    unlockTitle: '',
+    unlockSub: ''
   },
 
   onLoad() {
     const winInfo = wx.getWindowInfo()
     this.setData({ statusBarHeight: winInfo.statusBarHeight || 44 })
+    this.loadStickers()
+  },
+
+  onShow() {
+    this.loadStickers()
+  },
+
+  loadStickers() {
+    const lions = unlock.getLions()
+    const stickers = lions.map((l, i) => ({
+      id: i + 1,
+      name: l.name,
+      emoji: l.emoji,
+      unlocked: l.unlocked,
+      image: STICKER_IMAGES[i] || '',
+      unlockHint: STICKER_HINTS[l.id] || '完成更多玩法即可解锁'
+    }))
+    this.setData({ stickers })
   },
 
   goBack() {
@@ -35,29 +68,23 @@ Page({
     else wx.navigateBack()
   },
 
-  /* 快门 */
   onShutter() {
     this.setData({ state: 'sticker' })
   },
 
-  /* 相册 */
   onAlbum() {
     wx.chooseMedia({
       count: 1,
       mediaType: ['image'],
       sourceType: ['album'],
-      success: (res) => {
-        this.setData({ state: 'sticker' })
-      }
+      success: () => this.setData({ state: 'sticker' })
     })
   },
 
-  /* 翻转摄像头 */
   onFlip() {
     wx.showToast({ title: '切换摄像头', icon: 'none', duration: 1000 })
   },
 
-  /* 点击未解锁贴纸 → 弹出提示 */
   onTapLocked(e) {
     const id = e.currentTarget.dataset.id
     const sticker = this.data.stickers.find(s => s.id === id)
@@ -68,14 +95,15 @@ Page({
       lockModalHint: sticker.unlockHint || '完成更多玩法即可解锁'
     })
   },
+
   hideLockModal() {
     this.setData({ showLockModal: false })
   },
+
   onSelectSticker(e) {
     const id = e.currentTarget.dataset.id
     const sticker = this.data.stickers.find(s => s.id === id)
     if (!sticker || !sticker.unlocked) return
-
     this.setData({
       selectedSticker: id,
       editStickerImage: sticker.image || '',
@@ -83,7 +111,6 @@ Page({
     })
   },
 
-  /* 进入编辑 */
   onNextEdit() {
     if (!this.data.selectedSticker) return
     this.setData({
@@ -95,12 +122,10 @@ Page({
     })
   },
 
-  /* 返回贴纸选择 */
   onBackToSticker() {
     this.setData({ state: 'sticker' })
   },
 
-  /* 贴纸手势：单指拖拽 / 双指缩放+旋转 */
   onStickerTouchStart(e) {
     const touches = e.touches
     if (touches.length === 2) {
@@ -145,17 +170,39 @@ Page({
     this._isPinching = false
   },
 
-  /* 保存编辑 */
   onSaveEdit() {
+    const sticker = this.data.stickers.find(s => s.id === this.data.selectedSticker)
     this.setData({ state: 'done' })
+
+    unlock.saveRecord('photo', {
+      stickerName: sticker ? sticker.name : ''
+    })
+
+    const result = unlock.unlockLion('water')
+    if (result) {
+      const modal = unlock.getUnlockModal('water')
+      this.setData({
+        unlockShow: true, unlockIcon: modal.icon, unlockTitle: modal.title, unlockSub: modal.sub
+      })
+      if (result.alsoEarth) {
+        setTimeout(() => {
+          const m2 = unlock.getUnlockModal('earth')
+          this.setData({
+            unlockShow: true, unlockIcon: m2.icon, unlockTitle: m2.title, unlockSub: m2.sub
+          })
+        }, 3000)
+      }
+    }
   },
 
-  /* 再做一张 */
+  dismissUnlock() {
+    this.setData({ unlockShow: false })
+  },
+
   onRetake() {
     this.setData({ state: 'camera', selectedSticker: null })
   },
 
-  /* 分享 */
   onShare() {
     wx.showToast({ title: '分享功能开发中', icon: 'none' })
   }
