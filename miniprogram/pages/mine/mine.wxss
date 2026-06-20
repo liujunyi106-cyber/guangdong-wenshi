@@ -230,6 +230,15 @@
   opacity: 1;
   background: #E0E0E0;
 }
+.achi-locked .achi-icon-img {
+  opacity: 0.45;
+}
+.achi-locked .achi-name {
+  color: #B0B0B0;
+}
+.achi-locked .achi-desc {
+  color: #CCCCCC;
+}
 .achi-icon-img {
   width: 64rpx;
   height: 64rpx;
