@@ -739,10 +739,12 @@
 
 | 属性 | 值 |
 |------|-----|
-| 卡片 | `flex:1`, #FAFAFA, 20rpx 圆角, `padding:28rpx 16rpx 22rpx` |
-| 图标 | 64rpx 3D 图标 (`icon-combo.png` / `icon-camera.png` / `icon-paint.png`) |
+| 卡片 | `width:200rpx`, `flex-shrink:0`, `background: #FAFAFA`, 20rpx 圆角, `padding:28rpx 16rpx 22rpx` |
+| 图标 | 64rpx (`achi-star1/star2/combo/highscore/plays.png` + `icon-camera/paint.png`) |
 | 名称 | 24rpx Bold #1A1A1A |
 | 描述 | 20rpx #949494 |
+| 未解锁 | `background: #E0E0E0`（灰色方形底色）, 点击弹窗显示解锁条件 |
+| 数量 | 10 张（8鼓点+1AR+1涂色）, 左右 `scroll-view` 滑动 |
 
 #### 5.15.5 作品网格
 

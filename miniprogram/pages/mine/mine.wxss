@@ -222,11 +222,13 @@
   flex-shrink: 0;
   padding: 28rpx 16rpx 22rpx;
   border-radius: 20rpx;
+  background: #FAFAFA;
   text-align: center;
   position: relative;
 }
 .achi-card.achi-locked {
-  opacity: 0.25;
+  opacity: 1;
+  background: #E0E0E0;
 }
 .achi-icon-img {
   width: 64rpx;
