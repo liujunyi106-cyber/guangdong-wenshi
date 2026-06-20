@@ -512,4 +512,41 @@
 | 我要去哪里？ | 真机相机接入 / 音效 / 分享 / 商品详情页 |
 | 目标是什么？ | V1 核心闭环打通 → 可上线 |
 | 我学到了什么？ | 见 findings.md |
-| 我做了什么？ | 成就系统+状态栏统一+视觉打磨+Bug修复+V1盘点，包体积 2047KB |
+| 我做了什么？ | 教程蒙版层级修复+成就灰化+编译ID+编辑按钮对齐, 包体积 2052KB |
+
+## 会话：2026-06-20 (c)
+
+### 任务：教程蒙版层级 + 未解锁成就视觉 + 编译 ID + 编辑对齐
+- **状态：** completed ✅
+- 执行的操作：
+  - **教程蒙版层级修复**：
+    - 卡片移出 overlay 解决 `pointer-events:none` 阻断点击
+    - 动画 `translateY` → `scale(0.95→1)` 保持居中
+    - 层级：鼓面 < 蒙版350 < 命中区355 < 卡片370
+    - "准备好了吗"图标：🥁 → `02_鼓鼓.png`
+  - **未解锁成就视觉**：
+    - 背景 `#E0E0E0` 灰色方形（区别于白底）
+    - 图标 `opacity:0.45` + 名称 `#B0B0B0` + 描述 `#CCCCCC`
+    - 点击弹窗查看解锁条件（`wx.showModal`）
+    - 英文术语中文化：Combo→连击, Perfect→完美, Miss→漏掉, S级→最高级
+  - **编译 ID**：`COMPILE_ID` 机制 → 每次编译 `+1` 触发 `wx.clearStorageSync()`
+  - **编辑贴纸**：完成按钮高度 88→96rpx, padding 对齐选择贴纸
+- **文档同步**：progress.md / findings.md / task_plan.md / 落地版PRD.md / design-spec.md 全部更新
+- **包体积**：2052 KB / 2048 KB
+
+### 创建/修改的文件
+- `miniprogram/app.js` — COMPILE_ID 开发重置机制
+- `miniprogram/pages/drum/drum.{wxml,wxss}` — 教程蒙版层级+卡片独立+图标+动画
+- `miniprogram/pages/mine/mine.{wxml,wxss,js}` — 成就灰化+弹窗条件+英文中文化
+- `miniprogram/pages/ar/ar.wxss` — 编辑按钮对齐
+- `miniprogram/images/icon-drum-hero.png` — 教程确认图标
+- `docs/*.md` — 5份文档同步
+
+### 五问重启检查
+| 问题 | 答案 |
+|------|------|
+| 我在哪里？ | 阶段 6：打磨上线 |
+| 我要去哪里？ | 真机相机接入 / 音效 / 分享 / 商品详情页 |
+| 目标是什么？ | V1 核心闭环打通 → 可上线 |
+| 我学到了什么？ | 见 findings.md |
+| 我做了什么？ | 教程蒙版层级+成就灰化+编译ID+按钮对齐, 包体积 2052KB |

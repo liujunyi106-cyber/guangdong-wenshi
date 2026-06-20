@@ -82,6 +82,16 @@
 | 15 | 商店标题与首页不对齐 | shop-title→sub-header(spacer+title+spacer) |
 | 16 | 编辑贴纸按钮/预览间距 | 完成按钮 margin-top:-10rpx, 预览 padding-top 16→36rpx |
 
+## 本次会话新增（2026-06-20 c）
+| # | 问题/决策 | 方案 |
+|---|----------|------|
+| 17 | 教程弹窗 pointer-events:none 阻断卡片点击 | 卡片移出 overlay 独立渲染，position:fixed z-index:370 |
+| 18 | 教程动画 translateY 导致卡片位移 | 改用 scale(0.95→1) 保持 translate(-50%,-50%) 居中 |
+| 19 | 未解锁成就透明看不清 | #E0E0E0 灰色方形背景 + 图标0.45 + 名称#B0B0B0 + 描述#CC |
+| 20 | 未解锁看不到条件 | 点击弹窗 wx.showModal 显示解锁条件 |
+| 21 | 成就描述含英文术语 | Combo→连击, Perfect→完美, Miss→漏掉, S级→最高级 |
+| 22 | 多手机测试需每次清数据 | COMPILE_ID +1 机制 + wx.clearStorageSync() |
+
 ## 本次会话新增（2026-06-18 d）
 | 决策 | 理由 |
 |------|------|
