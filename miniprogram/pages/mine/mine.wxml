@@ -48,7 +48,8 @@
       </view>
       <scroll-view scroll-x class="achi-scroll">
         <view class="achi-row">
-          <view class="achi-card {{item.locked ? 'achi-locked' : ''}}" wx:for="{{achievements}}" wx:key="id">
+          <view class="achi-card {{item.locked ? 'achi-locked' : ''}}" wx:for="{{achievements}}" wx:key="id"
+            bindtap="onAchievementTap" data-locked="{{item.locked}}" data-desc="{{item.desc}}" data-name="{{item.name}}">
             <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
             <text class="achi-name">{{item.name}}</text>
             <text class="achi-desc">{{item.locked ? '未解锁' : item.desc}}</text>

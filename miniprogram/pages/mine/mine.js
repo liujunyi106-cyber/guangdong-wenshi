@@ -121,6 +121,19 @@ Page({
     this.setData({ expanded: next })
   },
 
+  /* 成就卡片点击 — 未解锁弹窗查看条件 */
+  onAchievementTap(e) {
+    const { locked, desc, name } = e.currentTarget.dataset
+    if (locked) {
+      wx.showModal({
+        title: name,
+        content: '解锁条件：' + desc,
+        showCancel: false,
+        confirmText: '知道了'
+      })
+    }
+  },
+
   formatTime(ts) {
     const d = new Date(ts)
     const pad = n => String(n).padStart(2, '0')
