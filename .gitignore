@@ -4,6 +4,9 @@ miniprogram/audio/
 __pycache__/
 *.pyc
 
+# 会话归档（含完整开发记录）
+.session/
+
 # AI 本地配置（非项目文件）
 .claude/
 
