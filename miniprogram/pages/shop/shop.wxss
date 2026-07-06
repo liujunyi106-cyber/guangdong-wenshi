@@ -1,7 +1,7 @@
 /* 商店样式（对齐 design-spec.md §5.14） */
 
 .page {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 30%, #EEEEEE 55%, #EEEEEE 100%);
 }
 
@@ -37,7 +37,7 @@
   width: 670rpx;
   height: 284rpx;
   border-radius: 32rpx;
-  margin: 52rpx 40rpx 24rpx;
+  margin: 0 40rpx 24rpx;
   background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%);
   position: relative;
   overflow: visible;
@@ -164,8 +164,9 @@
   justify-content: center;
 }
 .product-img-inner {
-  width: 262rpx;
-  height: 356rpx;
+  width: 100%;
+  height: 100%;
+  border-radius: 32rpx 32rpx 0 0;
 }
 .product-img-placeholder {
   font-size: 80rpx;

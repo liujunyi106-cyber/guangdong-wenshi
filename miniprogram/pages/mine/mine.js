@@ -32,7 +32,9 @@ Page({
       drum: false,
       photo: false,
       orders: false
-    }
+    },
+    workModalShow: false,
+    currentWork: null
   },
 
   onLoad() {
@@ -67,7 +69,7 @@ Page({
     const records = unlock.getRecords()
     const drumRecords = (records.drum || []).slice(0, 5)
     const photoRecords = (records.photo || []).slice(0, 6)
-    const artworkRecords = (records.artwork || []).slice(0, 3)
+    const artworkRecords = (records.artwork || []).slice(0, 20)
 
     // 计算成就解锁状态
     const achievements = this.data.achievements.map(a => {
@@ -132,6 +134,42 @@ Page({
         confirmText: '知道了'
       })
     }
+  },
+
+  /* 作品点击 */
+  onWorkTap(e) {
+    const work = this.data.works[e.currentTarget.dataset.index]
+    this.setData({ workModalShow: true, currentWork: work })
+  },
+
+  onWorkClose() {
+    this.setData({ workModalShow: false, currentWork: null })
+  },
+
+  onWorkDelete(e) {
+    const work = this.data.currentWork
+    wx.showModal({
+      title: '删除作品',
+      content: '确定要删除这个作品吗？',
+      success: (res) => {
+        if (res.confirm) {
+          const records = unlock.getRecords()
+          const list = records.artwork || []
+          const idx = list.findIndex(r => r.time === work.time)
+          if (idx > -1) {
+            list.splice(idx, 1)
+            records.artwork = list
+            wx.setStorageSync('gameRecords', records)
+            this.loadUserData()
+          }
+          this.setData({ workModalShow: false, currentWork: null })
+        }
+      }
+    })
+  },
+
+  onWorkShare() {
+    wx.showToast({ title: '分享功能开发中', icon: 'none', duration: 1500 })
   },
 
   formatTime(ts) {

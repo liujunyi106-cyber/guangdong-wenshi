@@ -37,7 +37,7 @@
     <view class="product-grid" wx:if="{{filteredProducts.length > 0}}">
       <view class="product-card" wx:for="{{filteredProducts}}" wx:key="id" bindtap="onProductTap" data-id="{{item.id}}">
         <view class="product-img">
-          <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFit" class="product-img-inner"></image>
+          <image wx:if="{{item.image}}" src="{{item.image}}" mode="aspectFill" class="product-img-inner"></image>
           <text wx:else class="product-img-placeholder">🦁</text>
         </view>
         <text class="product-name">{{item.name}}</text>

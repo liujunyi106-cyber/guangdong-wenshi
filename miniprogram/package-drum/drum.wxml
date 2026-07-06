@@ -1,0 +1,155 @@
+<!-- 敲鼓页面 -->
+<view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
+
+  <!-- ===== 曲目选择页 ===== -->
+  <view class="page-state" wx:if="{{state === 'songlist'}}">
+    <view class="sub-header songlist-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="goHome">←</view>
+      <text class="sub-title">选择曲目</text>
+      <view class="sub-spacer"></view>
+    </view>
+
+    <view class="song-card" wx:for="{{songs}}" wx:key="id" bindtap="onSelectSong" data-id="{{item.id}}">
+      <view>
+        <text class="song-name">{{item.name}}</text>
+        <text class="song-desc">{{item.desc}}</text>
+      </view>
+      <view class="song-right">
+        <view class="song-stars">
+          <image wx:for="{{item.starsFilled}}" wx:key="*this" class="star-icon" src="/images/star-filled.png" mode="aspectFit"></image>
+          <image wx:for="{{item.starsEmpty}}" wx:key="*this" class="star-icon" src="/images/star-empty.png" mode="aspectFit"></image>
+        </view>
+        <text class="song-best">{{item.best}}</text>
+      </view>
+    </view>
+
+    <view class="lion-status">
+      <view class="lion-row">
+        <view class="lion-info">
+          <image class="lion-thumb" src="/images/fire-lion.jpg" mode="aspectFit"></image>
+          <text class="{{lionFire.unlocked ? 'unlocked' : 'locked'}}">火火狮 · {{lionFire.unlocked ? '已解锁' : '敲鼓通关即得'}}</text>
+        </view>
+      </view>
+      <view class="lion-row">
+        <view class="lion-info">
+          <image class="lion-thumb" src="/images/wood-lion.jpg" mode="aspectFit"></image>
+          <text class="{{lionWood.unlocked ? 'unlocked' : 'locked'}}">木木狮 · {{lionWood.unlocked ? '已解锁' : 'S/A评级解锁'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 倒计时页 ===== -->
+  <view class="cd-page" wx:if="{{state === 'countdown'}}">
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="sub-spacer"></view>
+      <text class="sub-title">准备</text>
+      <view class="sub-spacer"></view>
+    </view>
+    <view class="cd-number-box">
+      <text class="cd-number {{cdPulse ? 'cd-pulse' : ''}}" style="{{cdTextStyle}}">{{cdText}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 游戏进行页 ===== -->
+  <view class="page-state game-page" wx:if="{{state === 'playing'}}">
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="pauseGame">←</view>
+      <view class="sub-spacer"></view>
+    </view>
+    <view class="game-progress-row">
+      <view class="game-progress-wrap">
+        <view class="game-progress-fill" style="width:{{progress}}%;"></view>
+      </view>
+      <text class="progress-pct">{{progress}}%</text>
+    </view>
+
+    <view class="game-body">
+      <image class="game-ip-img" src="{{currentIpImg}}" mode="aspectFit"></image>
+
+      <!-- 鼓面 + 命中区 共用容器 -->
+      <view class="drum-stage {{tutorialStep > 0 ? 'drum-stage-top' : ''}}">
+        <view class="drum-container">
+          <!-- 鼓棒 -->
+          <view class="drumstick {{drumstickLeft ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-l {{drumstickHit ? 'drumstick-hit' : ''}} drumstick-{{drumstickJudge}}"></view>
+          <view class="drumstick {{drumstickRight ? 'drumstick-show' : ''}} {{drumstickType === 'rim' ? 'drumstick-rim' : 'drumstick-center'}} drumstick-r {{drumstickHit ? 'drumstick-hit' : ''}} drumstick-{{drumstickJudge}}"></view>
+
+          <!-- 缩圈 × 5 击打区域 -->
+          <view class="ring-zone ring-left {{ringShow && ringZone === 'center-left' ? 'ring-visible' : ''}}"
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-right {{ringShow && ringZone === 'center-right' ? 'ring-visible' : ''}}"
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-center {{ringShow && ringZone === 'center-both' ? 'ring-visible' : ''}}"
+            style="transform: translate(-50%,-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-rim-left {{ringShow && (ringZone === 'rim-left' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+          <view class="ring-zone ring-rim-right {{ringShow && (ringZone === 'rim-right' || ringZone === 'rim-both') ? 'ring-visible' : ''}}"
+            style="transform: translateY(-50%) scale({{ringScale}});"></view>
+
+          <!-- 命中区（内圈，仅活跃时可点击） -->
+          <view class="hit-zone hz-left {{hzState.left ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-right {{hzState.right ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-center {{hzState.center ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-rim-left {{hzState.rimLeft ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+          <view class="hit-zone hz-rim-right {{hzState.rimRight ? 'hz-active hz-tap' : ''}}" bindtap="hitDrum"></view>
+
+          <!-- 鼓面 -->
+          <image class="drum-area" src="/images/drum-face.png" mode="aspectFit"></image>
+        </view>
+
+        <!-- 判定文字 -->
+        <text class="judge-text {{judgeType}} {{judgeShow ? 'judge-flash' : ''}}">{{judgeText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结算页礼花背景 -->
+  <image class="confetti-bg" src="/images/confetti.png" mode="aspectFill" wx:if="{{state === 'result'}}" style="top:{{statusBarHeight}}px;"></image>
+
+  <!-- ===== 结算页 ===== -->
+  <view class="page-state result-wrap" wx:if="{{state === 'result'}}">
+    <image class="result-ip-img" src="{{resultIpImage}}" mode="aspectFit"></image>
+    <view class="result-stars">
+      <image class="result-star-icon" src="/images/star-solid.png" mode="aspectFit" wx:for="{{starCount}}" wx:key="*this"></image>
+    </view>
+    <text class="result-title">{{resultTitle}}</text>
+    <view class="result-detail">
+      <text>✨ 太棒啦 </text><text style="color:{{scoreColor}};font-weight:700;">{{perfectCnt}}</text><text> 次    👍 不错哦 </text><text style="color:{{comboColor}};font-weight:700;">{{goodCnt}}</text><text> 次\n</text>
+      <text>连续敲击 </text><text style="color:{{comboColor}};font-weight:700;">{{maxComboCnt}}</text><text> 次    得分 </text><text style="color:{{scoreColor}};font-weight:700;font-size:36rpx;">{{totalScore}}</text><text> 分</text>
+    </view>
+    <view class="result-actions">
+      <view class="result-btn" bindtap="retryGame"><image class="retry-icon" src="/images/3d-icons/retry.png" mode="aspectFit"></image> 重试</view>
+      <view class="result-btn result-btn-home" bindtap="goHome"><image class="home-icon" src="/images/icon-home.png" mode="aspectFit"></image> 返回</view>
+    </view>
+  </view>
+
+  <!-- 交互式预玩教程 -->
+  <!-- 蒙版（仅暗色遮罩，穿透点击） -->
+  <view class="tutorial-overlay" wx:if="{{tutorialStep > 0}}">
+    <view class="tutorial-mask"></view>
+  </view>
+  <!-- 提示卡片（独立于蒙版，可点击） -->
+  <view class="tutorial-card" wx:if="{{tutorialStep > 0 && tutorialStep < 4}}">
+    <text class="tutorial-step-badge">第 {{tutorialStep}} 步</text>
+    <text class="tutorial-text">{{tutorialText}}</text>
+    <text class="tutorial-hint" wx:if="{{tutorialHint}}">{{tutorialHint}}</text>
+    <text class="tutorial-feedback" wx:if="{{tutorialFeedback}}">{{tutorialFeedback}}</text>
+  </view>
+  <view class="tutorial-card tutorial-ready" wx:if="{{tutorialStep === 4}}">
+    <image class="tutorial-ready-icon" src="/images/icon-drum-hero.png" mode="aspectFit"></image>
+    <text class="tutorial-text">{{tutorialText}}</text>
+    <view class="tutorial-confirm-btn" bindtap="onConfirmTutorial">开始挑战！</view>
+  </view>
+
+  <!-- 解锁弹窗 -->
+  <view class="unlock-overlay" wx:if="{{unlockShow}}" bindtap="dismissUnlock">
+    <view class="unlock-card" catchtap="dismissUnlock">
+      <image class="unlock-icon" src="/images/icon-congrats.png" mode="aspectFit"></image>
+      <text class="unlock-title">{{unlockTitle}}</text>
+      <text class="unlock-sub">{{unlockSub}}</text>
+      <view class="unlock-btn" bindtap="dismissUnlock">太棒了</view>
+    </view>
+  </view>
+</view>

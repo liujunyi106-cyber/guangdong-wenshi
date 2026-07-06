@@ -1,3 +1,0 @@
-[    4775ms] TypeError: Cannot read properties of null (reading 'classList')
-    at startColor (http://localhost:8765/v2_%E6%B6%82%E8%89%B2%E8%A3%85%E9%A5%B0_%E4%BD%8E%E4%BF%9D%E7%9C%9F.html:584:39)
-    at HTMLDivElement.onclick (http://localhost:8765/v2_%E6%B6%82%E8%89%B2%E8%A3%85%E9%A5%B0_%E4%BD%8E%E4%BF%9D%E7%9C%9F.html:283:64)

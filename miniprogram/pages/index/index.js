@@ -16,24 +16,24 @@ Page({
 
   /* Hero 点击 → 直接进敲鼓 */
   onHeroTap() {
-    wx.navigateTo({ url: '/pages/drum/drum' })
+    wx.navigateTo({ url: '/package-drum/drum' })
   },
 
   /* AR 拍照 */
   onARTap() {
-    wx.navigateTo({ url: '/pages/ar/ar' })
+    wx.navigateTo({ url: '/package-ar/ar' })
   },
 
   /* 涂色装饰 */
   onColorTap() {
-    wx.navigateTo({ url: '/pages/color/color' })
+    wx.navigateTo({ url: '/package-color/color' })
   },
 
   /* 舞狮故事卡片点击 */
   onNewsTap(e) {
     const { id } = e.currentTarget.dataset
     if (id) {
-      wx.navigateTo({ url: '/pages/news-detail/news-detail?id=' + id })
+      wx.navigateTo({ url: '/package-news/news-detail?id=' + id })
     }
   }
 })

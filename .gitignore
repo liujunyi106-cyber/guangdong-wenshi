@@ -1,0 +1,11 @@
+node_modules/
+miniprogram/audio/
+.playwright-mcp/
+__pycache__/
+*.pyc
+
+# AI 本地配置（非项目文件）
+.claude/
+
+# 隐私：小程序 AppID（替换为你的 AppID）
+miniprogram/project.config.json

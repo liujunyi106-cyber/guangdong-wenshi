@@ -87,7 +87,7 @@ page {
   border-radius: 16rpx;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 36rpx;
   color: #AAAAAA;
   background: transparent;

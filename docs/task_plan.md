@@ -59,7 +59,7 @@
 - [x] 敲鼓成绩精简
 - [x] 鼓面/IP模糊修复
 - [x] 成就系统升级（3→10项，规则引擎，左右滑动）
-- [x] 状态栏 6页统一（动态 statusBarHeight+padding）
+- [x] 状态栏 7页统一（动态 statusBarHeight+padding）
 - [x] 商店标题对齐首页 sub-header
 - [x] 我的页敲鼓成绩/AR照片对齐
 - [x] 编辑贴纸按钮微调
@@ -69,12 +69,13 @@
 - [x] 编译 ID 开发重置机制（每次编译+1清空全部数据）
 - [x] 成就英文术语中文化（Combo/Perfect/Miss/S级）
 - [x] 编辑贴纸完成按钮对齐选择贴纸下一步
+- [x] 分享功能 ×6（所有页面 onShareAppMessage）
+- [x] 商品详情页 + 小程序联盟跳转入口
+- [x] 首页狮子进度动态加载
+- [x] Figma 涂色改造（3子页：IP选择/涂色编辑/保存完成，匹配交互§6）
 - [ ] 真机相机接入 `wx.createCameraContext`
 - [ ] `audio/` 音效系统
-- [ ] 分享功能 ×3（AR/涂色/全局）
-- [ ] 商品详情页 + 小程序联盟跳转
 - [ ] 周边商品 3D 图补充
-- [ ] 首页狮子进度动态加载
 - [ ] 自测体验
 - [ ] 邀请测试
 - **状态：** in_progress 🔄
@@ -132,7 +133,7 @@
 | 1 | 真机相机接入 | 🔴 | `wx.createCameraContext` + `<camera>` 组件 | 2h |
 | 2 | audio/ 音效系统 | 🔴 | `wx.createInnerAudioContext()` / 8 首音频素材 | 3h |
 | 3 | 分享功能 ×3 | 🟡 | `wx.showShareImageMenu` / `onShareAppMessage` | 1h |
-| 4 | 商品详情页 | 🟡 | 新建 `pages/shop/detail/` + `navigateToMiniProgram` | 2h |
+| 4 | ✅ 商品详情页 Figma | ✔ | 已完成 Figma 原型 (151:696)，待开发 `pages/shop/detail/` | — |
 | 5 | 首页狮子进度 | 🟡 | `index.js` 导入 `unlock.js` + `lions` 渲染 | 0.5h |
 | 6 | 自测体验 | 🟡 | 真机全流程走通 × iPhone + Android | 2h |
 | 7 | 周边商品 3D 图 | 🟢 | `全部内容/3Dicon/` → 补 3 张图 | 0.5h |
@@ -156,6 +157,15 @@
 ## 遇到的错误
 | 错误 | 尝试次数 | 解决方案 |
 |------|---------|---------|
+
+### 阶段 5：文档一致性维护 & 涂色页规范补全
+- [x] 第 1 轮：文档 vs 代码（10 项不一致）
+- [x] 第 2 轮：文档 vs 文档（6 项交叉引用冲突）
+- [x] 第 3 轮：代码 vs 代码（2 项最佳实践建议）
+- [x] design-spec 新增 §5.14 涂色页规范（含橡皮擦大小滑块）
+- [x] 未解锁小狮 opacity 全域统一 0.45，删除锁图标引用
+- [x] 版本号升级（ds V2.13 / PRD V1.14 / 交互 V3.3）
+- **状态：** completed ✅
 
 ## 备注
 - 指南：Vibe Coding 六步法

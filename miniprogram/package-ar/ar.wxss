@@ -1,0 +1,453 @@
+/* AR 拍照样式（对齐 design-spec.md V2.2） */
+
+.page {
+  width: 100%;
+  height: 100vh;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.state {
+  width: 100%;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+}
+.state-show { display: flex; }
+
+/* 相机预览 */
+.camera-preview {
+  flex: 1;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.camera-placeholder {
+  text-align: center;
+}
+.camera-hint {
+  font-size: 48rpx;
+  color: rgba(255,255,255,0.4);
+  display: block;
+}
+.camera-sub {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.25);
+  margin-top: 16rpx;
+  display: block;
+}
+
+/* AR 顶部栏 */
+.ar-top-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 40rpx;
+  height: 112rpx;
+  z-index: 5;
+}
+.ar-top-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* 快门栏 */
+.shutter-bar {
+  height: 168rpx;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100rpx;
+  flex-shrink: 0;
+  position: relative;
+}
+.shutter-btn {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 6rpx solid #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: -80rpx;
+  transform: translateX(-50%);
+}
+.shutter-btn:active {
+  transform: translateX(-50%) scale(0.9);
+}
+.shutter-inner {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+.shutter-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  min-width: 120rpx;
+}
+.shutter-side-icon {
+  width: 88rpx;
+  height: 88rpx;
+}
+.shutter-album-icon {
+  width: 76rpx;
+  height: 76rpx;
+}
+.shutter-side-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 贴纸网格 3×2 */
+.sticker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30rpx;
+  padding: 32rpx 40rpx;
+  flex: 1;
+  overflow-y: auto;
+  align-content: flex-start;
+}
+.sticker-card {
+  width: 320rpx;
+  height: 242rpx;
+  border-radius: 32rpx;
+  background: #F5F5F5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 16rpx;
+  box-sizing: border-box;
+  border: 4rpx solid transparent;
+}
+.sticker-card.sticker-selected {
+  border-color: #E31E15;
+  background: #FFF5F3;
+}
+.sticker-card.sticker-locked {
+  background: #F0F0F0;
+  opacity: 0.6;
+}
+.sticker-card:active {
+  transform: scale(0.95);
+}
+.sticker-img {
+  width: 140rpx;
+  height: 140rpx;
+}
+.sticker-emoji {
+  font-size: 72rpx;
+}
+.sticker-name {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 600;
+}
+.sticker-lock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lock-icon {
+  width: 60rpx;
+  height: 60rpx;
+  opacity: 0.8;
+}
+
+.sticker-bottom {
+  padding: 24rpx 40rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+/* 编辑页 */
+.edit-header {
+  justify-content: space-between;
+  position: relative;
+}
+.sub-header {
+  display: flex;
+  align-items: center;
+  padding: 0 40rpx;
+  height: 112rpx;
+  flex-shrink: 0;
+}
+.sub-title {
+  flex: 1;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #000000;
+}
+.sub-spacer {
+  width: 64rpx;
+  flex-shrink: 0;
+}
+.edit-header .sub-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  flex: none;
+}
+.edit-preview {
+  flex: 1;
+  background: #F5F5F5;
+  position: relative;
+  margin: 0 40rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+.edit-photo {
+  width: 100%;
+  height: 100%;
+  background: #DDDDDD;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-photo-placeholder {
+  font-size: 40rpx;
+  color: #AAAAAA;
+}
+.edit-sticker-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.edit-sticker-img {
+  width: 200rpx;
+  height: 200rpx;
+}
+.edit-sticker-emoji {
+  font-size: 120rpx;
+}
+
+.edit-ctrls {
+  padding: 24rpx 40rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+}
+.ctrl-done {
+  height: 96rpx;
+  background: #E31E15;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.ctrl-done:active {
+  opacity: 0.85;
+}
+
+/* 完成页 */
+.done-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+}
+.done-check {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 48rpx;
+  color: #34C759;
+  margin-bottom: 40rpx;
+}
+.done-check-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+.done-preview {
+  width: 600rpx;
+  height: 600rpx;
+  background: #DDDDDD;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48rpx;
+}
+.done-preview-placeholder {
+  font-size: 40rpx;
+  color: #AAAAAA;
+}
+.done-actions {
+  display: flex;
+  gap: 32rpx;
+  width: 100%;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+.btn-outline {
+  flex: 1;
+  height: 96rpx;
+  border: 2px solid #DDDDDD;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  background: #FFFFFF;
+}
+.btn-primary {
+  flex: 1;
+  height: 96rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #E31E15;
+}
+.btn-disabled {
+  background: #C9CDD4;
+  color: #FFFFFF;
+}
+
+/* 未解锁弹窗 */
+.lock-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 560rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  z-index: 1001;
+  padding: 48rpx 40rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: lockModalIn 0.3s ease-out;
+}
+@keyframes lockModalIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.lock-modal-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 24rpx;
+}
+.lock-modal-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+.lock-modal-hint {
+  font-size: 28rpx;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 40rpx;
+  line-height: 1.6;
+}
+.lock-modal-btn {
+  width: 400rpx;
+  height: 88rpx;
+  background: #E31E15;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+.lock-modal-btn:active {
+  opacity: 0.85;
+}
+
+/* 解锁弹窗（对齐鼓页款式） */
+.unlock-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.unlock-card {
+  width: 560rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 64rpx 48rpx 48rpx;
+  text-align: center;
+  animation: modalBounce 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modalBounce {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.unlock-icon {
+  width: 96rpx;
+  height: 96rpx;
+  display: block;
+  margin: 0 auto 24rpx;
+}
+.unlock-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #E31E15;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.unlock-sub {
+  font-size: 28rpx;
+  color: #94A3B8;
+  display: block;
+  margin-bottom: 40rpx;
+}
+.unlock-btn {
+  width: 320rpx;
+  height: 88rpx;
+  border-radius: 16rpx;
+  background: #E31E15;
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}

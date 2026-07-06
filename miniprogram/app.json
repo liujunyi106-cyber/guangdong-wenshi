@@ -1,17 +1,31 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/drum/drum",
     "pages/shop/shop",
-    "pages/ar/ar",
-    "pages/color/color",
-    "pages/mine/mine",
-    "pages/news-detail/news-detail"
+    "pages/mine/mine"
+  ],
+  "subpackages": [
+    {
+      "root": "package-drum/",
+      "pages": ["drum"]
+    },
+    {
+      "root": "package-ar/",
+      "pages": ["ar"]
+    },
+    {
+      "root": "package-color/",
+      "pages": ["color"]
+    },
+    {
+      "root": "package-news/",
+      "pages": ["news-detail"]
+    }
   ],
   "window": {
     "navigationStyle": "custom",
     "backgroundTextStyle": "light",
-    "backgroundColor": "#FFFFFF"
+"backgroundColor": "#FFFFFF"
   },
   "tabBar": {
     "color": "#AAAAAA",

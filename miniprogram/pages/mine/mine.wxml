@@ -50,6 +50,7 @@
         <view class="achi-row">
           <view class="achi-card {{item.locked ? 'achi-locked' : ''}}" wx:for="{{achievements}}" wx:key="id"
             bindtap="onAchievementTap" data-locked="{{item.locked}}" data-desc="{{item.desc}}" data-name="{{item.name}}">
+            <image class="achi-card-confetti" src="/images/confetti.png" mode="aspectFill" wx:if="{{!item.locked}}"></image>
             <image class="achi-icon-img" src="{{item.icon}}" mode="aspectFit"></image>
             <text class="achi-name">{{item.name}}</text>
             <text class="achi-desc">{{item.locked ? '未解锁' : item.desc}}</text>
@@ -64,14 +65,34 @@
         <image class="card-head-icon" src="/images/icon-color.png" mode="aspectFit"></image>
         <text class="card-title">我的作品</text>
       </view>
-      <view class="work-row" wx:if="{{works.length > 0}}">
-        <view class="work-thumb" wx:for="{{works}}" wx:key="time" wx:if="{{index < 3}}">
-          <image wx:if="{{item.imageUrl}}" class="work-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
-          <text wx:else class="work-thumb-icon">🎨</text>
-        </view>
-      </view>
       <view wx:if="{{works.length === 0}}" class="empty-hint">
         <text class="empty-text">还没有作品，去创作吧~</text>
+      </view>
+      <scroll-view wx:elif="{{works.length >= 4}}" scroll-x class="work-scroll">
+        <view class="work-row-scroll">
+          <view class="work-card" wx:for="{{works}}" wx:key="time" bindtap="onWorkTap" data-index="{{index}}">
+            <image wx:if="{{item.imageUrl}}" class="work-card-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
+            <text wx:else class="work-card-placeholder">🎨</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view wx:else class="work-row-fixed">
+        <view class="work-card" wx:for="{{works}}" wx:key="time" bindtap="onWorkTap" data-index="{{index}}">
+          <image wx:if="{{item.imageUrl}}" class="work-card-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
+          <text wx:else class="work-card-placeholder">🎨</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 作品弹窗 -->
+    <view class="work-modal-overlay" wx:if="{{workModalShow}}" bindtap="onWorkClose">
+      <view class="work-modal-card" catchtap="">
+        <image wx:if="{{currentWork.imageUrl}}" class="work-modal-img" src="{{currentWork.imageUrl}}" mode="aspectFit"></image>
+        <text wx:else class="work-modal-placeholder">🎨</text>
+        <view class="work-modal-actions">
+          <view class="work-modal-btn work-modal-btn-delete" bindtap="onWorkDelete">删除</view>
+          <view class="work-modal-btn work-modal-btn-share" bindtap="onWorkShare">分享</view>
+        </view>
       </view>
     </view>
 

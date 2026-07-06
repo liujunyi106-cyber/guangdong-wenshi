@@ -1,0 +1,151 @@
+<!-- 涂色装饰页面 -->
+<view class="page">
+  <!-- 状态栏 -->
+  <view class="status-bar" style="height:{{statusBarHeight}}px; padding-top:{{statusBarPadding}}px;"></view>
+
+  <!-- ===== 线稿选择页 ===== -->
+  <view wx:if="{{state === 'outline'}}" class="state-show">
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="goBack">←</view>
+      <text class="sub-title">狮子绘画</text>
+      <view class="sub-spacer"></view>
+    </view>
+    <view class="section-title">选择IP形象</view>
+    <view class="ip-grid">
+      <view class="sticker-card {{selectedIp === index ? 'sticker-selected' : ''}}" 
+        wx:for="{{ipList}}" wx:key="id"
+        bindtap="onSelectIp" data-index="{{index}}">
+        <image class="sticker-img" src="{{item.thumb}}" mode="aspectFit"></image>
+        <text class="sticker-name">{{item.name}}</text>
+      </view>
+    </view>
+    <view class="outline-start" wx:if="{{selectedIp !== null}}">
+      <view class="btn-primary" bindtap="onStartPaint">开始涂色</view>
+    </view>
+  </view>
+
+  <!-- ===== 涂色编辑页 ===== -->
+  <view wx:if="{{state === 'coloring'}}" class="state-show">
+    <view class="sub-header edit-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="onBackToOutline">←</view>
+      <view class="mode-tabs">
+        <view class="mode-tab {{mode==='color' ? 'mode-active' : ''}}" bindtap="onSwitchMode" data-mode="color"><image class="tab-icon" src="/images/icon-paint-tab.png" mode="aspectFit"></image><text>涂色</text></view>
+        <view class="mode-tab {{mode==='deco' ? 'mode-active' : ''}}" bindtap="onSwitchMode" data-mode="deco"><image class="tab-icon" src="/images/icon-decor-tab.png" mode="aspectFit"></image><text>装饰</text></view>
+      </view>
+      <view class="sub-spacer"></view>
+    </view>
+
+    <!-- 涂色画布 -->
+    <view class="color-canvas">
+      <!-- 操作栏 -->
+      <view class="color-actions">
+        <view class="action-btn" bindtap="onUndo"><image class="action-icon action-icon-undo" src="/images/icon-undo.png" mode="aspectFit"></image><text class="action-label">撤销</text></view>
+        <view class="action-btn {{eraserMode ? 'eraser-active' : ''}}" bindtap="onToggleEraser">
+          <image class="action-icon action-icon-eraser" src="/images/icon-eraser.png" mode="aspectFit"></image>
+          <text class="action-label">橡皮擦</text>
+        </view>
+        <view class="action-btn action-save" bindtap="onSaveColor">
+          <image class="action-icon action-icon-save" src="/images/icon-save.png" mode="aspectFit"></image>
+          <text class="action-label action-label-save">保存</text>
+        </view>
+      </view>
+      <view class="canvas-area">
+        <canvas type="2d" id="colorCanvas" class="paint-canvas"></canvas>
+        <!-- 透明触摸层（涂色+装饰共用） -->
+        <view class="touch-layer"
+          bindtouchstart="onTouchCanvas"
+          bindtouchmove="onTouchCanvas"
+          bindtouchend="onTouchCanvas">
+        </view>
+        <!-- IP 参考图（左上角固定，右下角红圈拖拽缩放 1x~3x） -->
+        <view class="ip-ref-wrap"
+          style="left:{{ipBaseX}}px; top:{{ipBaseY}}px; width:{{ipBaseW * ipScale}}px; height:{{ipBaseH * ipScale}}px;">
+          <image class="ip-ref-img" src="{{currentIpUrl}}" mode="aspectFit"></image>
+          <view class="ip-drag-handle"
+            catchtouchstart="onIpRefTouch"
+            catchtouchmove="onIpRefTouch"
+            catchtouchend="onIpRefTouch">
+          </view>
+        </view>
+        <!-- 装饰拖拽预览 -->
+        <image wx:if="{{mode === 'deco' && decoGhostShow}}" class="deco-ghost" src="{{selectedDeco}}"
+          style="left:{{decoGhostX - 50}}px;top:{{decoGhostY - 50}}px;"
+          mode="aspectFit">
+        </image>
+      </view>
+      <!-- 画笔粗细（涂色模式，非橡皮擦） -->
+      <view wx:if="{{mode === 'color' && !eraserMode}}" class="brush-bar">
+        <text class="brush-end">细</text>
+        <slider min="1" max="8" value="{{brushIdx}}" bindchange="onBrushChange" block-size="20" activeColor="#E31E15"/>
+        <text class="brush-end">粗</text>
+      </view>
+      <!-- 调色盘 - 左右滑动（涂色模式） -->
+      <view wx:if="{{mode === 'color'}}" class="palette">
+        <scroll-view class="palette-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="palette-row">
+            <view class="color-swatch {{!eraserMode && colorIdx === index ? 'swatch-active' : ''}}"
+              wx:for="{{colors}}" wx:key="*this"
+              style="background:{{item}};{{!eraserMode && colorIdx === index ? (item === '#000000' ? 'border-color:#FFFFFF; box-shadow:0 0 0 6rpx rgba(255,255,255,0.35);' : 'border-color:#000000; box-shadow:0 0 0 6rpx rgba(0,0,0,0.2);') : ''}}"
+              bindtap="onPickColor" data-index="{{index}}">
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+      <!-- 花纹横向滑动（装饰模式） -->
+      <view wx:if="{{mode === 'deco'}}" class="palette">
+        <scroll-view class="palette-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="palette-row">
+            <image class="deco-thumb {{!eraserMode && selectedDeco === item ? 'deco-selected' : ''}}"
+              wx:for="{{decorations}}" wx:key="*this"
+              src="{{item}}" mode="aspectFit"
+              bindtap="onPickDeco" data-url="{{item}}">
+            </image>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 保存完成页 ===== -->
+  <view wx:if="{{state === 'done'}}" class="state-show">
+    <view class="sub-header" style="padding-top:{{statusBarHeight}}px;">
+      <view class="back-btn" bindtap="onBackToOutline">←</view>
+      <text class="sub-title">狮子绘画</text>
+      <view class="sub-spacer"></view>
+    </view>
+    <view class="done-wrap">
+      <view class="done-check"><image class="done-check-icon" src="/images/icon-saved.png" mode="aspectFit"></image><text>已保存</text></view>
+      <view class="done-preview">
+        <image class="done-img" src="{{savedImage}}" mode="aspectFit"></image>
+      </view>
+      <view class="done-actions">
+        <view class="btn-outline" bindtap="onRedraw">再画一张</view>
+        <view class="btn-primary" bindtap="onShareWork">分享好友</view>
+      </view>
+      <text class="done-hint">首次完成可解锁金金狮动画哦~</text>
+    </view>
+  </view>
+
+  <!-- 橡皮擦大小滑块（cover-view，page 直接子节点，避免层级裁剪） -->
+  <cover-view wx:if="{{state === 'coloring' && eraserMode}}" class="eraser-size-bar"
+    style="top:{{eraserBarTop}}px;"
+    catchtouchstart="onEraserBarStart"
+    catchtouchmove="onEraserBarMove">
+    <cover-view class="eraser-end-text">粗</cover-view>
+    <cover-view class="eraser-track">
+      <cover-view class="eraser-fill" style="height:{{100 - eraserThumbTop}}%;"></cover-view>
+      <cover-view class="eraser-thumb" style="top:{{eraserThumbTop}}%;"></cover-view>
+    </cover-view>
+    <cover-view class="eraser-end-text">细</cover-view>
+  </cover-view>
+
+  <!-- 解锁弹窗 -->
+  <view class="unlock-overlay" wx:if="{{unlockShow}}" bindtap="dismissUnlock">
+    <view class="unlock-card" catchtap="dismissUnlock">
+      <image class="unlock-icon" src="/images/icon-congrats.png" mode="aspectFit"></image>
+      <text class="unlock-title">{{unlockTitle}}</text>
+      <text class="unlock-sub">{{unlockSub}}</text>
+      <view class="unlock-btn" bindtap="dismissUnlock">太棒了</view>
+    </view>
+  </view>
+</view>

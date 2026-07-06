@@ -23,7 +23,7 @@
   width: 670rpx;
   height: 284rpx;
   border-radius: 32rpx;
-  margin: 52rpx 40rpx 24rpx;
+  margin: 110rpx 40rpx 24rpx;
   background: linear-gradient(90deg, #E31E15 0%, #F4725C 100%);
   position: relative;
   overflow: visible;
@@ -225,6 +225,17 @@
   background: #FAFAFA;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+.achi-card-confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
 }
 .achi-card.achi-locked {
   opacity: 1;
@@ -244,6 +255,8 @@
   height: 64rpx;
   display: block;
   margin: 0 auto 10rpx;
+  position: relative;
+  z-index: 1;
 }
 .achi-name {
   font-size: 24rpx;
@@ -259,27 +272,55 @@
 }
 
 /* ===== 作品 ===== */
-.work-row {
+.work-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+.work-row-scroll {
+  display: inline-flex;
+  gap: 16rpx;
+}
+.work-row-fixed {
   display: flex;
   gap: 16rpx;
 }
-.work-thumb {
-  flex: 1;
-  aspect-ratio: 1;
+.work-card {
+  width: 200rpx;
+  height: 220rpx;
+  flex-shrink: 0;
   border-radius: 20rpx;
   background: #FAFAFA;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
-.work-thumb-icon {
-  font-size: 48rpx;
-  color: #CCCCCC;
+.work-card:active {
+  transform: scale(0.97);
+  opacity: 0.85;
 }
-.work-img {
+.work-card-confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 20rpx;
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+}
+.work-card-img {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: relative;
+}
+.work-card-placeholder {
+  font-size: 48rpx;
+  color: #CCCCCC;
+  z-index: 1;
+  position: relative;
 }
 .empty-hint {
   padding: 48rpx 0;
@@ -288,6 +329,63 @@
 .empty-text {
   font-size: 26rpx;
   color: #AAAAAA;
+}
+
+/* ===== 作品弹窗 ===== */
+.work-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-modal-card {
+  width: 560rpx;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  text-align: center;
+}
+.work-modal-img {
+  width: 100%;
+  height: 400rpx;
+  border-radius: 16rpx;
+  background: #FAFAFA;
+}
+.work-modal-placeholder {
+  font-size: 120rpx;
+  display: block;
+  padding: 80rpx 0;
+}
+.work-modal-actions {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 32rpx;
+}
+.work-modal-btn {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-modal-btn:active {
+  opacity: 0.8;
+}
+.work-modal-btn-delete {
+  background: #FFFFFF;
+  color: #E31E15;
+  border: 2px solid #E31E15;
+}
+.work-modal-btn-share {
+  background: #333333;
+  color: #FFFFFF;
+  border: 2px solid #333333;
 }
 
 /* ===== 快捷菜单 ===== */
