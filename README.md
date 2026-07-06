@@ -54,6 +54,83 @@ scripts/            # 工具脚本
 # 需开通微信云开发环境
 ```
 
+## 新开发者入门
+
+### 1. 创建 project.config.json
+
+`project.config.json` 已从 Git 中移除（因含 AppID），需在 `miniprogram/` 下手动创建：
+
+```json
+{
+  "appid": "your_appid_here",
+  "projectname": "广东醒狮文创",
+  "libVersion": "3.7.12",
+  "cloudfunctionRoot": "cloud/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "compileType": "miniprogram",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": { "output": { "beautify": false }, "ignore": [] }
+  },
+  "condition": {}
+}
+```
+
+### 2. 音频资源
+
+`miniprogram/audio/` 目录被 Git 忽略（文件体积大）。开发者需自行准备 `drum/`、`story/`、`effect/` 子目录下的 `.mp3` 文件，或修改代码改为 CDN 加载方式。音频清单见 `docs/交互设计文档.md`。
+
+### 3. 微信云开发
+
+需开通微信云开发环境，将 `env` 配置为你的环境 ID。云函数及数据库集合定义见 `docs/技术规划文档.md`。
+
+## 版本
+
+当前版本：**V1.0**（MVP 版本，四大核心功能 + 解锁激励系统已实现）
+
+## 可扩展方向
+
+| 方向 | 说明 |
+|------|------|
+| **多语言** | 支持粤语/英文，故事卡片内容从论文扩展为多语言版本 |
+| **音频 CDN 化** | 将本地 `.mp3` 迁移至云端存储，减少包体积 |
+| **用户系统** | 接入微信登录 + 云数据库持久化用户进度 |
+| **排行榜** | 敲鼓游戏增加好友排行（云函数 + 云数据库） |
+| **AR 进阶** | 接入真实 AR 引擎（如 VPS），识别狮头轮廓叠加特效 |
+| **运营后台** | 管理端管理商品、成就、内容更新 |
+| **Web 管理端** | 为运营人员提供内容管理、数据看板 |
+| **社区分享** | 作品墙、社交裂变传播 |
+
+### 4. 配置 Git 远程仓库
+
+项目推送时使用的远程 URL 已移除了 Token，如需推送请在自己本地配置鉴权：
+
+```bash
+git remote set-url origin https://github.com/你的用户名/guangdong-wenshi.git
+# 或使用 SSH
+git remote set-url origin git@github.com:你的用户名/guangdong-wenshi.git
+```
+
 > 项目使用分包机制，主包 + 4 个子包。开发者需在微信开发者工具中关联云开发环境 ID。
 
 ## 文档
